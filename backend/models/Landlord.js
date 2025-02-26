@@ -5,6 +5,10 @@ const LandlordSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    type:{
+        type: String,
+        default: 'landlord'
+    },
     email: {
         type: String,
         required: true,
@@ -15,6 +19,10 @@ const LandlordSchema = new mongoose.Schema({
         required: true
     },
     propertyList: {
+        type: Array,
+        default: []
+    },
+    conversations: {
         type: Array,
         default: []
     }

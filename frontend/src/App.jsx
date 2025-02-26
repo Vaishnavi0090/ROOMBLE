@@ -4,7 +4,7 @@ import { socket } from './socket'
 import { Navbar } from './components/Navbar';
 import BaseState from './context/base/Basestate.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Messages from './components/Messages';
 
 
@@ -14,17 +14,19 @@ function App() {
       console.log('a user connected');
     }
     socket.on('connect', handleConnection)
+    socket.emit('join', socket.id);           //TODO: send user id here
+    socket.on('online_users', (data) => {
+      console.log(data);
+    });
+    
   },[]);
 
   return (
     <BaseState>
      <Navbar />
-    <Router>
-   
       <Routes>
         <Route path="/messages" element={<Messages />} />
       </Routes>
-    </Router>
     </BaseState>
   )
 }
