@@ -1,0 +1,321 @@
+/* Make full page take up space */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600&display=swap');
+
+* {
+    font-family: 'Fredoka', sans-serif;
+}
+
+
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Container that splits page into two halves */
+.main-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+/* Left Section (Logo) */
+.logo-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white; /* Ensures it's always white */
+    padding: 20px;
+}
+
+/* Make Logo Responsive */
+.logo-container img {
+    max-width: 80%;
+    height: auto;
+}
+
+/* Right Section (Login) */
+.login-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    padding: 20px;
+    min-height: 90vh;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+    .main-container {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    .logo-container {
+        padding: 40px 0;
+    }
+    
+    .logo-container img {
+        max-width: 50%;
+    }
+    
+    .login-container {
+        width: 100%;
+        padding: 40px 20px;
+    }
+}
+/* Login Box Styling */
+.login-box {
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    text-align: center;
+}
+
+
+body {
+    font-family: 'Fredoka', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+/* Login Container */
+.login-container {
+    text-align: center;
+}
+
+/* Login Box */
+.login-box {
+    background-color: #fce8e8;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 22px;
+    color: #3a1a1a;
+    font-weight: bold;
+}
+
+.subtext {
+    font-size: 14px;
+    color: #7a4949;
+    margin-bottom: 20px;
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #3a1a1a;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #4b0707;
+    border-radius: 5px;
+    color : black;
+    background-color:#fce8e8
+}
+/* Ensure everything is in one line and properly aligned */
+.remember-forgot {
+    display: flex;
+    align-items: center; /* Aligns everything vertically */
+    justify-content: space-between;
+    font-size: 12px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+/* Wraps "Remember Me" and checkbox together */
+.remember-container {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Adds space between label and checkbox */
+    white-space: nowrap; /* Prevents text from wrapping */
+}
+
+/* "Remember Me" text styling */
+.remember-label {
+    font-size: 12px;
+    font-weight: bold;
+    transform: translateY(-80%);
+    padding-left: 5px;
+}
+
+/* Properly aligns the checkbox */
+.remember-container input[type="checkbox"] {
+    width: 12px;
+    height: 12px;
+    cursor: pointer;
+    transform: translateY(-82%);
+    margin: 0; /* Removes any unwanted spacing */
+}
+.remember-container input[type="checkbox"] :unchecked{
+    color : white;
+    background-color: white;
+    accent-color: white;
+}
+/* Ensures "Forgot Password?" is aligned properly */
+.forgot-password {
+    color: #a52a2a;
+    text-decoration: none;
+    font-size: 12px;
+    transform: translateY(-50%);
+    font-weight: normal;
+    margin-left: auto; /* Pushes it to the right */
+}
+/* Login Button */
+.login-button {
+    background-color: #a52a2a;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.login-button:hover {
+    background-color: #d53737;
+}
+.toggle-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.toggle-switch {
+    position: relative;
+    width: 100px; /* Keep the same size */
+    height: 20px;
+    background-color: #a52a2a;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.toggle-text {
+    font-size: 10px;
+    flex : 1;
+    text-align: centre;
+    z-index : 2;
+    position: relative;    
+}
+
+.toggle-text.tenant {
+    text-align: left; 
+    padding-left: 5px;
+}
+.toggle-text.landlord {
+    text-align: right; 
+    padding-right: 5px;
+}
+
+.toggle-switch input {
+    display: none;
+}
+
+.toggle-label {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px;
+    font-weight: bold;
+    font-size: 12px;  /* Adjust text size */
+    position: absolute; /* Ensure text stays above */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2; /* Ensure text is above slider */
+    width: 100%;
+    color: #7B1212; /* Keep the text color */
+}
+
+.toggle-slider {
+    position: absolute;
+    width: 45px;
+    height: 16px;
+    background-color: white;
+    border-radius: 12px;
+    transition: 0.3s ease-in-out;
+    top: 50%;
+    left: 2px;
+    transform: translateY(-50%);
+    z-index: 1; /* Slider stays below text */
+}
+/* Default 'Tenant' selected */
+.toggle-text {
+    z-index: 3; /* Ensures text is on top */
+    position: relative;
+}
+
+/* When 'Landlord' is selected, slider moves and grows */
+.toggle-switch.landlord-selected .toggle-slider {
+    width: 50px;
+    left: calc(100% - 53px);
+}
+
+.toggle-switch.landlord-selected .landlord {
+    color: #7B1212;
+
+}
+
+.toggle-switch:not(.landlord-selected) .tenant {
+    color: #7B1212;
+}
+
+
+/* Register Text */
+.register-text {
+    color: black;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.register-text a {
+    color: #a52a2a;
+    font-weight: bold;
+    text-decoration: none;
+    text-shadow: #d61515;
+}
+
+/* Footer Text */
+.footer-text {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #a52a2a;
+    font-weight: bold;
+}
