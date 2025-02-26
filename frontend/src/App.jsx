@@ -4,6 +4,9 @@ import { socket } from './socket'
 import { Navbar } from './components/Navbar';
 import BaseState from './context/base/Basestate.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Messages from './components/Messages';
+
 
 function App() {
   useEffect(()=>{
@@ -15,7 +18,13 @@ function App() {
 
   return (
     <BaseState>
-      <Navbar />
+     <Navbar />
+    <Router>
+   
+      <Routes>
+        <Route path="/messages" element={<Messages />} />
+      </Routes>
+    </Router>
     </BaseState>
   )
 }

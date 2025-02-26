@@ -1,0 +1,112 @@
+.message-cards{
+    flex:2;
+    height: 100%;
+    background-color: #FDE6E8;
+    margin:6px;
+    margin-right: 3px;
+    border-radius: 15px;
+    .top{
+        .search-bar{
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            margin: 10px;
+            background-color: white;
+            border-radius: 10px;
+            input{
+                border: none;
+                outline: none;
+                background-color: transparent;
+                flex:1;
+            }
+
+        }
+        
+    }
+    .bottom {
+        display: flex;
+        margin: 10px;
+        flex-direction: column;
+        overflow-y: scroll;
+        max-height: calc(100vh - 200px);
+    }
+    
+    .card {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start; /* Align items to the start (top) of the card */
+        justify-content: space-between; /* Space between the content (image, text, and time) */
+        padding: 10px;
+        border: none;
+        width: 100%;
+        border-bottom: #B4ABAB 1px solid;
+        background-color: #FDE6E8;
+        border-radius: 0px;
+        cursor: pointer;
+        
+    }
+    .card:hover {
+        background-color: #F5D0D7;
+    }
+    
+    .sender-img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 10px; /* Space between image and text */
+        object-fit: cover;
+    }
+    
+    .sender-info {
+        flex: 1; /* Allows the text section to take the remaining space */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    
+    .senderName {
+        color: #7D141D;
+        font-weight: bold;
+        font-size: 20px;
+        margin-bottom: 5px; /* Space between name and last message */
+    }
+    
+    .last-message {
+        margin: 0; /* Removes default margin */
+        font-size: 14px;
+    }
+    
+    .time {
+        align-self: flex-start; /* Aligns the time to the bottom-right */
+        font-size: 12px;
+        color: #777;
+        margin-top: 5px; /* Space between the last message and time */
+        margin: 5px;
+    }
+    .right{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .newMsg{
+        display: flex;
+        background-color: #7D141D;
+        color: white;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+
+    }
+    .newMsgCount{
+        margin:0px;
+    }
+    
+}
+.people-text{
+    color: #7D141D;
+    padding: 5px;
+    margin:5px;
+}
