@@ -6,8 +6,8 @@ import BaseState from './context/base/Basestate.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route } from 'react-router-dom';
 import Messages from './components/Messages';
-
-
+import SignUpPage from './components/SignUp';
+import Login from './components/Login.jsx';
 function App() {
   useEffect(()=>{
     function handleConnection(){
@@ -26,7 +26,10 @@ function App() {
      <Navbar />
       <Routes>
         <Route path="/messages" element={<Messages />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
+      
     </BaseState>
   )
 }

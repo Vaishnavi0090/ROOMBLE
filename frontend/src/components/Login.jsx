@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import "./Login.css";
-import logo from "/roomble_logo.jpg"; // Vite uses '/' for public assets
-
+import "../css/Login.css";
+import logo from "../../public/logo.png"; // Vite uses '/' for public assets
+import { Link } from 'react-router-dom';
+import { Basecontext } from '../context/base/Basecontext'
 const Login = () => {
+    // const state = useContext(Basecontext)
     const [isLandlord, setIsLandlord] = useState(false);
 
     const handleToggle = () => {
@@ -17,12 +19,12 @@ const Login = () => {
             </div>
 
             {/* Right Section: Login Form */}
-            <div className="login-container">
+            {/* <div className="login-container"> */}
                 <div className="login-box">
-                    <h2>Login to your Account</h2>
+                    <h2 className="login-title">Login to your Account</h2>
                     <p className="subtext">See what is going on with your business</p>
 
-                    <form>
+                    <form className="login-form">
                         <label htmlFor="email">Email</label>
                         <input type="email" id="email" placeholder="mail@abc.com" required />
 
@@ -50,14 +52,14 @@ const Login = () => {
                     </div>
 
                     <p className="register-text">
-                        Not Registered Yet? <a href="#">Create an account</a>
+                        Not Registered Yet? <a href="/signup">Create an account</a>
                     </p>
                     <p className="footer-text">
                         With Roomble, you'll stumble on the perfect place to rumble!
                     </p>
                 </div>
             </div>
-        </div>
+        //  </div>
     );
 };
 
