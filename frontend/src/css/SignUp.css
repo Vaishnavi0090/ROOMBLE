@@ -24,18 +24,19 @@ body{
   }
   .signup-box {
     width: 600px;
+    height: 680px;
     display: flex;
     flex-direction: column;
     align-items: center;
     /* justify-content: space-around; */
     background-color: #ffe5e5;
-    gap: 10px;
+    gap: 7px;
     /* padding: 10px; */
     border-radius: 25px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     /* margin-right: 0px; */
     margin-top: 10px;
-   
+    
   }
   
   .title {
@@ -46,23 +47,31 @@ body{
     font-size: 30px;
     font-weight: 500;
   }
-  
+ 
   .signup-form {
     /* margin-top: 30px; */
     /* margin-bottom: 20px; */
   display: flex;
   flex-direction: column;
   
-  gap: 12px;
+  gap: 15px;
   }
-  
+  .scroll-div {
+    height: 480px;
+    overflow: hidden;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+  }
   .signup-form label {
     display: block;
     color: black;
     /* margin-top: 10px; */
     /* margin-left: 85px; */
     font-weight: 500;
-    font-size: 13px;
+    font-size: 15px;
     
   }
   
@@ -74,13 +83,14 @@ body{
     background-color:#ffe5e5;
     /* margin-top: 5px; */
     /* margin-left: 85px; */
-    font-size: 12px;
+    font-size: 15px;
     
   }
   .options {
     display: flex;
     flex-direction: column;
     /* margin-top: 15px; */
+    gap: 5px;
   }
   
   .options label {
@@ -89,20 +99,28 @@ body{
     color:black;
     /* margin-top: 5px; */
     font-weight: 500;
-    font-size: 13px;
+    font-size: 15px;
+    
   }
   
-  .options label input[type="checkbox"] {
+  /* .options label input[type="checkbox"] {
+    
+    order: -1; 
+  } */
+  .options label input[type="radio"] {
     
     order: -1; 
   }
   
   /* Ensure Yes/No and Male/Female labels are aligned with the checkbox */
-  .options label span {
+  /* .options label span {
+    margin-right: 10px; 
+    order: -1;
+  } */
+  .options label label {
     margin-right: 10px; 
     order: -1;
   }
-  
   .checkbox,
   .radio {
     accent-color: #ae3c42;
@@ -151,5 +169,23 @@ body{
     font-weight: 500;
     /* translate: 85px -10px; */
     font-size: 16px;
+  }
+  .error-confirm-password {
+    font-weight: 500;
+    font-size: 12px;
+    color: red;
+    margin-top: 5px;
+  }
+  .error-password {
+    font-size: 12px;
+    font-weight: 500;
+    color: red;
+    margin-top: 5px;
+  }
+  .success-message {
+    font-size: 12px;
+    font-weight: 500;
+    color: green;
+    margin-top: 5px;
   }
   
