@@ -1,6 +1,8 @@
 import { responsiveFontSizes } from '@mui/material';
 import React from 'react';
 import {useState} from 'react';
+const config = require('../config.json');
+
 function SignUpForm(){
 
     const [formInput, setFormInput] = useState({
@@ -54,7 +56,7 @@ function SignUpForm(){
     };
 
     const sendDataToAPI = async () => {
-     const apiURL = "http://<Insert backend IP here>:<Insert Port>/authenticateTenant/Tenant_register";
+     const apiURL = `${config.backend}/{look for the link to the signup route from backend}`;
 
      const requestData = {
       name:formInput.name,

@@ -1,3 +1,4 @@
+const express = require('express');
 const jwt = require('jsonwebtoken');
 const Landlord = require('../models/Landlord');
 const Tenant = require('../models/Tenant');
@@ -33,4 +34,4 @@ const checkUser = async (req, res, next) => {
     }
 };
 
-module.exports = checkUser;
+// module.exports = checkUser;

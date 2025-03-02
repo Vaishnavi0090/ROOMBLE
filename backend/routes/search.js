@@ -5,3 +5,5 @@ const jwt = require('jsonwebtoken');
 const Tenant = require('../models/Tenant');
 const Landlord = require('../models/Landlord');
 
+
+module.exports = router;
