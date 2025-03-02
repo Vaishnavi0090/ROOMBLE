@@ -5,10 +5,6 @@ const TenantSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    type:{
-        type: String,
-        default: 'tenant'
-    },
     email: {
         type: String,
         required: true,
@@ -22,15 +18,11 @@ const TenantSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    gender: {
-        type: String,
+    gender: {// false female,true male
+        type: Boolean,
         required: true
     },
-    religion: {
-        type: String,
-        required: true
-    },
-    alcohol: {
+    smoke: {
         type: Boolean,
         required: true 
     },
@@ -39,6 +31,10 @@ const TenantSchema = new mongoose.Schema({
         required: true
     },
     pets: {
+        type: Boolean,
+        required: true
+    },
+    flatmate: {//true if wants
         type: Boolean,
         required: true
     },
