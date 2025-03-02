@@ -1,6 +1,8 @@
 const express = require('express');
 const { createServer } = require('node:http');
 const dotenv = require('dotenv');
+const Landlord_routes_auth = require(`./routes/Landlord_auth`)//contains Landlord authentication routing
+const Tenant_routes_auth = require('./routes/Tenant_auth')//COntains tenant authentication
 dotenv.config(); // Load environment variables
 const mongoconnect = require('./mongodb'); // Ensures MongoDB connects
 const { MongoClient } = require("mongodb");
@@ -33,6 +35,9 @@ app.get('/', (req, res) => {
 
 // Search Route
 app.use('/search/', require('./routes/search'));
+//Auth routes
+app.use(`/authenticateLandlord`, Landlord_routes_auth);
+app.use('/authenticateTenant', Tenant_routes_auth);
 
 const client = new MongoClient(process.env.MONGOURI);
 
