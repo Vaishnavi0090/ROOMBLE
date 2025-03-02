@@ -4,8 +4,16 @@ import {useState} from 'react';
 function SignUpForm(){
 
     const [formInput, setFormInput] = useState({
+      name: "",
+      email: "",
       password: "",
       confirmPassword: "",
+      locality: "",
+      smoke: null,
+      pets: null,
+      veg:null,
+      flatmate: null,
+      gender: null,
       successMsg: "",
     });
     const [formError, setFormError] = useState({
@@ -14,35 +22,75 @@ function SignUpForm(){
     });
 
     const handleUserInput = (name, value) => {
-      setFormInput({...formInput, [name]:value,});
+      setFormInput((prev) => ({...prev, [name]:value,}));
     }
 
-    const validateFormInput = (event) => {
+    const validateFormInput = async (event) => {
       event.preventDefault();
       let inputError = {
         confirmPassword: "",
       };
       if(formInput.password.length < 6){
         setFormError({...inputError, password: "Password should be atleast 6 characters"});
-        setFormInput({...formInput, successMsg: "",})
+        // setFormInput({...formInput, successMsg: "",})
         return;
       }
       
       if(formInput.password.length > 10){
         setFormError({...inputError, password: "Password should not be more than 10 characters"});
-        setFormInput({...formInput, successMsg: "",})
+        // setFormInput({...formInput, successMsg: "",})
         return;
       }
       if(formInput.password !== formInput.confirmPassword){
         setFormError({...inputError, confirmPassword: "Password and Confirm password do not match!"});
-        setFormInput({...formInput, successMsg: "",})
+        // setFormInput({...formInput, successMsg: "",})
         return;
       }
-      setFormError(inputError);
-      setFormInput((prevState) => ({
-        ...prevState, successMsg:"Validation Successful",
+      // setFormError(inputError);
+      // setFormInput((prevState) => ({
+      //   ...prevState, successMsg:"Validation Successful",
+      // }));
+      await sendDataToAPI();
+    };
+
+    const sendDataToAPI = async () => {
+     const apiURL = "http://<Insert backend IP here>:<Insert Port>/authenticateTenant/Tenant_register";
+
+     const requestData = {
+      name:formInput.name,
+      email:formInput.email,
+      password:formInput.password,
+      locality:formInput.locality,
+      smoke:formInput.smoke==="yes",
+      pets:formInput.pets==="yes",
+      veg:formInput.veg==="yes",
+      flatmate:formInput.flatmate==="yes",
+      gender:formInput.gender==="male",
+     };
+
+     try {
+      const response = await fetch(apiURL, {method: "POST", headers: {"Content-Type": "application/json",}, body: JSON.stringify(requestData),});
+
+      const responseData = await response.json();
+
+      if(responseData.success) {
+        setFormInput((prev)=>({...prev, successMsg: responseData.message}))
+      }
+      else{
+        setFormInput((prev)=>({...prev, successMsg: responseData.message}))
+      }
+     }
+     catch (error) {
+      console.error("Error sending data:", error);
+      setFormInput((prev) => ({
+        ...prev,
+        successMsg: "Couldn't fetch data",
+        
       }));
     }
+    };
+
+
 
     return (
       <div className="signup-box">
@@ -52,7 +100,7 @@ function SignUpForm(){
         <div className="scroll-div">  
           <div>
           <label>Your good name</label>
-          <input type="text" className="input-box" placeholder="name" required />
+          <input type="text" className="input-box" placeholder="name" required name='name' onChange={({ target }) => handleUserInput(target.name, target.value)}/>
           </div>
           
           <div>
@@ -61,6 +109,8 @@ function SignUpForm(){
             type="email"
             className="input-box"
             placeholder="mail@abc.com"
+            name='email'
+            onChange={({ target }) => handleUserInput(target.name, target.value)}
             required
           />
           </div>
@@ -105,6 +155,8 @@ function SignUpForm(){
             type="text"
             className="input-box"
             placeholder="Eg. BanyanVilla Road"
+            name='locality'
+            onChange={({target})=>{handleUserInput(target.name, target.value)}}
             required
           />
           </div>
@@ -114,50 +166,50 @@ function SignUpForm(){
                  <label>
         Do you smoke/drink?
         <label htmlFor="smoke-yes">
-          <input type="radio" id="smoke-yes" name="smoke" className="radio" value="yes" required /> Yes
+          <input type="radio" id="smoke-yes" name="smoke" className="radio" value="yes" required onChange={({target})=>{handleUserInput(target.name, target.value)}} /> Yes
         </label>
         <label htmlFor="smoke-no">
-          <input type="radio" id="smoke-no" name="smoke" className="radio" value="no" /> No
+          <input type="radio" id="smoke-no" name="smoke" className="radio" value="no" onChange={({target})=>{handleUserInput(target.name, target.value)}} /> No
         </label>
       </label>
 
       <label>
         Do you plan on keeping pets?
         <label htmlFor="pets-yes">
-          <input type="radio" id="pets-yes" name="pets" className="radio" value="yes" required/> Yes
+          <input type="radio" id="pets-yes" name="pets" className="radio" value="yes" required onChange={({target})=>{handleUserInput(target.name, target.value)}}/> Yes
         </label>
         <label htmlFor="pets-no">
-          <input type="radio" id="pets-no" name="pets" className="radio" value="no" /> No
+          <input type="radio" id="pets-no" name="pets" className="radio" value="no" onChange={({target})=>{handleUserInput(target.name, target.value)}}/> No
         </label>
       </label>
 
       <label>
         Do you eat Non-veg?
-        <label htmlFor="nonveg-yes">
-          <input type="radio" id="nonveg-yes" name="nonveg" className="radio" value="yes" required /> Yes
+        <label htmlFor="veg-yes">
+          <input type="radio" id="veg-yes" name="veg" className="radio" value="yes" required onChange={({target})=>{handleUserInput(target.name, target.value)}}/> Yes
         </label>
-        <label htmlFor="nonveg-no">
-          <input type="radio" id="nonveg-no" name="nonveg" className="radio" value="no" /> No
+        <label htmlFor="veg-no">
+          <input type="radio" id="veg-no" name="veg" className="radio" value="no" onChange={({target})=>{handleUserInput(target.name, target.value)}} /> No
         </label>
       </label>
 
       <label>
         Do you need a flatmate?
         <label htmlFor="flatmate-yes">
-          <input type="radio" id="flatmate-yes" name="flatmate" className="radio" value="yes" required /> Yes
+          <input type="radio" id="flatmate-yes" name="flatmate" className="radio" value="yes" required onChange={({target})=>{handleUserInput(target.name, target.value)}}/> Yes
         </label>
         <label htmlFor="flatmate-no">
-          <input type="radio" id="flatmate-no" name="flatmate" className="radio" value="no" /> No
+          <input type="radio" id="flatmate-no" name="flatmate" className="radio" value="no" onChange={({target})=>{handleUserInput(target.name, target.value)}}/> No
         </label>
       </label>
 
       <label>
         What's your gender?
         <label htmlFor="gender-male">
-          <input type="radio" id="gender-male" name="gender" className="radio" value="male" required/> Male
+          <input type="radio" id="gender-male" name="gender" className="radio" value="male" required onChange={({target})=>{handleUserInput(target.name, target.value)}}/> Male
         </label>
         <label htmlFor="gender-female">
-          <input type="radio" id="gender-female" name="gender" className="radio" value="female" /> Female
+          <input type="radio" id="gender-female" name="gender" className="radio" value="female" onChange={({target})=>{handleUserInput(target.name, target.value)}}/> Female
         </label>
       </label>
           </div>
