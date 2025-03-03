@@ -1,0 +1,104 @@
+.drag-and-drop{
+    height:100%;
+    width:100%;
+    background-color:#FDE6E8;
+    margin-right: 0px;
+    padding-right: 0px;
+    border-radius: 5px;
+}
+
+.drag-and-drop .drag-top{
+    text-align: center;
+}
+
+.drag-and-drop p{
+    font-weight: bold;
+    color:#7D141D;
+}
+
+.drag-and-drop .drag-area{
+    /*temp*/
+    height:40%;
+    border-radius: 5px;
+    border:2px dashed #CBD0DC;
+    color: #878787;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    -webkit-user-select: none;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.drag-and-drop .drag-area .visible{
+    font-size: 18px;
+    color: #7D141D;
+}
+
+.drag-and-drop .drag-select{
+    color:#7D141D;
+    margin-left: 5px;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.drag-and-drop .drag-select:hover{
+    opacity: 0.6;
+}
+
+.drag-and-drop .drag-container{
+    width:100%;
+    height:auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 10px;
+}
+
+.drag-and-drop .drag-container .drag-image{
+    width:50px;
+    height:50px;
+    margin-right: 5px;
+    position: relative;
+    margin-bottom: 5px;
+}
+
+.drag-and-drop .drag-container .drag-image img{
+    width:100%;
+    height:100%;
+    /* temp*/
+    object-fit: cover;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+
+.drag-and-drop .drag-container .drag-image span{
+    /*temp*/
+    position: absolute;
+    top: -2px;
+    right: 5px;
+    font-size: 20px;
+    color: #7D141D;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.drag-and-drop input,
+.drag-and-drop .drag-area .on-drop,
+.drag-and-drop .drag-area.dragover .visible{
+    display: none;
+}
+
+.drag-delete{
+    z-index: 999;
+    color: #7D141D;
+}
+
+

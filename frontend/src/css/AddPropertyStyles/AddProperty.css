@@ -1,0 +1,149 @@
+.add-prop-container{
+    display: flex;
+    height: calc(100vh - 80px);
+    overflow: hidden; 
+    width: 100%;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-item {
+    background-color: white;
+    border-radius: 5px;
+}
+
+.add-prop-top {
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: white;
+    flex: 7.2;
+}
+.input-top{
+    display:flex;
+    gap:10%;
+    height: 90%;
+}
+
+.upload-container{
+    flex:4;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+.description-container{
+    flex:6;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.description-container textarea{
+    width: 100%;
+    height: 90%;
+    padding: 10px;
+    border: 1px solid #7D141D;
+    border-radius: 5px;
+    resize: none;
+    background-color: #FDE6E8;
+}
+
+
+.add-prop-middle{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: white;
+    flex:1.5;
+}
+
+.add-prop-middle input{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #7D141D;
+    border-radius: 5px;
+    background-color: #FDE6E8;
+}
+
+.add-prop-middle select{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #7D141D;
+    border-radius: 5px;
+    background-color: #FDE6E8;
+    
+}
+
+.add-prop-bottom{
+    display: flex;
+    justify-content: flex-start;
+    
+    padding: 20px;
+    background-color: white;
+    flex:5;
+    gap: 10%;
+}
+
+.add-prop-bottom .Address-container{
+    display: flex;
+    flex-direction: column;
+    width:25%;
+}
+.add-prop-bottom .Amenities-container{
+    display: flex;
+    flex-direction: column;
+    width:25%;
+}
+
+.add-prop-bottom textarea{
+    width: 100%;
+    height: 90%;
+    padding: 10px;
+    border: 1px solid #7D141D;
+    border-radius: 5px;
+    background-color: #FDE6E8;
+}
+
+.Form-Submit-btn{
+    height:30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #7D141D;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.4s;
+    align-self: center;
+}
+
+.Form-Submit-btn:hover{
+    opacity: 0.6;
+}
+.Form-Submit-btn:active{
+    transform: scale(0.95);
+}
+
+select {
+    color: black;
+}
+
+select option:first-child {
+    color: #979799 !important;
+}
+select:has(option:first-child:checked) {
+    color: #979799 !important;
+}
+select:not(:focus) option:not(:first-child) {
+    color: black;
+}
+
+.addProp-form-error{
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}

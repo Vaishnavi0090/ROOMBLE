@@ -8,6 +8,7 @@ import { Routes, Route } from 'react-router-dom';
 import Messages from './components/Messages';
 import SignUpPage from './components/SignUp';
 import Login from './components/Login.jsx';
+import AddProperty from './components/AddProperty.jsx';
 function App() {
   useEffect(()=>{
     function handleConnection(){
@@ -28,6 +29,8 @@ function App() {
         <Route path="/messages" element={<Messages />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/add-property" element={<AddProperty/>}/>
+
       </Routes>
       
     </BaseState>
