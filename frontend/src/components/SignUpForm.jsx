@@ -1,7 +1,7 @@
 import { responsiveFontSizes } from '@mui/material';
 import React from 'react';
 import {useState} from 'react';
-const config = require('../config.json');
+import config from '../config';
 
 function SignUpForm(){
 
