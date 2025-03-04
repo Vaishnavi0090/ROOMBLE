@@ -1,13 +1,14 @@
 import React from "react";
-import "./App.css";
+import "../css/SignupLandlord.css";
+import logo from '../../public/logo.png'
 
-function App() {
+function SignupLandlord() {
   return (
     <div className="container">
       {/* Left Section */}
       <div className="left-section">
         <img
-          src="edited_image_final_logo.jpg"
+          src=".jpg"
           alt="Roomble Logo"
           className="logo"
         />
@@ -46,4 +47,4 @@ function App() {
   );
 }
 
-export default App;
+export default SignupLandlord;
