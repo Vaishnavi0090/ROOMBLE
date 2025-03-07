@@ -10,6 +10,7 @@ import SignUpPage from './components/SignUp';
 import Login from './components/Login.jsx';
 import AddProperty from './components/AddProperty.jsx';
 import FindProperty from './components/FindProperty.jsx';
+import FindFlatmate from './components/FindFlatmate.jsx';
 function App() {
   useEffect(()=>{
     function handleConnection(){
@@ -32,6 +33,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/add-property" element={<AddProperty/>}/>
         <Route path="/find-property" element={<FindProperty/>} />
+        <Route path="/find-flatmate" element={<FindFlatmate/>}/>
       </Routes>
       
     </BaseState>

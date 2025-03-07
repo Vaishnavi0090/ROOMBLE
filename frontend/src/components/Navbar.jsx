@@ -20,6 +20,7 @@ export const Navbar = () => {
           <li><Link to="/add-property">Add Property</Link></li>
           <li><Link to="/messages">Messages</Link></li>
           <li><Link to="/find-property">Find Property</Link></li>
+          <li><Link to="/find-flatmate">Find Flatmate</Link></li>
         </ul>
       </div>
       <div className="account-logo">
