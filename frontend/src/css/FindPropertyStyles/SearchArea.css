@@ -1,0 +1,123 @@
+.search-prop-container{
+    display: flex;
+    flex-direction: column;
+    background-color: #FDE6E8;
+    height: 100%;
+    overflow: auto;
+}
+
+.search-prop-searchbar{
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    margin: 10px;
+    background-color: white;
+    border-radius: 10px;
+    input{
+        border: none;
+        outline: none;
+        background-color: transparent;
+        flex:1;
+    }
+
+}
+
+.city-search-container{
+    display: flex;
+    flex-direction: column;
+    margin: 5%;
+    gap:5px;
+}
+
+.city-search-container label{
+    font-size: 1rem;
+    margin-left: 5px;
+}
+
+.city-search-container select{
+    border:none;
+    outline: none;
+    height: 35px;
+    border-radius: 10px;
+}
+
+.locality-search-container{
+    display: flex;
+    flex-direction: column;
+    margin: 5%;
+    gap:5px;
+}
+
+.locality-search-container label{
+    font-size: 1rem;
+    margin-left: 5px;
+}
+
+.locality-search-container select{
+    border:none;
+    outline: none;
+    height: 35px;
+    border-radius: 10px;
+}
+
+.price-range-container{
+    display: flex;
+    flex-direction: column;
+    margin: 5%;
+}
+
+.range-slider__range {
+    background-color: #7D141D !important;  /* Maroon fill */
+}
+
+.range-slider__thumb {
+    background-color: #7D141D !important;  /* Maroon handle */
+    border: 2px solid #7D141D !important;
+}
+
+.range-slider__thumb:focus,
+.range-slider__thumb:hover {
+    box-shadow: 0 0 0 8px rgba(128, 0, 0, 0.3);  /* Light maroon glow */
+}
+
+
+.BHK-container{
+    display: flex;
+    flex-direction: column;
+    margin: 5%;
+}
+
+.BHK-container label{
+    font-size: 1rem;
+    margin-left: 5px;
+}
+
+input[type="checkbox"] {
+    accent-color: #7D141D; /* Changes the tick mark color */
+}
+
+.search-prop-buttons{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 10px;
+    margin: 10px;
+}
+
+.search-prop-buttons button{
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    background-color: #7D141D;
+    color: white;
+    font-size: 1rem;
+}
+
+.search-prop-buttons button:hover{
+    background-color: #A4161A;
+}
+
+.search-prop-buttons button:active{
+    transform: scale(0.9);
+}
