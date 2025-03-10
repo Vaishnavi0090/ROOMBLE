@@ -5,13 +5,13 @@ const Landlord_routes_auth = require(`./routes/Landlord_auth`)//contains Landlor
 const Tenant_routes_auth = require('./routes/Tenant_auth')//COntains tenant authentication
 dotenv.config(); // Load environment variables
 const ForgotPassword_routes = require(`./routes/ForgotPassword`);
+const Searching_Routes = require(`./routes/Searching_Routes`)
 const mongoconnect = require('./mongodb'); // Ensures MongoDB connects
 const { MongoClient } = require("mongodb");
 
 
 const SECRET_KEY = process.env.SECRET_KEY; // Change this to a secure secret key
-console.log(SECRET_KEY);
-console.log(typeof(SECRET_KEY));
+
 const app = express();
 const server = createServer(app);
 
@@ -34,6 +34,7 @@ app.use(`/api/forgotPassword`, ForgotPassword_routes);//Send accoutnt type in th
 app.use('/api/Landlord/auth', Landlord_routes_auth); // Added Landlord Routes
 app.use('/api/Tenant/auth', Tenant_routes_auth); // Added Tenant Routes
 app.use('/api/reviews', require('./routes/reviewroutes')); // Added Review Routes
+app.use(`/api/Search_Routes`, Searching_Routes);//Searching routes, add logic for searching properties also here only
 
 // Default Route
 app.get('/', (req, res) => {
@@ -41,10 +42,11 @@ app.get('/', (req, res) => {
 });
 
 // Search Route
-app.use('/search/', require('./routes/search'));
+// app.use('/search/', require('./routes/search'));
 //Auth routes
-app.use(`/authenticateLandlord`, Landlord_routes_auth);
-app.use('/authenticateTenant', Tenant_routes_auth);
+// app.use(`/authenticateLandlord`, Landlord_routes_auth);
+// app.use('/authenticateTenant', Tenant_routes_auth);
+
 
 const client = new MongoClient(process.env.MONGOURI);
 

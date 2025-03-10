@@ -65,7 +65,6 @@ router.post(`/enteremail`, async(req, res) => {
                 
                 let new_OTP = (Math.floor(100000 + Math.random() * 900000)).toString();
                 await Sendmail(email, `Welcome once again to Roomble`, `Hello, If it was you who was trying to reset your password, here's your OTP ${new_OTP}. However if this wasn't you, Kindly ignore.`);
-                console.log(`name = ${user.name}; email =  ${user.email}; gender =  ${user.gender}; flatmate =  ${user.flatmate}`)
                 const newlyCreatedUser = new Tenant_OTP({
                     name : user.name,
                     email : user.email,
@@ -143,7 +142,6 @@ router.post(`/enterOTP`, authMiddleware , async (req,res) => {
         // "accounttype
         let user;
         if(accounttype === `tenant`){
-            console.log("In here");
             user = await Tenant_OTP.findOne({email : useremail});
         }
         else if(accounttype === `landlord`){

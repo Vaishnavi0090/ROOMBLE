@@ -8,11 +8,6 @@ const SECRET_KEY = process.env.SECRET_KEY;
 const checkUser = async (req, res, next) => {
     const token = req.header('authtoken');
     const accountType = req.header('accounttype');
-    console.log(token);
-    console.log(accountType);
-    console.log(SECRET_KEY);
-    console.log(typeof(accountType));
-    console.log(`hi`);
     if (!token) {
         return res.status(401).json({ message: 'Access Denied' });
     }
@@ -24,9 +19,7 @@ const checkUser = async (req, res, next) => {
         if (accountType === 'landlord') {
             user = await Landlord.findById(verified.id);
         } else if (accountType === 'tenant') {
-            console.log(`bye`);
             user = await Tenant.findById(verified.id);
-            console.log(`hi`);
         } else {
             console.log(accountType);
             return res.status(400).json({ message: 'Invalid account type' });

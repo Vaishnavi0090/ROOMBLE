@@ -142,7 +142,7 @@ router.post(`/verifyTenant/:id`, async (req, res) => {
 router.post(`/Tenant_login`, async (req, res) => {
     try {
         const { email, password } = req.body;
-        const findTenant = await Tenant.findOne({ email });
+        const findTenant = await Tenant.findOne({ email : email });
 
         if (!findTenant) {
             return res.status(404).json({
@@ -173,7 +173,7 @@ router.post(`/Tenant_login`, async (req, res) => {
         }
     } catch (e) {
         console.error(`Error occurred`, e);
-        console.log(SECRET_KEY);
+
         res.status(500).json({
             message: "Some error in server",
             success: false
