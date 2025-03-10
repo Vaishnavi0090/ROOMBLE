@@ -3,9 +3,12 @@ const mongoose = require(`mongoose`);
 const LandlordSchema_OTP = new mongoose.Schema({
     name : {type : String, required : true, trim : true},
     email : {type : String, required : true, trim : true, unique : true}, 
+    type:{ type : String, default : 'landlord'},
     password : {type : String, required : true},
     OTP : {type : String},
     propertyList : {type : Array, default : []},
+    conversations: { type : Array, default : []},
+    Allow_changes: {type : Boolean, default : false},
     createdat : {type : Date, default : Date.now, expires : 300}
 });
 
@@ -20,6 +23,7 @@ const TenantSchema_OTP = new mongoose.Schema({
     veg: {type : Boolean, required: true },
     pets: {type: Boolean, required: true},
     flatmate: {type: Boolean, required : true},
+    Allow_changes : {type : Boolean, default : false},
     createdat : {type : Date, default : Date.now, expires : 300}
 
 });

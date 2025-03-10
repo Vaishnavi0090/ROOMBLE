@@ -4,10 +4,11 @@ const bcrypt = require(`bcrypt`);
 const Tenant = require("../models/Tenant");
 const { Landlord_OTP, Tenant_OTP } = require("../models/OTP_models");
 const router = express.Router();
+require(`dotenv`).config(`../.env`); // Load environment variables
 const Sendmail = require("../helper_funcs/mailSender");
-const authMiddleware = require("../middleware/auth-middleware"); // Middleware for JWT auth
+const authMiddleware = require("../middlewares/checkuser"); // Middleware for JWT auth
 
-const SECRET_KEY = "your_secret_key"; // Change this to a secure secret key
+const SECRET_KEY = process.env.SECRET_KEY; // Change this to a secure secret key
 
 /* Contains authenticate/Tenant_Login, authenticate/Tenant_register, authenticate/verifyTenant */
 
@@ -172,6 +173,7 @@ router.post(`/Tenant_login`, async (req, res) => {
         }
     } catch (e) {
         console.error(`Error occurred`, e);
+        console.log(SECRET_KEY);
         res.status(500).json({
             message: "Some error in server",
             success: false
@@ -181,7 +183,7 @@ router.post(`/Tenant_login`, async (req, res) => {
 
 // // --------------------- Protected Route Example ---------------------
 router.get("/protected-route", authMiddleware, (req, res) => {
-    res.json({ success: true, message: "You have accessed a protected route!" });
+    res.json({ success: true, message: "You have accessed a protected route!", email: req.user.email });
 });
 
 module.exports = router;
