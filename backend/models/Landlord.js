@@ -25,7 +25,30 @@ const LandlordSchema = new mongoose.Schema({
     conversations: {
         type: Array,
         default: []
-    }
+    },
+    reviews: [{
+        reviewer: {
+            type: mongoose.Schema.Types.ObjectId,
+            refPath: 'reviews.reviewerType',
+            required: true
+        },
+        reviewerType: {
+            type: String,
+            enum: ['Tenant', 'Landlord'],
+            required: true
+        },
+        rating: {
+            type: Number,
+            min: 1,
+            max: 5,
+            required: true
+        },
+        comment: String,
+        createdAt: {
+            type: Date,
+            default: Date.now
+        }
+    }]
 })
 
 module.exports = mongoose.model('Landlord', LandlordSchema);

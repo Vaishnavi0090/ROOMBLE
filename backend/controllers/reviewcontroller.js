@@ -1,6 +1,7 @@
 const Review = require('../models/Review');
 const Landlord = require('../models/Landlord');
 const Tenant = require('../models/Tenant');
+const mongoose = require('mongoose');
 
 /**
  * @desc Create a new review
@@ -11,20 +12,47 @@ const createReview = async (req, res) => {
     try {
         const { reviewer, reviewerType, reviewee, revieweeType, rating, comment } = req.body;
 
+        // Prevent self-reviews
+        if (reviewer === reviewee) {
+            return res.status(400).json({ 
+                success: false,
+                message: "Users cannot review themselves" 
+            });
+        }
+
+        // Prevent landlord-to-landlord reviews
+        if (reviewerType === 'Landlord' && revieweeType === 'Landlord') {
+            return res.status(400).json({
+                success: false,
+                message: "Landlords cannot review other landlords"
+            });
+        }
+
         // Validate reviewer and reviewee types
         if (!['Tenant', 'Landlord'].includes(reviewerType) || !['Tenant', 'Landlord'].includes(revieweeType)) {
-            return res.status(400).json({ message: "Invalid reviewer or reviewee type" });
+            return res.status(400).json({ 
+                success: false,
+                message: "Invalid reviewer or reviewee type" 
+            });
         }
 
         // Ensure reviewer and reviewee exist in the database
-        const reviewerExists = reviewerType === 'Tenant' ? await Tenant.findById(reviewer) : await Landlord.findById(reviewer);
-        const revieweeExists = revieweeType === 'Tenant' ? await Tenant.findById(reviewee) : await Landlord.findById(reviewee);
+        const reviewerExists = reviewerType === 'Tenant' ? 
+            await Tenant.findById(reviewer) : 
+            await Landlord.findById(reviewer);
+            
+        const revieweeExists = revieweeType === 'Tenant' ? 
+            await Tenant.findById(reviewee) : 
+            await Landlord.findById(reviewee);
 
         if (!reviewerExists || !revieweeExists) {
-            return res.status(404).json({ message: "Reviewer or Reviewee not found" });
+            return res.status(404).json({ 
+                success: false,
+                message: "Reviewer or Reviewee not found" 
+            });
         }
 
-        // Create a new review
+        // Create review for storing in Review collection (keeping existing functionality)
         const newReview = new Review({
             reviewer,
             reviewerType,
@@ -34,11 +62,45 @@ const createReview = async (req, res) => {
             comment
         });
 
+        // Save to Review collection
         await newReview.save();
-        res.status(201).json({ message: "Review added successfully", review: newReview });
+
+        // Create review object for embedding in user documents
+        const reviewToEmbed = {
+            reviewer,
+            reviewerType,
+            rating,
+            comment,
+            createdAt: new Date(),
+            _id: newReview._id // Use the same ID as the standalone review
+        };
+
+        // Add review to reviewee document (either Tenant or Landlord)
+        if (revieweeType === 'Tenant') {
+            await Tenant.findByIdAndUpdate(
+                reviewee,
+                { $push: { reviews: reviewToEmbed } }
+            );
+        } else {
+            await Landlord.findByIdAndUpdate(
+                reviewee,
+                { $push: { reviews: reviewToEmbed } }
+            );
+        }
+
+        res.status(201).json({ 
+            success: true,
+            message: "Review added successfully", 
+            review: newReview 
+        });
 
     } catch (error) {
-        res.status(500).json({ message: "Server Error", error: error.message });
+        console.error("Error creating review:", error);
+        res.status(500).json({ 
+            success: false,
+            message: "Server Error", 
+            error: error.message 
+        });
     }
 };
 
@@ -47,30 +109,56 @@ const createReview = async (req, res) => {
  * @route GET /api/reviews/:revieweeId
  * @access Public
  */
-const mongoose = require('mongoose'); // ✅ Import mongoose
-
 const getReviewsForUser = async (req, res) => {
     try {
-        console.log("Received reviewee ID:", req.params.id);
-
-        // Convert string ID to ObjectId
         const revieweeId = new mongoose.Types.ObjectId(req.params.id);
 
-        // Fetch reviews where reviewee matches the given ID
-        const reviews = await Review.find({ reviewee: revieweeId });
-
-        console.log("Found reviews:", reviews);
-
-        if (!reviews.length) {
-            return res.status(404).json({ message: "No reviews found for this user." });
+        // First, try to find the user in Tenant collection
+        let user = await Tenant.findById(revieweeId);
+        let userType = 'Tenant';
+        
+        // If not found in Tenant, check Landlord collection
+        if (!user) {
+            user = await Landlord.findById(revieweeId);
+            userType = 'Landlord';
+            
+            if (!user) {
+                return res.status(404).json({ 
+                    success: false,
+                    message: "User not found" 
+                });
+            }
         }
 
-        res.json(reviews);
+        // Check if user has any reviews
+        if (!user.reviews || user.reviews.length === 0) {
+            return res.status(404).json({ 
+                success: false,
+                message: "No reviews found for this user" 
+            });
+        }
+
+        // For backwards compatibility, also fetch from Review collection
+        // REMOVED: const oldReviews = await Review.find({ reviewee: revieweeId });
+        
+        // Return ONLY reviews from user document
+        res.status(200).json({
+            success: true,
+            userType,
+            reviews: user.reviews
+            // No longer including legacyReviews
+        });
+
     } catch (error) {
         console.error("Error fetching reviews:", error);
-        res.status(500).json({ message: "Server Error", error: error.message });
+        res.status(500).json({ 
+            success: false,
+            message: "Server Error", 
+            error: error.message 
+        });
     }
 };
+
 /**
  * @desc Update a review
  * @route PUT /api/reviews/:reviewId
@@ -82,20 +170,61 @@ const updateReview = async (req, res) => {
         const { rating, comment } = req.body;
 
         // Convert reviewId to a valid ObjectId
-        const updatedReview = await Review.findByIdAndUpdate(
-            new mongoose.Types.ObjectId(reviewId),
+        const reviewObjectId = new mongoose.Types.ObjectId(reviewId);
+
+        // First update in Review collection
+        const existingReview = await Review.findByIdAndUpdate(
+            reviewObjectId,
             { rating, comment },
             { new: true, runValidators: true }
         );
 
-        if (!updatedReview) {
-            return res.status(404).json({ message: "Review not found" });
+        if (!existingReview) {
+            return res.status(404).json({ 
+                success: false,
+                message: "Review not found" 
+            });
         }
 
-        res.status(200).json({ message: "Review updated successfully", review: updatedReview });
+        // Now update the embedded review in either Tenant or Landlord collection
+        const { reviewee, revieweeType } = existingReview;
+        
+        // Update in the appropriate collection
+        if (revieweeType === 'Tenant') {
+            await Tenant.updateOne(
+                { _id: reviewee, "reviews._id": reviewObjectId },
+                { 
+                    $set: { 
+                        "reviews.$.rating": rating,
+                        "reviews.$.comment": comment 
+                    } 
+                }
+            );
+        } else {
+            await Landlord.updateOne(
+                { _id: reviewee, "reviews._id": reviewObjectId },
+                { 
+                    $set: { 
+                        "reviews.$.rating": rating,
+                        "reviews.$.comment": comment 
+                    } 
+                }
+            );
+        }
+
+        res.status(200).json({ 
+            success: true,
+            message: "Review updated successfully", 
+            review: existingReview 
+        });
 
     } catch (error) {
-        res.status(500).json({ message: "Server Error", error: error.message });
+        console.error("Error updating review:", error);
+        res.status(500).json({ 
+            success: false,
+            message: "Server Error", 
+            error: error.message 
+        });
     }
 };
 
@@ -107,20 +236,49 @@ const updateReview = async (req, res) => {
 const deleteReview = async (req, res) => {
     try {
         const { reviewId } = req.params;
+        const reviewObjectId = new mongoose.Types.ObjectId(reviewId);
 
-        // Convert reviewId to a valid ObjectId
-        const deletedReview = await Review.findByIdAndDelete(new mongoose.Types.ObjectId(reviewId));
-
-        if (!deletedReview) {
-            return res.status(404).json({ message: "Review not found" });
+        // First, get the review to find out who it belongs to
+        const reviewToDelete = await Review.findById(reviewObjectId);
+        
+        if (!reviewToDelete) {
+            return res.status(404).json({ 
+                success: false,
+                message: "Review not found" 
+            });
         }
 
-        res.status(200).json({ message: "Review deleted successfully" });
+        const { reviewee, revieweeType } = reviewToDelete;
+
+        // Delete from Review collection
+        await Review.findByIdAndDelete(reviewObjectId);
+
+        // Also delete from the embedded array in Tenant or Landlord
+        if (revieweeType === 'Tenant') {
+            await Tenant.updateOne(
+                { _id: reviewee },
+                { $pull: { reviews: { _id: reviewObjectId } } }
+            );
+        } else {
+            await Landlord.updateOne(
+                { _id: reviewee },
+                { $pull: { reviews: { _id: reviewObjectId } } }
+            );
+        }
+
+        res.status(200).json({ 
+            success: true,
+            message: "Review deleted successfully" 
+        });
 
     } catch (error) {
-        res.status(500).json({ message: "Server Error", error: error.message });
+        console.error("Error deleting review:", error);
+        res.status(500).json({ 
+            success: false,
+            message: "Server Error", 
+            error: error.message 
+        });
     }
 };
-
 
 module.exports = { createReview, getReviewsForUser, updateReview, deleteReview };
