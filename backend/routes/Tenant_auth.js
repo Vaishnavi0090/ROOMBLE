@@ -4,6 +4,7 @@ const bcrypt = require(`bcrypt`);
 const Tenant = require("../models/Tenant");
 const { Landlord_OTP, Tenant_OTP } = require("../models/OTP_models");
 const router = express.Router();
+require(`dotenv`).config(`../.env`); // Load environment variables
 const Sendmail = require("../helper_funcs/mailSender");
 // const authMiddleware = require("../middleware/auth-middleware"); // Middleware for JWT auth
 
@@ -66,7 +67,7 @@ router.post(`/Tenant_register`, async (req, res) => {
             await Sendmail(email, `Welcome to Roomble!!`, `Your OTP is ${generated_OTP}`);
             res.status(400).json({
                 success: true,
-                message: `authenticate/verifyTenant/${newlyCreatedUser._id}).`
+                message: `authenticate/verifyTenant/${newlyCreatedUser._id}`
             });
         } else {
             res.status(400).json({
@@ -141,7 +142,7 @@ router.post(`/verifyTenant/:id`, async (req, res) => {
 router.post(`/Tenant_login`, async (req, res) => {
     try {
         const { email, password } = req.body;
-        const findTenant = await Tenant.findOne({ email });
+        const findTenant = await Tenant.findOne({ email : email });
 
         if (!findTenant) {
             return res.status(404).json({
@@ -172,6 +173,7 @@ router.post(`/Tenant_login`, async (req, res) => {
         }
     } catch (e) {
         console.error(`Error occurred`, e);
+
         res.status(500).json({
             message: "Some error in server",
             success: false
