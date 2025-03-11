@@ -5,9 +5,9 @@ const Tenant = require("../models/Tenant");
 const { Landlord_OTP, Tenant_OTP } = require("../models/OTP_models");
 const router = express.Router();
 const Sendmail = require("../helper_funcs/mailSender");
-const authMiddleware = require("../middleware/auth-middleware"); // Middleware for JWT auth
+// const authMiddleware = require("../middleware/auth-middleware"); // Middleware for JWT auth
 
-const SECRET_KEY = "your_secret_key"; // Change this to a secure secret key
+const SECRET_KEY = process.env.JWT_SECRET;
 
 /* Contains authenticate/Tenant_Login, authenticate/Tenant_register, authenticate/verifyTenant */
 
@@ -180,8 +180,8 @@ router.post(`/Tenant_login`, async (req, res) => {
 });
 
 // // --------------------- Protected Route Example ---------------------
-router.get("/protected-route", authMiddleware, (req, res) => {
-    res.json({ success: true, message: "You have accessed a protected route!" });
-});
+// router.get("/protected-route", authMiddleware, (req, res) => {
+//     res.json({ success: true, message: "You have accessed a protected route!" });
+// });
 
 module.exports = router;

@@ -25,7 +25,8 @@ const Landlord = require('./models/Landlord');
 const Tenant = require('./models/Tenant'); // Added Tenant model
 
 // Routes
-app.use('/api/auth', require('./routes/auth'));
+app.use('/api/tenant_auth', require('./routes/Tenant_auth')); // Added Tenant Auth Routes
+app.use('/api/landlord_auth', require('./routes/Landlord_auth')); // Added Landlord Auth Routes
 app.use('/api/reviews', require('./routes/reviewroutes')); // Added Review Routes
 
 // Default Route

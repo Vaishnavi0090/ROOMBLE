@@ -87,16 +87,16 @@ function setupSocket(server) {
             }
             */
            // Assuming that the user has read all the messages in the conversation
-              Conversation.findOneAndUpdate(
-                { _id: data.conversation_id },
-                { $set: { 'messages.$[elem].read': true } },
-                (err, conversation) => {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        socket.emit('message_read', { conversation_id: data.conversation_id });
-                    }
-                });
+            Conversation.findOneAndUpdate(
+            { _id: data.conversation_id },
+            { $set: { 'messages.$[elem].read': true } },
+            (err, conversation) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    socket.emit('message_read', { conversation_id: data.conversation_id });
+                }
+            });
         });
 
         socket.on('disconnect', () => {

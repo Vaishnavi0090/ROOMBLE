@@ -5,8 +5,9 @@ const jwt = require('jsonwebtoken');
 const Tenant = require('../models/Tenant');
 const Landlord = require('../models/Landlord');
 const Conversation = require('../models/Conversation');
+const checkuser = require('../middleware/checkuser');
 
-router.post('get_conversation', async (req, res) => {
+router.post('get_conversation', checkuser, async (req, res) => {
     const conversation_id = req.body.conversation_id;
     try {
         const conversation = await Conversation.findOne({ _id: conversation_id });
