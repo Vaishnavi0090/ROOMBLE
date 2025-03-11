@@ -16,7 +16,9 @@ const ConversationSchema = new mongoose.Schema({
         senderID: String,
         message: String,
         timestamp: Date,
-        read: Boolean
+        read1: Boolean, // read by member[0]
+        read2: Boolean  // read by member[1]
+        // one of them will be trivially true
     }
 */
 

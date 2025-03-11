@@ -9,7 +9,6 @@ const Searching_Routes = require(`./routes/Searching_Routes`)
 const mongoconnect = require('./mongodb'); // Ensures MongoDB connects
 const { MongoClient } = require("mongodb");
 
-
 const SECRET_KEY = process.env.SECRET_KEY; // Change this to a secure secret key
 
 const app = express();
@@ -18,9 +17,14 @@ const server = createServer(app);
 // Import database connection
 require('./mongodb'); // Ensures MongoDB connects
 
-// Import the socket setup function
-const setupSocket = require('./socket');
-const io = setupSocket(server);
+const io = require('socket.io')(server, {
+    cors: {
+        origin: '*',
+    }
+});
+
+const onlineUsers = new Map();
+
 
 // Middleware
 app.use(express.json()); // Allows Express to parse JSON request bodies
@@ -35,6 +39,8 @@ app.use('/api/Landlord/auth', Landlord_routes_auth); // Added Landlord Routes
 app.use('/api/Tenant/auth', Tenant_routes_auth); // Added Tenant Routes
 app.use('/api/reviews', require('./routes/reviewroutes')); // Added Review Routes
 app.use(`/api/Search_Routes`, Searching_Routes);//Searching routes, add logic for searching properties also here only
+const messageRoutes = require('./routes/message');
+app.use('/messages', messageRoutes(io, onlineUsers));
 
 // Default Route
 app.get('/', (req, res) => {
