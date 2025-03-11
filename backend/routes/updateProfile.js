@@ -1,5 +1,5 @@
 const express = require("express")
-const router = require("router")
+const router = express.Router();
 const authMiddleware = require("../middlewares/checkuser")
 const Tenant = require("../models/Tenant")
 const Landlord = require("../models/Landlord")
@@ -70,3 +70,6 @@ catch(error){
         message: "Internal Server Error",
     })
 }});
+
+
+module.exports = router;
