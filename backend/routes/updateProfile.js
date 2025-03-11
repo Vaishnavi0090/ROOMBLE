@@ -5,7 +5,7 @@ const Tenant = require("../models/Tenant")
 const Landlord = require("../models/Landlord")
 const jwt = require("jsonwebtokem")
 const dotenv = require("dotenv");
-const { route } = require("./ForgotPassword")
+// const { route } = require("./ForgotPassword")
 dotenv.config();
 
 //this code expects a response from an edit profile section wherein user can change things except for his email and password.
