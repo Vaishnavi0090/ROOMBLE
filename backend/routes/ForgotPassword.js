@@ -188,7 +188,7 @@ router.post(`/enterOTP`, authMiddleware , async (req,res) => {
 } )
 
 //send accounttype and authtoken in header. newPassword in body
-router.post(`/ChangePassword`, authMiddleware, async (req,res) => {
+router.post(`/ForgotPassword`, authMiddleware, async (req,res) => {
     try {
         let useremail = req.user.email;
         let newPassword = req.body.newPassword;
