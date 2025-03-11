@@ -32,7 +32,7 @@ router.post(`/enteremail`, async(req, res) => {
             user = await Landlord.findOne({email : email});
         }
         else{
-            return res.status(400).statusMessage({
+            return res.status(400).json({
                 success : false,
                 message : "Bad Account type"
             })
