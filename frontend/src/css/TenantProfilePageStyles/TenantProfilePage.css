@@ -1,0 +1,85 @@
+
+
+.tenant-profile-container {
+    display: flex;
+    max-width: 1200px;
+    /* height: 600px; */
+    /* height: auto; */
+    margin: 20px auto;
+    padding: 20px;
+    /* background-color: #f9f9f9; */
+    background-color: #ffe5e5;
+    border-radius: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .tenant-profile-left-column {
+    width: 40%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  
+  .tenant-profile-photo {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 45px;
+  }
+  
+  .tenant-profile-bio {
+    font-size: 20px;
+    font-weight: 400;
+    color: #7D141D;
+    line-height: 1.2;
+  }
+  
+  .tenant-profile-right-column {
+    width: 60%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  .tenant-profile-details {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  .tenant-profile-details  p {
+    font-size: 17px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .tenant-profile-details span {
+    font-weight: bold;
+    color: #7D141D;
+    flex-shrink: 0;
+    min-width: 170px;
+  }
+  
+  .tenant-profile-edit-button {
+    width: 60px;
+    margin-top: 20px;
+    padding: 10px 10px;
+    font-size: 16px;
+    background-color: #ae3c42;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    left: 85%;
+    /* top: 3%; */
+    /* transform: translateX(-50%); */
+  }
+  
+  .tenant-profile-edit-button:hover {
+    background-color: #d74747;
+  }
+  

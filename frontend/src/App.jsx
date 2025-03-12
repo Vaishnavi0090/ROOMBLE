@@ -12,6 +12,7 @@ import AddProperty from "./components/AddProperty.jsx";
 import FindProperty from "./components/FindProperty.jsx";
 import FindFlatmate from "./components/FindFlatmate.jsx";
 import OTPPage from "./components/OTPPage/OTPPage.jsx";
+import TenantProfilePage from "./components/TenantProfilePage/TenantProfilePage.jsx";
 function App() {
   const [id, setID] = useState("");
   useEffect(() => {
@@ -36,6 +37,7 @@ function App() {
         <Route path="/find-property" element={<FindProperty />} />
         <Route path="/find-flatmate" element={<FindFlatmate />} />
         <Route path="/otp-page" element={<OTPPage id={id} />} />
+        <Route path="/tenant-profile-page" element={<TenantProfilePage />} />
       </Routes>
     </BaseState>
   );
