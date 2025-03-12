@@ -143,3 +143,4 @@ router.post("/verify-email-change", authMiddleware, async (req, res) => {
     }
 
 })
+model.exports = router;
