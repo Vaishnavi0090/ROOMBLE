@@ -17,12 +17,12 @@ const SECRET_KEY = process.env.SECRET_KEY;
 router.put("/updateProfile",authMiddleware,async(req,res)=>{
     try{
         const userId = req.user.id;
-        const {accoutType, ...updatedFields } = req.body;
+        const {accounttype, ...updatedFields } = req.body;
     let user;
 
-    if(accountType === "tenant"){
+    if(accounttype === "tenant"){
         user = await Tenant.findById(userId);
-    }else if(accountType === "landlord"){
+    }else if(accounttype === "landlord"){
         user = await Landlord.findById(userId);
     }
     else{
