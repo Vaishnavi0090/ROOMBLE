@@ -10,11 +10,12 @@ const Landlord = require("../models/Landlord");
 const Tenant = require("../models/Tenant");
 const { Landlord_OTP, Tenant_OTP } = require("../models/OTP_models");
 
+//send newEmail, oldEmail and accounttype in the request
 router.post("/requestEmailUpdate", authMiddleware, async (req, res) => {
     try {
-        const { newEmail, oldEmail, accountType } = req.body;
+        const { newEmail, oldEmail, accounttype } = req.body;
 
-        if (accountType !== "tenant" && accounTtype !== "landlord") {
+        if (accounttype !== "tenant" && accounttype !== "landlord") {
             return res.status(400).json({
                 success: false,
                 message: "Invalid account type."
@@ -39,7 +40,7 @@ router.post("/requestEmailUpdate", authMiddleware, async (req, res) => {
         await Sendmail(newEmail, "Roomble - Email Update OTP", `Your OTP for updating email is: ${new_OTP}`);
 
         // Check if OTP record exists
-        let otpModel = accountType === "tenant" ? Tenant_OTP : Landlord_OTP;
+        let otpModel = accounttype === "tenant" ? Tenant_OTP : Landlord_OTP;
         let otpRecord = await otpModel.findOne({ email: newEmail });
 
         if (otpRecord) 
@@ -73,14 +74,15 @@ router.post("/requestEmailUpdate", authMiddleware, async (req, res) => {
 
 
 // 🔹 Step 2: Verify OTP and Change Email
+// send userId, newEmail, enteredOTP and accounttype in the request
 router.post("/verify-email-change", authMiddleware, async (req, res) => {
     try {
         const userId = req.user.id;
         const newEmail = req.body.newEmail;
         const enteredOTP = req.body.otp;
-        const accountType = req.body.accountType;
+        const accounttype = req.body.accounttype;
 
-        if(!newEmail || !enteredOTP || !accountType){
+        if(!newEmail || !enteredOTP || !accounttype){
             return res.status(400).json({
                 success : false,
                 message : "Missing Required Fields"
@@ -88,11 +90,11 @@ router.post("/verify-email-change", authMiddleware, async (req, res) => {
         }
 
 
-        // Find the OTP record for the new email and check for a valid accountType
+        // Find the OTP record for the new email and check for a valid accounttype
         let otpRecord;
-        if (accountType === "tenant") {
+        if (accounttype === "tenant") {
             otpRecord = await Tenant_OTP.findOne({ email: newEmail });
-        } else if (accountType === "landlord") {
+        } else if (accounttype === "landlord") {
             otpRecord = await Landlord_OTP.findOne({ email: newEmail });
         } else {
             return res.status(400).json({ success: false, message: "Invalid account type" });
@@ -113,9 +115,9 @@ router.post("/verify-email-change", authMiddleware, async (req, res) => {
 
         // Find user and update email
         let user;
-        if (accountType === "tenant") {
+        if (accounttype === "tenant") {
             user = await Tenant.findByIdAndUpdate(userId, { email: newEmail }, { new: true });
-        } else if (accountType === "landlord") {
+        } else if (accounttype === "landlord") {
             user = await Landlord.findByIdAndUpdate(userId, { email: newEmail }, { new: true });
         }
 
@@ -126,7 +128,7 @@ router.post("/verify-email-change", authMiddleware, async (req, res) => {
 
         // Generate new JWT with updated email, since jwt tokens contain information about the email, so we need to generate a new one.
         const newToken = jwt.sign(
-            { id: user._id, email: user.email, role: accountType },
+            { id: user._id, email: user.email, role: accounttype },
             SECRET_KEY,
             { expiresIn: "1h" }
         );
