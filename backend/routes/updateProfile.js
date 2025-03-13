@@ -13,7 +13,7 @@ dotenv.config();
 const SECRET_KEY = process.env.SECRET_KEY;
 
 //update profile route 
-
+//Send accountype and all the fields except for email and password in the request say like locality,smoking -> yes or no , etc.
 router.put("/updateProfile",authMiddleware,async(req,res)=>{
     try{
         const userId = req.user.id;
