@@ -5,10 +5,10 @@ const LandlordSchema_OTP = new mongoose.Schema({
   email: { type: String, required: true, trim: true, unique: true },
   type: { type: String, default: "landlord" },
   password: { type: String, required: true },
-  OTP: { type: String },
+  OTP: { type: String, required : true },
   propertyList: { type: Array, default: [] },
   conversations: { type: Array, default: [] },
-  Allow_changes: { type: Boolean, default: false },
+  Allow_changes: { type: Boolean, default: false },//This is for forgotPassword, do not change this
   createdat: { type: Date, default: Date.now, expires: 300 },
 });
 
@@ -23,7 +23,7 @@ const TenantSchema_OTP = new mongoose.Schema({
   veg: { type: Boolean, required: true },
   pets: { type: Boolean, required: true },
   flatmate: { type: Boolean, required: true },
-  Allow_changes: { type: Boolean, default: false },
+  Allow_changes: { type: Boolean, default: false },//This is also for forgot password donot change this
   createdat: { type: Date, default: Date.now, expires: 300 },
 });
 

@@ -8,7 +8,7 @@ require(`dotenv`).config(`../.env`); // Load environment variables
 const Sendmail = require("../helper_funcs/mailSender");
 // const authMiddleware = require("../middleware/auth-middleware"); // Middleware for JWT auth
 
-const SECRET_KEY = process.env.JWT_SECRET;
+const SECRET_KEY = process.env.SECRET_KEY;
 
 /* Contains authenticate/Tenant_Login, authenticate/Tenant_register, authenticate/verifyTenant */
 
@@ -22,6 +22,7 @@ async function ComparePassword(enteredPassword, storedHash) {
 }
 
 // --------------------- Tenant Registration ---------------------
+//Send name, email, password, locality, gender, smoke, veg, pets, flatmate as body
 router.post(`/Tenant_register`, async (req, res) => {
     try {
         const { name, email, password, locality, gender, smoke, veg, pets, flatmate } = req.body;
@@ -36,7 +37,7 @@ router.post(`/Tenant_register`, async (req, res) => {
         }
 
         // If user already requested OTP, update OTP instead of creating a new entry
-        const checkExistingUser_withOTP = await Tenant_OTP.findOne({ email });
+        const checkExistingUser_withOTP = await Tenant_OTP.findOne({ email : email });
         if (checkExistingUser_withOTP) {
             let new_OTP = (Math.floor(100000 + Math.random() * 900000)).toString();
             await Sendmail(email, `Welcome once again to Roomble`, new_OTP);
@@ -86,13 +87,15 @@ router.post(`/Tenant_register`, async (req, res) => {
 });
 
 // --------------------- OTP Verification & Tenant Creation ---------------------
+
+//Send Entered_OTP as body
 router.post(`/verifyTenant/:id`, async (req, res) => {
     try {
         const { Entered_OTP } = req.body;
         const userId = req.params.id;
 
         if (!userId) {
-            return res.json({ message: "OTP isn't generated, Try again" });
+            return res.json({ message: "Invalid UserID" });
         }
 
         const Tenant_withOTP = await Tenant_OTP.findById(userId);
@@ -119,12 +122,12 @@ router.post(`/verifyTenant/:id`, async (req, res) => {
 
             await newTenant.save();
 
-            res.status(201).json({
+            return res.status(201).json({
                 success: true,
                 message: "User successfully registered"
             });
         } else {
-            res.status(400).json({
+            return res.status(400).json({
                 success: false,
                 message: "Invalid OTP, please try again"
             });
@@ -142,7 +145,7 @@ router.post(`/verifyTenant/:id`, async (req, res) => {
 router.post(`/Tenant_login`, async (req, res) => {
     try {
         const { email, password } = req.body;
-        const findTenant = await Tenant.findOne({ email : email });
+        const findTenant = await Tenant.findOne({ email });
 
         if (!findTenant) {
             return res.status(404).json({
