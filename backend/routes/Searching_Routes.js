@@ -10,9 +10,7 @@ const SECRET_KEY = process.env.SECRET_KEY;
 
 //Send the query as locality, gender, smoke, veg, pets, flatmates : accounttype and authtoken in header
 router.get(`/SearchFlatmates`, authMiddleware, async (req,res) => {
-
-    try{
-
+    try{           
         const { locality, gender, smoke, veg, pets, flatmate } = req.body;
         let query = {};
         if(locality !== undefined){query.locality = locality;}
@@ -39,5 +37,42 @@ router.get(`/SearchFlatmates`, authMiddleware, async (req,res) => {
     }
 
 })
+
+const { MongoClient } = require('mongodb');
+const client = new MongoClient(process.env.MONGOURI);
+
+/* Search Properties */
+// Will add authMiddleware too in the next line, disabled it for testing purposes
+router.get('/SearchProperties/:town', async (req, res) => {  
+    const town = req.params.town;
+
+    try {
+        await client.connect();
+        const db = client.db("mumbai_properties");
+
+        // Get town data (including sorted nearest towns)
+        const townData = await db.collection("towns").findOne({ name: town });
+        if (!townData) return res.status(404).json({ error: "Town not found" });
+
+        // Ensure nearest_towns is an array
+        const nearestTowns = Array.isArray(townData?.nearest_towns) ? townData.nearest_towns : [];
+        const queryTowns = [town, ...nearestTowns];
+
+        // Fetch properties from all relevant towns
+        const properties = await db.collection("properties").find({ town: { $in: queryTowns } }).toArray();
+
+        // Sorting: Ensure properties from the main town come first
+        const sortedProperties = properties.sort((a, b) => {
+            return queryTowns.indexOf(a.town) - queryTowns.indexOf(b.town);
+        });
+
+        res.json(sortedProperties);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" });
+    } finally {
+        await client.close();
+    }
+});
 
 module.exports = router;
