@@ -43,7 +43,7 @@
   }
   
   .tenant-edit-btn {
-    background: #8b0000;
+    background: #ae3c42;
     color: white;
     padding: 10px 15px;
     border: none;
@@ -64,6 +64,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px; /* Proper spacing between inputs */
+    color: #7d141d
   }
   
   .tenant-edit-right {
@@ -71,6 +72,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px; /* Proper spacing between inputs */
+    color: #7d141d;
   }
   
   /* Align Alcohol, Veg, and Pets options properly */
@@ -111,30 +113,43 @@
     font-size: 12px;
     width: 108px; /* Make buttons smaller */
     text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
   .tenant-edit-choices .active {
-    background: #8b0000;
+    background: #ae3c42;
   }
   
   .tenant-edit-left select {
     width: auto;
     height: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ae3c42;
+    padding: 5px;
   }
   
   .tenant-edit-left input {
     width: auto;
     height: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ae3c42;
+    padding: 5px;
   }
   
   .tenant-edit-right select {
     width: auto;
     height: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ae3c42;
+    padding: 5px;
   }
   
   .tenant-edit-right input {
     width: auto;
     height: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ae3c42;
+    padding: 5px;
   }
   /* Brief Intro Section */
   .tenant-edit-right textarea {
@@ -142,7 +157,9 @@
     height: 148px;
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid #ae3c42;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #ae3c42;
     resize: none;
   }
   
