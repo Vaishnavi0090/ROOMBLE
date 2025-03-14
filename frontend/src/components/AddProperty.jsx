@@ -69,7 +69,7 @@ function AddProperty() {
                 </div>
             </div>
             <div className="add-prop-middle">
-                <div className={"form-item BHK-container"}>
+                <div className={"form-item bhk-container"}>
                     <h4 style={{color:"#7D141D"}}>BHK *</h4>
                     <input
                         value={formData.bhk}
