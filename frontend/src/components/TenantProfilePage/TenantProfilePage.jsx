@@ -2,8 +2,12 @@ import React from "react";
 import { useState, useRef } from "react";
 import logo from "../../../public/sampleUser_img.png";
 import "../../css/TenantProfilePageStyles/TenantProfilePage.css"; // Import the CSS specific to this component
-
+import { useNavigate } from "react-router-dom";
 export default function TenantProfilePage() {
+  const navigate = useNavigate();
+  const handleSubmit = () => {
+    navigate("/tenant-edit-page");
+  };
   return (
     <div className="tenant-profile-container">
       {/* Left Column */}
@@ -74,7 +78,9 @@ export default function TenantProfilePage() {
             </p>
           </div>
         </div>
-        <button className="tenant-profile-edit-button">Edit</button>
+        <button className="tenant-profile-edit-button" onClick={handleSubmit}>
+          Edit
+        </button>
       </div>
     </div>
   );
