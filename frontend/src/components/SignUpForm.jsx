@@ -183,16 +183,19 @@ function SignUpForm({ setID }) {
               <br />
               (For better recommendations)
             </label>
-            <input
+            <select
               type="text"
               className="input-box"
-              placeholder="Eg. BanyanVilla Road"
               name="locality"
               onChange={({ target }) => {
                 handleUserInput(target.name, target.value);
               }}
               required
-            />
+            >
+              <option value="Bangalore">Bangalore</option>
+              <option value="Mumbai">Mumbai</option>
+              <option value="Delhi">Delhi</option>
+            </select>
           </div>
 
           <div className="options">
