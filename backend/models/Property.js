@@ -40,6 +40,10 @@ const PropertySchema = new mongoose.Schema({
     electricity_water_included: {
         type: Boolean,
         required: true
+    },
+    type: {
+        type: String,
+        required: true
     }
 }, { timestamps: true });
 
