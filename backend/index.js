@@ -6,6 +6,7 @@ const Tenant_routes_auth = require('./routes/Tenant_auth')//COntains tenant auth
 dotenv.config(); // Load environment variables
 const ForgotPassword_routes = require(`./routes/ForgotPassword`);
 const Searching_Routes = require(`./routes/Searching_Routes`)
+const BookMark_Routes = require(`./routes/Bookmark`);
 const mongoconnect = require('./mongodb'); // Ensures MongoDB connects
 const { MongoClient } = require("mongodb");
 
@@ -39,6 +40,7 @@ app.use('/api/Landlord/auth', Landlord_routes_auth); // Added Landlord Routes
 app.use('/api/Tenant/auth', Tenant_routes_auth); // Added Tenant Routes
 app.use('/api/reviews', require('./routes/reviewroutes')); // Added Review Routes
 app.use(`/api/Search_Routes`, Searching_Routes);//Searching routes, add logic for searching properties also here only
+app.use(`/api/BookMarking_Routes`, BookMark_Routes);
 const messageRoutes = require('./routes/message');
 app.use('/messages', messageRoutes(io, onlineUsers));
 

@@ -42,6 +42,16 @@ const TenantSchema = new mongoose.Schema({
         type: Array,
         default: []
     },
+    bookmarks_tenants : { //Stores the ID of the tenant
+        type : [String],
+        default : [],
+        required : false
+    },
+    bookmarks_property : { //Only stores the ID of the property
+        type : [String],
+        default : [],
+        required : false
+    },
     reviews: [{
         reviewer: {
             type: mongoose.Schema.Types.ObjectId,
