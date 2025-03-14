@@ -188,6 +188,7 @@ router.post(`/enterOTP`, authMiddleware, async (req, res) => {
 });
 
 //send accounttype and authtoken in header. newPassword in body
+// not sure but we do need to send the oldPassword separately since authtoken does not contain info about the password afaik -> bikram
 router.post(`/ChangePassword`, authMiddleware, async (req, res) => {
   try {
     let useremail = req.user.email;
