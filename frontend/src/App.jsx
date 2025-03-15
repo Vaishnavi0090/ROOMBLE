@@ -14,6 +14,7 @@ import FindFlatmate from "./components/FindFlatmate.jsx";
 import OTPPage from "./components/OTPPage/OTPPage.jsx";
 import TenantProfilePage from "./components/TenantProfilePage/TenantProfilePage.jsx";
 import TenantEditPage from "./components/TenantProfilePage/TenantEditPage.jsx";
+import BookmarkedFlatmates from "./components/BookmarkedFlatmates.jsx";
 function App() {
   const [id, setID] = useState("");
   useEffect(() => {
@@ -40,9 +41,11 @@ function App() {
         <Route path="/otp-page" element={<OTPPage id={id} />} />
         <Route path="/tenant-profile-page" element={<TenantProfilePage />} />
         <Route path="/tenant-edit-page" element={<TenantEditPage />} />
+        <Route path="/home" element ={<BookmarkedFlatmates/>}/>
       </Routes>
     </BaseState>
   );
 }
 
 export default App;
+

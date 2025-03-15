@@ -1,0 +1,37 @@
+.bookmarked-page {
+    padding: 30px;
+    max-width: 100%;
+    margin: auto;
+}
+
+.page-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: #1a1a1a;
+    font-family: "DM Sans", sans-serif;
+    text-align: left;
+    position: relative;
+    text-transform: capitalize;
+    padding-bottom: 5px;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+.page-title::after {
+    content: "";
+    width: 80px;
+    height: 4px;
+    background-color: #8b1e2f;
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    border-radius: 2px;
+}
+
+.flatmates-grid {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 20px;
+    justify-content: space-between;
+    width: 100%;
+}

@@ -16,7 +16,7 @@ export const Navbar = () => {
       </div>
       <div className="menu">
         <ul>
-          <li><Link to="/">Home</Link></li>
+          <li><Link to="/home">Home</Link></li>
           <li><Link to="/add-property">Add Property</Link></li>
           <li><Link to="/messages">Messages</Link></li>
           <li><Link to="/find-property">Find Property</Link></li>

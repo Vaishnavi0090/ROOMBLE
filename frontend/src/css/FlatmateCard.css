@@ -1,0 +1,95 @@
+.flatmate-card {
+    width: 450px;
+    background-color: #fde6eb;
+    border-radius: 18px;
+    padding: 25px;
+    text-align: left;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-header {
+    background-color: #8b1e2f;
+    color: white;
+    padding: 10px;
+    border-radius: 16px !important;
+    display: flex;
+    align-items: center;
+    gap:15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  }
+  
+  .profile-pic {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    border: 2px solid white;
+  }
+  
+  .flatmate-name {
+    font-size: 22px;
+    font-weight: bold;
+    font-family: sans-serif;
+  }
+  
+  .card-body {
+    padding: 10px 5px;
+  }
+  
+  .location-title {
+    font-weight: bold;
+    font-size: 19px;
+    font-family: sans-serif;
+  }
+  
+  .location-text {
+    font-size: 15px;
+    color: black;
+    
+    margin-top: 5px;
+    font-family: sans-serif;
+  }
+  
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    gap: 10px;
+  }
+  
+  
+  .bookmark-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .view-btn {
+    background-color: #8b1e2f;
+    color: white;
+    border: none;
+    padding: 8px 25px;
+    font-family: sans-serif;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+  }
+  
+  .view-btn:hover {
+    background-color: #a02d3f;
+  }
+  
+  .bookmark-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    margin-left: auto;
+    margin-top: 10px;
+  }
+  
+  .bookmark-btn:hover {
+    transform: scale(1.1); /* Slight zoom on hover */
+  }
+  
