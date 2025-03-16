@@ -10,6 +10,16 @@ router.post("/listProperty",authMiddleware, async(req,res)=>{
         const landlordId = req.user.id;
         const propertyData = req.body;
 
+        const requiredFields = ["name","town","address","area","bhk","attached_bathrooms","criteria","price","electricity_water_included","type"
+        ];
+        const missingFields = requiredFields.filter(field => !propertyData[field]);
+
+        if(missingFields.length>0){
+            return res.status(400).json({
+                success : false,
+                message : `Missing Required Fields : ${missingFields.join(", ")}`
+            })
+        }
 
         const landlord = await Landlord.findById(landlordId);
         if(!landlord){
@@ -29,5 +39,44 @@ router.post("/listProperty",authMiddleware, async(req,res)=>{
                 message : "You have already listed a property at this address"
             });
         }
+        const newProperty = new Property(propertyData);
+        try{
+            await newProperty.save();
+        }
+        catch(saveError){
+            console.error("Error saving property: ",saveError);
+            return res.status(500).json({
+                success: false,
+                message: "Failed to save the property",
+            })
+        }
+
+        landlord.propertyList.push(newProperty._id);
+
+        try{
+            await landlord.save();
+        }
+        catch(updateError){
+            console.error("Error updating landlord: ",updateError);
+
+            await Property.findByIdAndDelete(newProperty._id);
+            return res.status(500).json({
+                success : false,
+                message : "Failed to update landlord"
+            })
+        }
+        return res.status(201).json({
+            success : true,
+            message : "Property added and listed successfully",
+            property: newProperty,
+        });
+
+    } catch(error){
+        console.error("Unexpected Error: ",error);
+        return res.status(500).json({
+            success : false,
+            message : "Internal Server Error",
+        })
     }
-})
+});
+module.exports = router;
