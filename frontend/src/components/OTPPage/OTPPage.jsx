@@ -5,8 +5,8 @@ import "../../css/OTPPage/OTPPage.css"; // Import the CSS specific to this compo
 import logo from "../../../public/logo.png";
 export default function OTPPage({ id }) {
   const navigate = useNavigate();
-  //   console.log(`id is ${id}`);
-  const respURL = `http://127.0.0.1/authenticatelandlord/verifyTenant/${id}`;
+    console.log(`id is ${id}`);
+  const respURL = `http://127.0.0.1:3000/api/Tenant/auth/verifyTenant/${id}`;
   //   console.log(respURL);
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [message, setMessage] = useState("");
@@ -41,6 +41,7 @@ export default function OTPPage({ id }) {
     }
 
     try {
+      console.log(enteredOTP);
       const response = await fetch(respURL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

@@ -129,7 +129,7 @@ router.post(`/verifyLandlord/:id`, async (req, res) => {
 });
 
 //send email, password in req.body
-router.post(`/Landlord_Login`, async (req, res) => {
+router.post(`/Landlord_login`, async (req, res) => {
     try {
         const { email, password } = req.body;
         let user = await Landlord.findOne( { email });

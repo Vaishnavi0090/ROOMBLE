@@ -68,7 +68,7 @@ router.post(`/Tenant_register`, async (req, res) => {
             await Sendmail(email, `Welcome to Roomble!!`, `Your OTP is ${generated_OTP}`);
             res.status(200).json({
                 success: true,
-                message: `authenticate/verifyTenant/${newlyCreatedUser._id}`
+                message: `${newlyCreatedUser._id}`
             });
         } else {
             res.status(400).json({
@@ -91,6 +91,7 @@ router.post(`/Tenant_register`, async (req, res) => {
 //Send Entered_OTP as body
 router.post(`/verifyTenant/:id`, async (req, res) => {
     try {
+        // console.log("in here");
         const { Entered_OTP } = req.body;
         const userId = req.params.id;
 

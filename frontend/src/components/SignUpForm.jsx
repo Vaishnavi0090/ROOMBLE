@@ -66,7 +66,7 @@ function SignUpForm({ setID }) {
   };
 
   const sendDataToAPI = async () => {
-    const apiURL = "http://127.0.0.1:3000/authenticateTenant/Tenant_register";
+    const apiURL = "http://127.0.0.1:3000/api/Tenant/auth/Tenant_register";
 
     const requestData = {
       name: formInput.name,

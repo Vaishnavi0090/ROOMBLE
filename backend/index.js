@@ -7,6 +7,7 @@ dotenv.config(); // Load environment variables
 const ForgotPassword_routes = require(`./routes/ForgotPassword`);
 const Searching_Routes = require(`./routes/Searching_Routes`)
 const BookMark_Routes = require(`./routes/Bookmark`);
+const cors = require(`cors`);
 const mongoconnect = require('./mongodb'); // Ensures MongoDB connects
 const { MongoClient } = require("mongodb");
 
@@ -14,6 +15,7 @@ const SECRET_KEY = process.env.SECRET_KEY; // Change this to a secure secret key
 
 const app = express();
 const server = createServer(app);
+app.use(cors());
 
 // Import database connection
 require('./mongodb'); // Ensures MongoDB connects
