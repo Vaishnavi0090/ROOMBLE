@@ -192,7 +192,9 @@ function SignUpForm({ setID }) {
               }}
               required
             >
-              <option value="Bangalore">Bangalore</option>
+              <option value="Bangalore" selected>
+                Bangalore
+              </option>
               <option value="Mumbai">Mumbai</option>
               <option value="Delhi">Delhi</option>
             </select>
