@@ -6,7 +6,7 @@ const SECRET_KEY = process.env.SECRET_KEY;
 const Sendmail = require("../helper_funcs/mailSender");
 const Landlord = require("../models/Landlord");
 const Tenant = require("../models/Tenant");
-const authMiddleware = require("../middleware/checkuser");
+const authMiddleware = require("../middlewares/checkuser");
 const { Landlord_OTP, Tenant_OTP } = require("../models/OTP_models");
 
 //expect email and accounttype
