@@ -7,6 +7,8 @@ dotenv.config(); // Load environment variables
 const ForgotPassword_routes = require(`./routes/ForgotPassword`);
 const Searching_Routes = require(`./routes/Searching_Routes`)
 const BookMark_Routes = require(`./routes/Bookmark`);
+const View_profiles = require(`./routes/view_profiles`);
+const Deleteprofile = require(`./routes/deleteProfile`);
 const cors = require(`cors`);
 const mongoconnect = require('./mongodb'); // Ensures MongoDB connects
 const { MongoClient } = require("mongodb");
@@ -37,6 +39,8 @@ const Landlord = require('./models/Landlord');
 const Tenant = require('./models/Tenant'); // Added Tenant model
 
 // Routes
+app.use(`/api/view_profiles`, View_profiles);
+app.use(`/api/Deleting_routes`, Deleteprofile);
 app.use(`/api/forgotPassword`, ForgotPassword_routes);//Send accoutnt type in the request body
 app.use('/api/Landlord/auth', Landlord_routes_auth); // Added Landlord Routes
 app.use('/api/Tenant/auth', Tenant_routes_auth); // Added Tenant Routes

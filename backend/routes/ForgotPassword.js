@@ -20,15 +20,15 @@ async function Hashpassword(plainPassword) {
     return await bcrypt.hash(plainPassword, saltRounds);
 }
 
-//Send accountType and email in the request body
+//Send accounttype and email in the request body
 router.post(`/enteremail`, async(req, res) => {
     try {
-        const {email, accountType} = req.body;
+        const {email, accounttype} = req.body;
         let user;
-        if(accountType === `tenant`){
+        if(accounttype === `tenant`){
             user = await Tenant.findOne({email : email});
         }
-        else if(accountType === `landlord`){
+        else if(accounttype === `landlord`){
             user = await Landlord.findOne({email : email});
         }
         else{
@@ -47,7 +47,7 @@ router.post(`/enteremail`, async(req, res) => {
         else{
             const token = jwt.sign({ id: user._id, email: user.email }, SECRET_KEY, { expiresIn: "5m" });
 
-            if(accountType === `tenant`){
+            if(accounttype === `tenant`){
 
                 let ifExists = await Tenant_OTP.findOne({email : email});
                 
@@ -84,7 +84,7 @@ router.post(`/enteremail`, async(req, res) => {
                     authtoken : token
                 })
             }
-            else if(accountType === `landlord`){
+            else if(accounttype === `landlord`){
                 let ifExists = await Landlord_OTP.findOne({email : email});
                 
                 if(ifExists){
@@ -131,27 +131,27 @@ router.post(`/enteremail`, async(req, res) => {
     }
 })
 
-//send authtoken and accountType and Entered_OTP
+//send authtoken and accounttype and Entered_OTP
 router.post(`/enterOTP`, authMiddleware , async (req,res) => {
 
     try{
         let useremail = req.user.email;
         let userid = req.user.id;
         let Entered_OTP = req.body.Entered_OTP;
-        let accountType = req.body.accountType;
-        // "accountType
+        let accounttype = req.body.accounttype;
+        // "accounttype
         let user;
-        if(accountType === `tenant`){
+        if(accounttype === `tenant`){
             user = await Tenant_OTP.findOne({email : useremail});
         }
-        else if(accountType === `landlord`){
+        else if(accounttype === `landlord`){
             user = await Landlord_OTP.findOne({email : useremail});
         }
         else{
-            console.log(accountType);
+            console.log(accounttype);
             return res.status(401).json({
                 success : false,
-                message : "No accountType"
+                message : "No accounttype"
             })
         }
 
@@ -187,14 +187,14 @@ router.post(`/enterOTP`, authMiddleware , async (req,res) => {
     }
 } )
 
-//send accountType and authtoken in header. newPassword in body
+//send accounttype and authtoken in header. newPassword in body
 router.post(`/ForgotPassword`, authMiddleware, async (req,res) => {
     try {
         let useremail = req.user.email;
         let newPassword = req.body.newPassword;
         const Hashedpassword = await Hashpassword(newPassword);
-        let accountType = req.body.accountType;
-        if(accountType === `tenant`){
+        let accounttype = req.body.accounttype;
+        if(accounttype === `tenant`){
             let user = await Tenant_OTP.findOne({email : useremail});
             if(!user){
                 return res.status(404).json({
@@ -218,7 +218,7 @@ router.post(`/ForgotPassword`, authMiddleware, async (req,res) => {
                 })
             }
         }
-        else if(accountType === `landlord`){
+        else if(accounttype === `landlord`){
             let user = Landlord_OTP.findOne({email : useremail});
             if(!user){
                 return res.status(404).json({

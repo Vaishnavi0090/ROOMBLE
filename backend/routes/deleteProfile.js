@@ -183,3 +183,5 @@ router.post(`/enterOTPtoDelete`, authMiddleware, async (req, res) => {
     });
   }
 });
+
+module.exports = router;
