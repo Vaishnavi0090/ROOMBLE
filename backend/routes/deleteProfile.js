@@ -8,6 +8,9 @@ const Landlord = require("../models/Landlord");
 const Tenant = require("../models/Tenant");
 const authMiddleware = require("../middlewares/checkuser");
 const { Landlord_OTP, Tenant_OTP } = require("../models/OTP_models");
+const Conversation = require("../models/Conversation");
+const Review = require("../models/Review");
+const Property = require("../models/Property");
 
 //expect email and accounttype
 router.post(`/deleteInitiate`, async (req, res) => {
@@ -163,11 +166,22 @@ router.post(`/enterOTPtoDelete`, authMiddleware, async (req, res) => {
                 message : "User not found or already deleted",
             });
         }
+
+        // Delete related data
+        if (accounttype === `tenant`) {
+          await Conversation.deleteMany({ tenantEmail: userEmail });
+          await Review.deleteMany({ tenantEmail: userEmail });
+        } else if (accounttype === `landlord`) {
+          await Property.deleteMany({ landlordEmail: userEmail });
+          await Conversation.deleteMany({ landlordEmail: userEmail });
+          await Review.deleteMany({ landlordEmail: userEmail });
+        }
+
         const deletedUserOTP = await Tenant_OTP.findOneAndDelete({email : userEmail}) || await Landlord_OTP.findOneAndDelete({email : userEmail});
 
         return res.status(200).json({
             success : true,
-            message : "Account Deleted successfully.",
+            message : "Account and related data deleted successfully.",
         })
     } else {
       return res.status(401).json({

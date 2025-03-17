@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/Login.css";
 import logo from "../../public/logo.png"; // Vite uses '/' for public assets
@@ -7,9 +7,24 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isLandlord, setIsLandlord] = useState(false);
+    const [rememberMe, setRememberMe] = useState(false);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+    // Load saved email & password from localStorage when the component mounts
+    useEffect(() => {
+        const savedEmail = localStorage.getItem("rememberedEmail");
+        const savedPassword = localStorage.getItem("rememberedPassword");
+        const savedUserType = localStorage.getItem("rememberedUserType");
+
+        if (savedEmail && savedPassword) {
+            setEmail(savedEmail);
+            setPassword(savedPassword);
+            setRememberMe(true);
+            setIsLandlord(savedUserType === "landlord");
+        }
+    }, []);
 
     const handleToggle = () => {
         setIsLandlord(!isLandlord);
@@ -20,15 +35,15 @@ const Login = () => {
         setError("");
         setLoading(true);
 
-        const userType = isLandlord ? "Landlord" : "Tenant"; 
-        
+        const userType = isLandlord ? "landlord" : "tenant"; 
+
         try {
             const response = await fetch("http://127.0.0.1:3000/api/"+userType+"/auth/"+userType+"_login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({ email, password}),
             });
 
             const data = await response.json();
@@ -36,7 +51,18 @@ const Login = () => {
 
             if (data.success) {
                 localStorage.setItem("token", data.token);
-                navigate("/messages");
+
+                if (rememberMe) {
+                    localStorage.setItem("rememberedEmail", email);
+                    localStorage.setItem("rememberedPassword", password);
+                    localStorage.setItem("rememberedUserType", userType);
+                } else {
+                    localStorage.removeItem("rememberedEmail");
+                    localStorage.removeItem("rememberedPassword");
+                    localStorage.removeItem("rememberedUserType");
+                }
+
+                navigate("/dashboard");
             } else {
                 setError(data.message || "Invalid login credentials");
             }
@@ -81,8 +107,13 @@ const Login = () => {
 
                     <div className="remember-forgot">
                         <span className="remember-container">
+                            <input
+                                type="checkbox"
+                                id="rememberMe"
+                                checked={rememberMe}
+                                onChange={() => setRememberMe(!rememberMe)}
+                            />
                             <label htmlFor="rememberMe" className="remember-label">Remember Me</label>
-                            <input type="checkbox" id="rememberMe" />
                         </span>
                         <a href="#" className="forgot-password">Forgot Password?</a>
                     </div>
