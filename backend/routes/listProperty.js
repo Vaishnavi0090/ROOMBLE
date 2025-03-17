@@ -3,7 +3,6 @@ const router = express.Router();
 const Laandlord = require("../models/Landlord")
 const Property = require("../models/Property")
 const authMiddleware = require("../middlewares/checkuser");
-const Landlord = require("../models/Landlord");
 
 router.post("/listProperty",authMiddleware, async(req,res)=>{
     try{
