@@ -13,6 +13,7 @@ const listProperty = require(`./routes/listProperty`);
 const deleteProperty = require(`./routes/deleteProperty`);
 const changePassword = require('./routes/changePassword');
 const messageRoutes = require('./routes/message');
+const changeEmail = require('./routes/changeEmail');
 const cors = require(`cors`);
 const mongoconnect = require('./mongodb'); // Ensures MongoDB connects
 const { MongoClient } = require("mongodb");
@@ -55,6 +56,7 @@ app.use(`/api/BookMarking_Routes`, BookMark_Routes);
 app.use(`/api/DeleteProperty`, deleteProperty);
 app.use(`/api/listproperty`, listProperty);
 app.use(`/api/deleteproperty`, deleteProperty);
+app.use('/api/changeEmail',changeEmail);
 app.use('/messages', messageRoutes(io, onlineUsers));
 
 // Default Route

@@ -4,11 +4,14 @@ const dotenv = require('dotenv');
 dotenv.config();
 const jwt = require("jsonwebtoken");
 const Sendmail = require("../helper_funcs/mailSender");
-const authMiddleware = require("../middleware/checkuser");
+const authMiddleware = require("../middlewares/checkuser");
 const SECRET_KEY = process.env.SECRET_KEY;
 const Landlord = require("../models/Landlord");
 const Tenant = require("../models/Tenant");
+const mongoose = require('mongoose');
+
 const { Landlord_OTP, Tenant_OTP } = require("../models/OTP_models");
+
 
 //send newEmail, oldEmail and accounttype in the request
 router.post("/requestEmailUpdate", authMiddleware, async (req, res) => {
@@ -75,74 +78,133 @@ router.post("/requestEmailUpdate", authMiddleware, async (req, res) => {
 
 // 🔹 Step 2: Verify OTP and Change Email
 // send userId, newEmail, enteredOTP and accounttype in the request
+
+
 router.post("/verify-email-change", authMiddleware, async (req, res) => {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
     try {
         const userId = req.user.id;
         const newEmail = req.body.newEmail;
         const enteredOTP = req.body.otp;
         const accounttype = req.body.accounttype;
 
-        if(!newEmail || !enteredOTP || !accounttype){
+        // Validate input
+        if(!newEmail || !enteredOTP || !accounttype) {
             return res.status(400).json({
-                success : false,
-                message : "Missing Required Fields"
-            })
+                success: false,
+                message: "Missing required fields"
+            });
         }
 
-
-        // Find the OTP record for the new email and check for a valid accounttype
-        let otpRecord;
-        if (accounttype === "tenant") {
-            otpRecord = await Tenant_OTP.findOne({ email: newEmail });
-        } else if (accounttype === "landlord") {
-            otpRecord = await Landlord_OTP.findOne({ email: newEmail });
-        } else {
-            return res.status(400).json({ success: false, message: "Invalid account type" });
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(newEmail)) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid email format"
+            });
         }
 
-        if(!otpRecord){
+        // Check if new email is already in use
+        const emailExists = await Tenant.findOne({ email: newEmail }).session(session) || 
+                          await Landlord.findOne({ email: newEmail }).session(session);
+
+        if (emailExists) {
+            await session.abortTransaction();
+            session.endSession();
+            return res.status(400).json({
+                success: false,
+                message: "This email is already in use"
+            });
+        }
+
+        // Find and validate OTP record
+        const otpModel = accounttype === "tenant" ? Tenant_OTP : Landlord_OTP;
+        const otpRecord = await otpModel.findOne({ email: newEmail }).session(session);
+
+        if (!otpRecord) {
+            await session.abortTransaction();
+            session.endSession();
             return res.status(404).json({
-                success : false,
-                message : "OTP not found, kindly request a new OTP!!"
-            })
-        }
-        if(otpRecord.OTP !== enteredOTP){
-            return res.status(401).json({
-                success : false,
-                message : "Invalid OTP, please check again later!!"
-            })
+                success: false,
+                message: "OTP not found, please request a new OTP"
+            });
         }
 
-        // Find user and update email
-        let user;
-        if (accounttype === "tenant") {
-            user = await Tenant.findByIdAndUpdate(userId, { email: newEmail }, { new: true });
-        } else if (accounttype === "landlord") {
-            user = await Landlord.findByIdAndUpdate(userId, { email: newEmail }, { new: true });
+        // Check OTP expiration (assuming OTP expires after 10 minutes)
+        const otpAge = (Date.now() - otpRecord.updatedAt) / (1000 * 60); // in minutes
+        if (otpAge > 10) {
+            await otpRecord.deleteOne({ session });
+            await session.abortTransaction();
+            session.endSession();
+            return res.status(401).json({
+                success: false,
+                message: "OTP has expired, please request a new one"
+            });
         }
+
+        if (otpRecord.OTP !== enteredOTP) {
+            await session.abortTransaction();
+            session.endSession();
+            return res.status(401).json({
+                success: false,
+                message: "Invalid OTP"
+            });
+        }
+
+        // Update user email
+        const userModel = accounttype === "tenant" ? Tenant : Landlord;
+        const user = await userModel.findByIdAndUpdate(
+            userId, 
+            { email: newEmail }, 
+            { new: true, session }
+        );
 
         if (!user) {
-            return res.status(404).json({ success: false, message: "User not found" });
+            await session.abortTransaction();
+            session.endSession();
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            });
         }
-        await otpRecord.deleteOne(); // deleting the OTP record since it was created for email updation only
 
-        // Generate new JWT with updated email, since jwt tokens contain information about the email, so we need to generate a new one.
+        // Delete OTP record
+        await otpRecord.deleteOne({ session });
+
+        // Generate new JWT
         const newToken = jwt.sign(
             { id: user._id, email: user.email, role: accounttype },
             SECRET_KEY,
             { expiresIn: "1h" }
         );
 
+        await session.commitTransaction();
+        session.endSession();
+
         return res.status(200).json({
             success: true,
             message: "Email updated successfully",
             token: newToken,
+            user: {
+                id: user._id,
+                email: user.email,
+                name: user.name
+            }
         });
 
     } catch (error) {
-        console.log("Error in email updation :",error);
-        return res.status(500).json({ success: false, message: "Internal Server Error" });
+        await session.abortTransaction();
+        session.endSession();
+        console.error("Error in email verification:", error);
+        return res.status(500).json({ 
+            success: false, 
+            message: "Internal Server Error",
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        });
     }
+});
 
-})
-model.exports = router;
+module.exports = router;
