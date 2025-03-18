@@ -12,6 +12,8 @@ const Deleteprofile = require(`./routes/deleteProfile`);
 const listProperty = require(`./routes/listProperty`);
 const deleteProperty = require(`./routes/deleteProperty`);
 const messageRoutes = require('./routes/message');
+const enlist_delist = require(`./routes/lisst_delist_prop`);
+const fileUpload = require('express-fileupload');
 const cors = require(`cors`);
 const mongoconnect = require('./mongodb'); // Ensures MongoDB connects
 const { MongoClient } = require("mongodb");
@@ -19,6 +21,7 @@ const { MongoClient } = require("mongodb");
 const SECRET_KEY = process.env.SECRET_KEY; // Change this to a secure secret key
 
 const app = express();
+app.use(fileUpload());
 const server = createServer(app);
 app.use(cors());
 
@@ -42,6 +45,7 @@ const Landlord = require('./models/Landlord');
 const Tenant = require('./models/Tenant'); // Added Tenant model
 
 // Routes
+app.use(`/api/Listing_Delisting`, enlist_delist);
 app.use(`/api/view_profiles`, View_profiles);
 app.use(`/api/Deleting_routes`, Deleteprofile);
 app.use(`/api/forgotPassword`, ForgotPassword_routes);//Send accoutnt type in the request body
