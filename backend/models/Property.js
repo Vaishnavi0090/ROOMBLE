@@ -9,6 +9,10 @@ const PropertySchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    city: {
+        type : String,
+        required : true
+    },
     address: {
         type: String,
         required: true
@@ -21,11 +25,7 @@ const PropertySchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    attached_bathrooms: {
-        type: Number,
-        required: true
-    },
-    criteria: {
+    Description: {
         type: String,
         required: true
     },
@@ -35,14 +35,6 @@ const PropertySchema = new mongoose.Schema({
     },
     price: {
         type: Number,
-        required: true
-    },
-    electricity_water_included: {
-        type: Boolean,
-        required: true
-    },
-    type: {
-        type: String,
         required: true
     },
     available : { // true if not delisted, false if delisted
