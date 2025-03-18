@@ -1,6 +1,7 @@
 const express = require(`express`);
 const Towns = require("../models/Towns"); // Model for town distances
 const Tenant = require('../models/Tenant');
+const Property = require('../models/Property');
 require(`dotenv`).config(`../.env`); // Load environment variables
 const authMiddleware = require("../middlewares/checkuser"); 
 const router = express.Router();
@@ -42,6 +43,7 @@ const SECRET_KEY = process.env.SECRET_KEY;
 
 
 
+// Searching Flatmates
 
 //Recommendation Score Formulation
 
@@ -158,11 +160,10 @@ router.get("/SearchFlatmates", authMiddleware, async (req, res) => {
     }
 });
 
-const { MongoClient } = require('mongodb');
 
-const client = new MongoClient(process.env.MONGOURI);
+// Searching Properties
 
-router.get('/SearchProperties', express.json(), async (req, res) => {  
+router.get('/SearchProperties', authMiddleware, async (req, res) => {  
     const { town, min_price, max_price, min_area, max_area, ...filters } = req.body; // Extract filters from request body
 
     if (!town) {
@@ -170,11 +171,9 @@ router.get('/SearchProperties', express.json(), async (req, res) => {
     }
 
     try {
-        await client.connect();
-        const db = client.db("mumbai_properties");
-
         // Get town data (including sorted nearest towns)
-        const townData = await db.collection("towns").findOne({ name: town });
+        const townData = await Towns.findOne({ name: town });
+        // const townData = await db.collection("towns").findOne({ name: town });
         if (!townData) return res.status(404).json({ error: "Town not found" });
 
         // Ensure nearest_towns is an array
@@ -187,15 +186,15 @@ router.get('/SearchProperties', express.json(), async (req, res) => {
         // Add price range filtering
         if (min_price || max_price) {
             query.price = {};
-            if (min_price) query.price.$gte = Number(min_price);
-            if (max_price) query.price.$lte = Number(max_price);
+            if (min_price) query.price.$gte = Number(min_price); // Use min_price in argument
+            if (max_price) query.price.$lte = Number(max_price); // Use max_price in argument
         }
 
         // Add area range filtering
         if (min_area || max_area) {
             query.area = {};
-            if (min_area) query.area.$gte = Number(min_area);
-            if (max_area) query.area.$lte = Number(max_area);
+            if (min_area) query.area.$gte = Number(min_area); // Use min_area in argument
+            if (max_area) query.area.$lte = Number(max_area); // Use max_area in argument
         }
 
         // Add other dynamic filters
@@ -206,7 +205,7 @@ router.get('/SearchProperties', express.json(), async (req, res) => {
         });
 
         // Fetch properties with filtering
-        const properties = await db.collection("properties").find(query).toArray();
+        const properties = await Property.find(query).lean();
 
         // Preserve sorting order based on nearest towns
         const sortedProperties = properties.sort((a, b) => {
@@ -217,8 +216,6 @@ router.get('/SearchProperties', express.json(), async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Internal server error" });
-    } finally {
-        await client.close();
     }
 });
 
