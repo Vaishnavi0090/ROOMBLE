@@ -1,0 +1,173 @@
+  .fce-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 30px 60px;
+    display: flex;
+    gap: 50px;
+    box-sizing: border-box;
+  }
+  
+  /* Profile Info */
+  .fce-profile-info {
+    width: 50%;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.25);
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 2.5;
+    color: #7D141D;
+    background-color: #FDE6E8;
+  }
+  
+  .fce-profile-info ul {
+    list-style: none;
+  }
+  
+  /* Right Side */
+  .fce-right-side {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* Profile Header */
+  .fce-profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    background: #7D141D;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+  
+  .fce-profile-text {
+    text-align: left;
+  }
+  
+  .fce-profile-header h3 {
+    font-size: 42px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 2px;
+    line-height: 1;
+  }
+  
+  .fce-profile-header p {
+    all: unset;
+    font-size: 28px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 0;
+    font-weight: 200;
+  }
+  
+  .fce-profile-img {
+    width: 120px;
+    height: 150px;
+    border-radius: 50%;
+    margin-left: auto;
+  }
+  
+  .fce-profile-description {
+    all: unset;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background-color: #FDE6E8;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+  }
+  
+  /* Button */
+  .fce-message-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #7D141D;
+    color: white;
+    border: 1px solid #7D141D;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .fce-message-btn:hover {
+    background-color: #7D141D;
+     transform: scale(1.05);
+    color: white;
+  }
+  
+  .fce-message-icon {
+    font-size: 18px;
+  }
+  
+  @media (max-width: 768px) {
+    .fce-container {
+        flex-direction: column;
+        padding: 20px;
+        gap: 30px;
+    }
+  
+    .fce-profile-info, .fce-right-side {
+        width: 100%;
+    }
+  
+    .fce-profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
+  
+    .fce-profile-img {
+        margin: auto;
+    }
+  
+    .fce-profile-header h3 {
+        font-size: 32px;
+    }
+  
+    .fce-profile-header p {
+        font-size: 28px;
+    }
+  
+    .fce-profile-description {
+        font-size: 18px;
+    }
+  }
+  
+  .fce-bookmark-icon {
+    font-size: 24px; /* Icon size */
+    color: rgba(0, 0, 0, 0.3); /* Light and minimal */
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+  }
+  
+  
+  .fce-bookmark-icon.filled {
+    color: #7D141D; /* Filled bookmark color */
+    transform: scale(1.1);
+  }
+  
+  .fce-bookmark-icon:hover {
+    color: #7D141D; /* Slight dark red on hover */
+    transform: scale(1.1);
+  }
+  
+  .fce-action-buttons {
+    display: flex;
+    justify-content: space-between; /* Bookmark on left, Message button on right */
+    align-items: center;
+    margin-top: auto;
+  }
