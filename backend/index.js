@@ -11,6 +11,7 @@ const View_profiles = require(`./routes/view_profiles`);
 const Deleteprofile = require(`./routes/deleteProfile`);
 const listProperty = require(`./routes/listProperty`);
 const deleteProperty = require(`./routes/deleteProperty`);
+const changePassword = require('./routes/changePassword');
 const messageRoutes = require('./routes/message');
 const cors = require(`cors`);
 const mongoconnect = require('./mongodb'); // Ensures MongoDB connects
@@ -45,6 +46,7 @@ const Tenant = require('./models/Tenant'); // Added Tenant model
 app.use(`/api/view_profiles`, View_profiles);
 app.use(`/api/Deleting_routes`, Deleteprofile);
 app.use(`/api/forgotPassword`, ForgotPassword_routes);//Send accoutnt type in the request body
+app.use(`/api/changePassword`, changePassword);
 app.use('/api/Landlord/auth', Landlord_routes_auth); // Added Landlord Routes
 app.use('/api/Tenant/auth', Tenant_routes_auth); // Added Tenant Routes
 app.use('/api/reviews', require('./routes/reviewroutes')); // Added Review Routes
