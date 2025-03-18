@@ -1,22 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import "../css/PropertyDisplay.css";
 
 const PropertyDisplay = ({ 
-  image, 
-  price, 
-  address, 
-  description, 
-  amenities, 
-  area, 
-  onDelist, 
-  onDelete 
+  images, price, address, description, amenities, area, onDelist, onDelete 
 }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? images.length - 1 : prevIndex - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex === images.length - 1 ? 0 : prevIndex + 1));
+  };
+
   return (
     <div className="property-display-container">
-      {/* Left Section - Property Image and Basic Info */}
+      {/* Left Section - Image Slider */}
       <div className="property-display-left">
         <div className="property-display-image-carousel">
-          <img src={image} alt="Property" />
+          <button className="property-display-arrow left" onClick={handlePrev}>‹</button>
+          <img src={images[currentIndex]} alt="Property" />
+          <button className="property-display-arrow right" onClick={handleNext}>›</button>
         </div>
         <div className="property-display-price">₹{price}/Month</div>
         <div className="property-display-location">{address}</div>
@@ -24,29 +29,18 @@ const PropertyDisplay = ({
 
       {/* Right Section - Property Details */}
       <div className="property-display-right">
-        {/* Description */}
         <div className="property-display-section">
           <h3>Description</h3>
           <p>{description}</p>
         </div>
-
-        {/* Amenities */}
         <div className="property-display-section">
           <h3>Amenities</h3>
-          <ul>
-            {amenities.map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ul>
+          <ul>{amenities.map((item, index) => <li key={index}>{item}</li>)}</ul>
         </div>
-
-        {/* Area */}
         <div className="property-display-section">
           <h3>Area</h3>
           <p>{area} sqft</p>
         </div>
-
-        {/* Action Buttons */}
         <div className="property-display-buttons">
           <button className="property-display-delist" onClick={onDelist}>Delist</button>
           <button className="property-display-delete" onClick={onDelete}>Delete</button>
