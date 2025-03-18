@@ -16,6 +16,8 @@ import TenantProfilePage from "./components/TenantProfilePage/TenantProfilePage.
 import TenantEditPage from "./components/TenantProfilePage/TenantEditPage.jsx";
 import BookmarkedFlatmates from "./components/BookmarkedFlatmates.jsx";
 import SignupLandlord from "./components/SignupLandlord.jsx";
+import HomePage from "./components/LandlordDashboard/HomePage.jsx"; //This is Landlord Homepage
+
 function App() {
   const [id, setID] = useState("");
   useEffect(() => {
@@ -44,6 +46,7 @@ function App() {
         <Route path="/tenant-profile-page" element={<TenantProfilePage />} />
         <Route path="/tenant-edit-page" element={<TenantEditPage />} />
         <Route path="/home" element ={<BookmarkedFlatmates/>}/>
+        <Route path="/LandlordDashboard" element ={<HomePage/>}/>
       </Routes>
     </BaseState>
   );

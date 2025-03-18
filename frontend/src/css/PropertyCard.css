@@ -1,0 +1,95 @@
+.property-card {
+    width: 100%;
+    max-width: 395px;/* Maximum width for responsiveness */
+    height: 100%;
+    max-height: 370px;
+    border-radius: 20px; /* Rounded corners */
+    background-color: #fde6e8;/* Frame color */
+    box-shadow: 0px 8px 12px rgba(0,0,0,0.2); /* Drop shadow effect */
+    overflow: hidden; /* Hides any content that overflows the card */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  
+  /* Image Section */
+  .image-container {
+    width: 100%;
+    height: 60%;
+    overflow: hidden;
+    font-size:0; /* Ensure image doesn't overflow its container */
+    box-shadow:0px 4px 10px rgba(0,0,0,0.2);
+  }
+  
+  .image-container img {
+    width: 100%;
+    height: 50%; /* Adjust height dynamically, ye auto tha pehle*/
+    object-fit: cover; /* Ensures the image fits perfectly */
+    display: block; /* Remove extra space below image */
+  }
+  
+  /* Details Section */
+  .details {
+    padding: 15px; /* Space around text content */
+    box-sizing: border-box; /* Excludes padding from element's total width and height */
+  }
+
+
+  .price {
+    color:#7d141d;
+    font-family:"DM Sans", sans-serif;
+    font-size:22px;
+    font-weight:bold;
+    margin-bottom: -6px; /* Add spacing below price, ye 5 tha */
+    margin-top: 1px;
+  }
+  
+  .description {
+    color: #000000; /* Text color for description */
+    font-family: "DM Sans", sans-serif;
+    font-size: 18px; /* Font size for description text */
+    margin-bottom: 0px; /* Add spacing below description, ye 10 tha */
+    margin-top: 8px;
+    font-weight: bold; /* Typography bold */
+  }
+  
+  .bhk {
+    color: #000000; /* Text color for BHK details */
+    font-family: "Inter", sans-serif;
+    font-size: 17px; /* Font size for BHK text */
+    margin-bottom: -8px; /* Add spacing below BHK, 15 tha */
+    margin-top: 6px;
+  }
+  
+  /* Buttons Section */
+  .buttons {
+    display: flex;
+    justify-content: space-between; /* Space between buttons horizontally */
+    padding: -8px; /*15 tha*/
+    box-sizing: content-box; /* Include padding in element's total width and height */
+    margin-bottom: 10px; /*ye nikal de*/
+    margin-right: 10px;
+  }
+  
+  .view-button,
+.delete-button {
+  padding: 10px 22px;
+  font-size: 16px;
+  font-family: "DM Sans", sans-serif;
+  background-color: #7d141d; /* Button background color */
+  color: white; /* Text color for buttons */
+  border-radius: 10px; /* Rounded corners for buttons */
+  border: none; /* Remove default border styling */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2); /* Drop shadow effect */
+}
+.view-button {
+  margin-left: 188px; /* Adjust this value to move the button further right */
+}
+
+/* Hover Effects for Buttons */
+.view-button:hover,
+.delete-button:hover {
+  background-color: #a51b27; /* Darker shade on hover */
+}
