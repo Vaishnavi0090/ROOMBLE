@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../css/Navbar.css'
 import { useContext } from 'react'
 import { Basecontext } from '../context/base/Basecontext'
@@ -7,7 +7,10 @@ import { Link } from 'react-router-dom';
 
 export const Navbar = () => {
   const state = useContext(Basecontext)
-  // console.log(state)
+  const {user, setUser, fetuser} = state
+  fetuser()
+  // useEffect(()=>{console.log(user)}, [user])
+
 
   return (
     <div className="navbar">
@@ -29,7 +32,11 @@ export const Navbar = () => {
         <button className='login-btn'><Link to="/login">Login</Link></button>
         <button className='signup-btn'><Link to="/signup-tenant">Sign Up</Link></button>
         </>:
-        <img src="/user.png" alt="account" className='account-img'/>
+        // <a href= " if user type is tenant then /tenant-profile-page else /landlord-profile-page" className='account-img'>
+        <a href= {user.type=='tenant'?"/tenant-profile-page":"/landlord-profile-page"}>
+          <img src="/user.png" alt="account" className='account-img'/>
+        </a>
+        // <img src="/user.png" alt="account" className='account-img'/>
         }
       </div>
     </div>

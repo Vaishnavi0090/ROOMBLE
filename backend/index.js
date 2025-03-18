@@ -58,6 +58,7 @@ app.use(`/api/listproperty`, listProperty);
 app.use(`/api/deleteproperty`, deleteProperty);
 app.use('/api/changeEmail',changeEmail);
 app.use('/messages', messageRoutes(io, onlineUsers));
+app.use('/api/auth', require('./routes/getuser'));
 
 // Default Route
 app.get('/', (req, res) => {
