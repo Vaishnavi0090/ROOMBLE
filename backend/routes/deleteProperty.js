@@ -4,13 +4,16 @@ const Landlord = require("../models/Landlord");
 const Property = require("../models/Property");
 const authMiddleware = require("../middlewares/checkuser");
 
-
-
-// authtoken,accounttyep in header, and property id in the call
 router.delete("/deleteProperty/:propertyId", authMiddleware, async (req, res) => {
     try {
         const landlordId = req.user.id;
         const propertyId = req.params.propertyId;
+
+        if (!mongoose.Types.ObjectId.isValid(propertyId)) {
+            console.log(`!!!!INVALID ID FOUND!!!!!`);
+            console.log(id);
+            return res.status(400).json({ error: `${id} is invalid ID` });
+        }
 
         const landlord = await Landlord.findById(landlordId);
         if (!landlord) {

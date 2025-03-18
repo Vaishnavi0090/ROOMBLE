@@ -1,0 +1,204 @@
+/* Main Container */
+.property-display-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    background-color: white; /* Light pink background */
+    border-radius: 10px;
+}
+
+/* Left Section */
+.property-display-left {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Property Image - Placeholder for carousel */
+.property-display-image-carousel {
+    position: relative;
+    width: 100%;
+    max-height: 500px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.property-display-image-carousel img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Star Rating */
+.property-display-rating {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #FFD700; /* Gold color for rating */
+}
+
+/* Property Price */
+.property-display-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #7D141D;
+    margin-top: 10px;
+}
+
+/* Property Location */
+.property-display-location {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: black;
+    margin-top: 5px;
+}
+
+/* Right Section */
+.property-display-right {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Section Titles */
+.property-display-section h3 {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #7D141D;
+    margin-bottom: 5px;
+}
+
+/* Description & Amenities */
+.property-display-section p {
+    font-size: 1rem;
+    color: black;
+    line-height: 1.5;
+}
+
+.property-display-section ul {
+    padding-left: 20px;
+}
+
+.property-display-section ul li {
+    font-size: 1rem;
+    color: black;
+    line-height: 1.5;
+}
+
+/* Area Text */
+.property-display-section p {
+    font-size: 1.1rem;
+    
+    color: black;
+}
+
+/* Buttons */
+.property-display-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.property-display-buttons button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+}
+
+/* Delist Button */
+.property-display-delist {
+    background-color: #7D141D;
+}
+
+.property-display-delist:hover {
+    background-color: #A4161A;
+}
+
+/* Delete Button */
+.property-display-delete {
+    background-color: #7D141D;
+}
+
+.property-display-delete:hover {
+    background-color: #A4161A;
+}
+
+/* Image Carousel - Add Arrows for Navigation */
+.property-display-image-carousel {
+    position: relative;
+    width: 100%;
+    max-height: 500px;
+    overflow: hidden;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Images inside the Carousel */
+.property-display-image-carousel img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Left & Right Navigation Arrows */
+.property-display-arrow {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    transition: background 0.3s ease;
+}
+
+.property-display-arrow.left {
+    left: 10px;
+}
+
+.property-display-arrow.right {
+    right: 10px;
+}
+
+.property-display-arrow:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+/* Optional: Add Dots Navigation Below the Image */
+.property-display-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.property-display-dot {
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    background: gray;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.property-display-dot.active {
+    background: #7D141D; /* Active dot color */
+}

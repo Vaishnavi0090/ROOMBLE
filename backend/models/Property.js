@@ -44,7 +44,12 @@ const PropertySchema = new mongoose.Schema({
     type: {
         type: String,
         required: true
-    }
+    },
+    available : { // true if not delisted, false if delisted
+        type : Boolean,
+        required : false,
+        default : true
+    },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Property', PropertySchema);

@@ -9,6 +9,9 @@ const Searching_Routes = require(`./routes/Searching_Routes`)
 const BookMark_Routes = require(`./routes/Bookmark`);
 const View_profiles = require(`./routes/view_profiles`);
 const Deleteprofile = require(`./routes/deleteProfile`);
+const listProperty = require(`./routes/listProperty`);
+const deleteProperty = require(`./routes/deleteProperty`);
+const messageRoutes = require('./routes/message');
 const cors = require(`cors`);
 const mongoconnect = require('./mongodb'); // Ensures MongoDB connects
 const { MongoClient } = require("mongodb");
@@ -47,7 +50,9 @@ app.use('/api/Tenant/auth', Tenant_routes_auth); // Added Tenant Routes
 app.use('/api/reviews', require('./routes/reviewroutes')); // Added Review Routes
 app.use(`/api/Search_Routes`, Searching_Routes);//Searching routes, add logic for searching properties also here only
 app.use(`/api/BookMarking_Routes`, BookMark_Routes);
-const messageRoutes = require('./routes/message');
+app.use(`/api/DeleteProperty`, deleteProperty);
+app.use(`/api/listproperty`, listProperty);
+app.use(`/api/deleteproperty`, deleteProperty);
 app.use('/messages', messageRoutes(io, onlineUsers));
 
 // Default Route
@@ -55,42 +60,6 @@ app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
-// Search Route
-// app.use('/search/', require('./routes/search'));
-// Auth routes
-// app.use(`/authenticateLandlord`, Landlord_routes_auth);
-// app.use('/authenticateTenant', Tenant_routes_auth);
-
-
-// const client = new MongoClient(process.env.MONGOURI);
-
-// app.get("/properties/:town", async (req, res) => {
-//     const town = req.params.town;
-//     try {
-//       await client.connect();
-//       const db = client.db("mumbai_properties");
-  
-//       // Get town data (including sorted nearest towns)
-//       const townData = await db.collection("towns").findOne({ name: town });
-//       if (!townData) return res.status(404).json({ error: "Town not found" });
-  
-//       // Ensure nearest_towns is an array
-//       const nearestTowns = Array.isArray(townData?.nearest_towns) ? townData.nearest_towns : [];
-//       const queryTowns = [town, ...nearestTowns];
-  
-//       // Fetch properties from all relevant towns
-//       const properties = await db.collection("properties").find({ town: { $in: queryTowns } }).toArray();
-  
-//       // Sorting: Ensure properties from the main town come first
-//       const sortedProperties = properties.sort((a, b) => {
-//         return queryTowns.indexOf(a.town) - queryTowns.indexOf(b.town);
-//       });
-  
-//       res.json(sortedProperties);
-//     } finally {
-//       await client.close();
-//     }
-//   });
 
 // Start server
 const PORT = process.env.PORT || 5000;
