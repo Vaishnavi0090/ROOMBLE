@@ -66,30 +66,35 @@ function SearchFlatmatesFilter() {
 
             {/* Yes/No Checkbox Filters */}
             <div className="filter-options">
-                {[
-                    { label: "Smoke/drink?", key: "smokeDrink" },
-                    { label: "Pets?", key: "pets" },
-                    { label: "Eat non-veg?", key: "eatNonVeg" },
-                    { label: "Day time worker?", key: "dayWorker" }
-                ].map((filter) => (
-                    <div key={filter.key} className="filter-row">
-                        <label>{filter.label}</label>
+    {[
+        { label: "Smoke/drink?", key: "smokeDrink" },
+        { label: "Pets?", key: "pets" },
+        { label: "Eat non-veg?", key: "eatNonVeg" },
+        { label: "Day time worker?", key: "dayWorker" }
+    ].map((filter) => (
+            <div key={filter.key} className="filter-row">
+                <span className="filter-label">{filter.label}</span>
+                <div className="filter-choices">
+                    <label>
                         <input 
                             type="checkbox" 
                             checked={filters[filter.key] === true} 
                             onChange={() => handleFilterChange(filter.key, true)} 
                         />
-                        <label>Yes</label>
+                        Yes
+                    </label>
+                    <label>
                         <input 
                             type="checkbox" 
                             checked={filters[filter.key] === false} 
                             onChange={() => handleFilterChange(filter.key, false)} 
                         />
-                        <label>No</label>
-                    </div>
-                ))}
+                        No
+                    </label>
+                </div>
             </div>
-
+        ))}
+    </div>
             <div className="search-prop-buttons">
                 <button onClick={handleApplyChanges}>Apply</button>
                 <button onClick={handleClearChanges}>Clear filters</button>

@@ -10,7 +10,7 @@ import SignUpPage from "./components/SignUp";
 import Login from "./components/Login.jsx";
 import AddProperty from "./components/AddProperty.jsx";
 import FindProperty from "./components/FindProperty.jsx";
-import FindFlatmate from "./components/FindFlatmate.jsx";
+import FindFlatmate from "./components/FindFlatmateComponents/FindFlatmate.jsx";
 import OTPPage from "./components/OTPPage/OTPPage.jsx";
 import TenantProfilePage from "./components/TenantProfilePage/TenantProfilePage.jsx";
 import TenantEditPage from "./components/TenantProfilePage/TenantEditPage.jsx";
