@@ -197,6 +197,16 @@ router.get('/SearchProperties', authMiddleware, async (req, res) => {
             if (max_area) query.area.$lte = Number(max_area); // Use max_area in argument
         }
 
+        // Handle BHK filtering
+        if (bhk) {
+            if (bhk === "more") {
+                query.bhk = { $gt: 3 }; // More than 3 BHK
+            } else {
+                const bhkNumber = Number(bhk);
+                if (!isNaN(bhkNumber)) query.bhk = bhkNumber; // Exact match for 1, 2, 3 BHK
+            }
+        }
+
         // Add other dynamic filters
         Object.keys(filters).forEach(key => {
             if (filters[key] !== undefined && filters[key] !== "") {
