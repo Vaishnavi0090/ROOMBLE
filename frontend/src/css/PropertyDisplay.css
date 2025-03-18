@@ -134,3 +134,71 @@
 .property-display-delete:hover {
     background-color: #A4161A;
 }
+
+/* Image Carousel - Add Arrows for Navigation */
+.property-display-image-carousel {
+    position: relative;
+    width: 100%;
+    max-height: 500px;
+    overflow: hidden;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Images inside the Carousel */
+.property-display-image-carousel img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Left & Right Navigation Arrows */
+.property-display-arrow {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    transition: background 0.3s ease;
+}
+
+.property-display-arrow.left {
+    left: 10px;
+}
+
+.property-display-arrow.right {
+    right: 10px;
+}
+
+.property-display-arrow:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+/* Optional: Add Dots Navigation Below the Image */
+.property-display-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.property-display-dot {
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    background: gray;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.property-display-dot.active {
+    background: #7D141D; /* Active dot color */
+}

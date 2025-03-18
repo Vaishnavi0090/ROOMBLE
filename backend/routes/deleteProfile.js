@@ -133,7 +133,7 @@ router.post(`/deleteInitiate`, async (req, res) => {
   }
 });
 
-//send email,accounttype and Entered_OTP
+//send email,accounttype and Entered_OTP in body and token in header
 router.post(`/enterOTPtoDelete`, authMiddleware, async (req, res) => {
   try {
     let userEmail = req.user.email;

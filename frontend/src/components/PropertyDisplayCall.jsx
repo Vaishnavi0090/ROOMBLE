@@ -1,8 +1,9 @@
 import PropertyDisplay from "../components/PropertyDisplay";
 import sampleImage from "../../public/property-img.png"; 
+import image from "../../public/logo.png";
 
 const propertyData = {
-  image: sampleImage,
+  images: [sampleImage,sampleImage,sampleImage,image],
   price: 7000,
   address: "6958 Sanket’s Palace, Kota, Rajasthan",
   description: "This modern and well-lit 2BHK apartment offers a comfortable living...",
