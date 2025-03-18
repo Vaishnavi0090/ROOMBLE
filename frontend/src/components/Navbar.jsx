@@ -27,7 +27,7 @@ export const Navbar = () => {
         {state.user.type=='none'?
         <>
         <button className='login-btn'><Link to="/login">Login</Link></button>
-        <button className='signup-btn'><Link to="/signup">Sign Up</Link></button>
+        <button className='signup-btn'><Link to="/signup-tenant">Sign Up</Link></button>
         </>:
         <img src="/user.png" alt="account" className='account-img'/>
         }

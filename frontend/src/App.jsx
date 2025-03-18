@@ -15,6 +15,7 @@ import OTPPage from "./components/OTPPage/OTPPage.jsx";
 import TenantProfilePage from "./components/TenantProfilePage/TenantProfilePage.jsx";
 import TenantEditPage from "./components/TenantProfilePage/TenantEditPage.jsx";
 import BookmarkedFlatmates from "./components/BookmarkedFlatmates.jsx";
+import SignupLandlord from "./components/SignupLandlord.jsx";
 function App() {
   const [id, setID] = useState("");
   useEffect(() => {
@@ -33,7 +34,8 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/messages" element={<Messages />} />
-        <Route path="/signup" element={<SignUpPage setID={setID} />} />
+        <Route path="/signup-tenant" element={<SignUpPage setID={setID} />} />
+        <Route path="/signup-landlord" element={<SignupLandlord />} />
         <Route path="/login" element={<Login />} />
         <Route path="/add-property" element={<AddProperty />} />
         <Route path="/find-property" element={<FindProperty />} />

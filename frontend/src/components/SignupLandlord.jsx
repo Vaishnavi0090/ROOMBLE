@@ -1,25 +1,25 @@
 import React from "react";
 import "../css/SignupLandlord.css";
-import logo from '../../public/logo.png'
+import logo from '../../public/logo.png';
 
 function SignupLandlord() {
   return (
-    <div className="container">
+    <div className="signup-landlord-container">
       {/* Left Section */}
-      <div className="left-section">
+      <div className="signup-landlord-left-section">
         <img
-          src=".jpg"
+          src={logo}
           alt="Roomble Logo"
-          className="logo"
+          className="signup-landlord-logo"
         />
       </div>
 
       {/* Right Section */}
-      <div className="right-section">
-        <h1 className="signup-title">Signup as a Landlord</h1>
+      <div className="signup-landlord-right-section">
+        <h1 className="signup-landlord-title">Signup as a Landlord</h1>
 
         {/* Form */}
-        <form>
+        <form className="signup-landlord-form">
           <label>Your Good Name</label>
           <input type="text" placeholder="name" />
 
@@ -33,13 +33,13 @@ function SignupLandlord() {
           <input type="password" placeholder="***************" />
 
           {/* Sign Up Button */}
-          <button type="submit" className="signup-button">
+          <button type="submit" className="signup-landlord-button">
             Sign Up
           </button>
         </form>
 
         {/* Footer Text */}
-        <p className="footer-text">
+        <p className="signup-landlord-footer-text">
           With Roomble, you’ll stumble on the perfect place to rumble!
         </p>
       </div>

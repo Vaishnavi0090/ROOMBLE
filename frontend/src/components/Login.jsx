@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "../css/Login.css";
 import logo from "../../public/logo.png"; // Vite uses '/' for public assets
 
@@ -135,7 +135,7 @@ const Login = () => {
                 </div>
 
                 <p className="register-text">
-                    Not Registered Yet? <a href="/signup">Create an account</a>
+                    Not Registered Yet? <Link to={isLandlord ? "/signup-landlord" : "/signup-tenant"}>Create an account</Link>
                 </p>
                 <p className="footer-text">
                     With Roomble, you'll stumble on the perfect place to rumble!
