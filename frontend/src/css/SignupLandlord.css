@@ -7,24 +7,18 @@
   --gray: #696969;
 }
 
-/* Global Styles */
-body {
-  margin: 0;
-  font-family: "Nunito Sans", sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
-
-.container {
+.signup-landlord-container {
   display: flex;
   width: 100%;
   height: 100vh;
+  font-family: "Nunito Sans", sans-serif;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
 }
 
 /* Left Section */
-.left-section {
+.signup-landlord-left-section {
   flex: 1;
   background-color: var(--white);
   display: flex;
@@ -33,13 +27,13 @@ body {
   padding: 20px;
 }
 
-.logo {
+.signup-landlord-logo {
   max-width: 80%;
   max-height: 80%;
 }
 
 /* Right Section */
-.right-section {
+.signup-landlord-right-section {
   flex: 1;
   background-color: var(--blush-pink);
   padding: 30px;
@@ -52,7 +46,7 @@ body {
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.signup-title {
+.signup-landlord-title {
   font-size: 20px;
   font-weight: bold;
   color: var(--black);
@@ -61,20 +55,20 @@ body {
 }
 
 /* Form Styles */
-form {
+.signup-landlord-form {
   display: flex;
   flex-direction: column;
   align-items: stretch;
 }
 
-form label {
+.signup-landlord-form label {
   font-size: 14px;
   font-weight: 600;
   color: var(--gray);
   margin-bottom: 5px;
 }
 
-form input {
+.signup-landlord-form input {
   font-size: 14px;
   font-weight: normal;
   padding: 10px;
@@ -85,7 +79,7 @@ form input {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.signup-button {
+.signup-landlord-button {
   background-color: var(--crimson-red);
   color: var(--white);
   font-size: 18px;
@@ -99,7 +93,7 @@ form input {
 }
 
 /* Footer Text */
-.footer-text {
+.signup-landlord-footer-text {
   font-size: 15px;
   font-weight: 600;
   color: var(--crimson-red);
@@ -109,33 +103,33 @@ form input {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .container {
+  .signup-landlord-container {
     flex-direction: column;
   }
 
-  .left-section,
-  .right-section {
+  .signup-landlord-left-section,
+  .signup-landlord-right-section {
     flex: none;
     width: 100%;
   }
 
-  .right-section {
+  .signup-landlord-right-section {
     padding: 20px;
     border-radius: 0;
   }
 
-  .signup-title {
+  .signup-landlord-title {
     font-size: 28px;
     text-align: center;
   }
 
-  .footer-text {
+  .signup-landlord-footer-text {
     font-size: 20px;
   }
 }
 
-/* hover */
-button {
+/* Hover */
+.signup-landlord-button {
   background-color: #7d141d;
   color: white;
   padding: 10px 20px;
@@ -144,6 +138,6 @@ button {
   transition: background-color 0.3s;
 }
 
-button:hover {
-  background-color: #b3121d; 
+.signup-landlord-button:hover {
+  background-color: #b3121d;
 }
