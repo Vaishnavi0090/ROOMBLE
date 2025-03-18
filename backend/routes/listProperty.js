@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router();
-const Laandlord = require("../models/Landlord")
+const Landlord = require("../models/Landlord")
 const Property = require("../models/Property")
 const authMiddleware = require("../middlewares/checkuser");
 
@@ -9,9 +9,9 @@ router.post("/listProperty",authMiddleware, async(req,res)=>{
         const landlordId = req.user.id;
         const propertyData = req.body;
 
-        const requiredFields = ["name","town","address","area","bhk","attached_bathrooms","criteria","price","electricity_water_included","type"
+        const requiredFields = ["name","town","address","area","bhk","attached_bathrooms","criteria","price","electricity_water_included","type","amenties"
         ];
-        const missingFields = requiredFields.filter(field => !propertyData[field]);
+        const missingFields = requiredFields.filter(field => (propertyData[field] == undefined));
 
         if(missingFields.length>0){
             return res.status(400).json({
@@ -78,4 +78,5 @@ router.post("/listProperty",authMiddleware, async(req,res)=>{
         })
     }
 });
+
 module.exports = router;

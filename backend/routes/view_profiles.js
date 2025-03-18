@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken"); // JWT for token authentication
 const bcrypt = require(`bcrypt`);
 const Tenant = require("../models/Tenant");
 const Landlord = require(`../models/Landlord`);
+const Property = require(`../models/Property`)
 const mongoose = require(`mongoose`);
 const router = express.Router();
 require(`dotenv`).config(`../.env`); // Load environment variables
@@ -12,12 +13,12 @@ const SECRET_KEY = process.env.SECRET_KEY;
 
 /* Contains routes for viewing Self profile and other peoples profile */
 
-//Send just autthoken and accounttype in header and accounttype
+//Send just autthoken and accounttype in header
 router.post(`/Self_profile`, authMiddleware, async (req,res) => {
     try{
 
         let userid = req.user.id;
-        let accountType = req.body.accounttype;
+        let accountType = req.header(`accounttype`);
         let user;
         if(accountType === `tenant`){
             user = await Tenant.findById(userid);
@@ -30,6 +31,7 @@ router.post(`/Self_profile`, authMiddleware, async (req,res) => {
 
             return res.status(200).json({
                 success : true,
+                id : user._id,
                 name : user.name,
                 email : user.email, 
                 locality : user.locality,
@@ -41,6 +43,29 @@ router.post(`/Self_profile`, authMiddleware, async (req,res) => {
             })
         }
         else if(accountType === `landlord`){
+            user = await Landlord.findById(userid);
+            if(!user){
+                return res.status(404).json({
+                    success : false,
+                    message : "Account not found"
+                })
+            }
+            
+            let properyData = [];
+            for (let propid of user.propertyList){
+                let prop = await Property.findById(propid);
+                if(prop){
+                    properyData.push(prop);
+                }
+            }
+
+            return res.status(200).json({
+                success : true,
+                name : user.name,
+                email : user.email,
+                message : `This user owns ${properyData.length} properties.`,
+                Properties : properyData
+            })
 
         } else {
             return res.status(400).json({
@@ -57,7 +82,7 @@ router.post(`/Self_profile`, authMiddleware, async (req,res) => {
     }
 })
 
-router.post(`/other_profiles/` , authMiddleware , async (req, res) => {
+router.post(`/other_users` , authMiddleware , async (req, res) => {
     try {
         let { requested_id, accounttype } = req.body;
         let user;
@@ -77,6 +102,7 @@ router.post(`/other_profiles/` , authMiddleware , async (req, res) => {
             else{
                 return res.status(200).json({
                     success : true,
+                    id : user._id,
                     name : user.name,
                     locality : user.locality,
                     gender : user.gender,
@@ -87,6 +113,29 @@ router.post(`/other_profiles/` , authMiddleware , async (req, res) => {
                 })
             }
         } else if(accounttype === `landlord`){
+            user = await Landlord.findById(requested_id);
+            if(!user){
+                return res.status(404).json({
+                    success : false,
+                    message : "Account not found"
+                })
+            }
+            
+            let properyData = [];
+            for (let propid of user.propertyList){
+                let prop = await Property.findById(propid);
+                if(prop){
+                    properyData.push(prop);
+                }
+            }
+
+            return res.status(200).json({
+                success : true,
+                name : user.name,
+                email : user.email,
+                message : `This user owns ${properyData.length} properties.`,
+                Properties : properyData
+            })
 
         } else {
             return res.status(400).json({

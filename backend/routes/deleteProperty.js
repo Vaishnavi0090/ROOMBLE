@@ -4,10 +4,16 @@ const Landlord = require("../models/Landlord");
 const Property = require("../models/Property");
 const authMiddleware = require("../middlewares/checkuser");
 
-router.delete("/delistProperty/:propertyId", authMiddleware, async (req, res) => {
+router.delete("/deleteProperty/:propertyId", authMiddleware, async (req, res) => {
     try {
         const landlordId = req.user.id;
         const propertyId = req.params.propertyId;
+
+        if (!mongoose.Types.ObjectId.isValid(propertyId)) {
+            console.log(`!!!!INVALID ID FOUND!!!!!`);
+            console.log(id);
+            return res.status(400).json({ error: `${id} is invalid ID` });
+        }
 
         const landlord = await Landlord.findById(landlordId);
         if (!landlord) {
@@ -38,7 +44,7 @@ router.delete("/delistProperty/:propertyId", authMiddleware, async (req, res) =>
 
         return res.status(200).json({
             success: true,
-            message: "Property delisted successfully",
+            message: "Property deleted successfully",
         });
     } catch (error) {
         console.error("Unexpected Error: ", error);
