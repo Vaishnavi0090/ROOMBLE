@@ -4,7 +4,10 @@ const Landlord = require("../models/Landlord");
 const Property = require("../models/Property");
 const authMiddleware = require("../middlewares/checkuser");
 
-router.delete("/delistProperty/:propertyId", authMiddleware, async (req, res) => {
+
+
+// authtoken,accounttyep in header, and property id in the call
+router.delete("/deleteProperty/:propertyId", authMiddleware, async (req, res) => {
     try {
         const landlordId = req.user.id;
         const propertyId = req.params.propertyId;
@@ -38,7 +41,7 @@ router.delete("/delistProperty/:propertyId", authMiddleware, async (req, res) =>
 
         return res.status(200).json({
             success: true,
-            message: "Property delisted successfully",
+            message: "Property deleted successfully",
         });
     } catch (error) {
         console.error("Unexpected Error: ", error);

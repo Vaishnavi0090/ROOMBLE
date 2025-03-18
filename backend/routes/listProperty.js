@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router();
-const Laandlord = require("../models/Landlord")
+const Landlord = require("../models/Landlord")
 const Property = require("../models/Property")
 const authMiddleware = require("../middlewares/checkuser");
 
