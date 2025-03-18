@@ -9,6 +9,7 @@ function AddProperty() {
         bhk: "",
         area: "",
         rent: "",
+        city: "",
         location: "",
         address: "",
         amenities: "",
@@ -29,6 +30,7 @@ function AddProperty() {
         if (!formData.area || isNaN(formData.area)) newErrors.area = "Area is required and must be a number.";
         if (!formData.rent || isNaN(formData.rent)) newErrors.rent = "Rent is required and must be a number.";
         if (!formData.address.trim()) newErrors.address = "Address is required.";
+        if (!formData.city) newErrors.city = "Please select a city.";
         if (!formData.location) newErrors.location = "Please select a location.";
 
         setErrors(newErrors);
@@ -95,6 +97,19 @@ function AddProperty() {
                         placeholder="Enter Rent"
                     />
                     {errors.rent && <p className="addProp-form-error">{errors.rent}</p>}
+                </div>
+                <div className={"form-item City-container"}>
+                    <h4 style={{color:"#7D141D"}}>City *</h4>
+                    <select
+                        value={formData.city}
+                        onChange={(e) => updateFormData("city", e.target.value)}
+                    >
+                        <option value="">Select City</option>
+                        <option value="City1">Mumbai</option>
+                        <option value="City2">Bengaluru</option>
+                        <option value="City2">Delhi</option>
+                    </select>
+                    {errors.city && <p className="addProp-form-error">{errors.city}</p>}
                 </div>
                 <div className={"form-item Location-container"}>
                     <h4 style={{color:"#7D141D"}}>Location *</h4>

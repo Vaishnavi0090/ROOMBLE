@@ -111,42 +111,49 @@ const createReview = async (req, res) => {
  */
 const getReviewsForUser = async (req, res) => {
     try {
-        const revieweeId = new mongoose.Types.ObjectId(req.params.id);
-
+        console.log("Request body:", req.body);
+        const revieweeId = new mongoose.Types.ObjectId(req.body.id);
+        console.log("Looking for user with ID:", revieweeId);
+        
         // First, try to find the user in Tenant collection
         let user = await Tenant.findById(revieweeId);
         let userType = 'Tenant';
         
         // If not found in Tenant, check Landlord collection
         if (!user) {
+            console.log("Not found in Tenant, checking Landlord");
             user = await Landlord.findById(revieweeId);
             userType = 'Landlord';
             
             if (!user) {
+                console.log("User not found in any collection");
                 return res.status(404).json({ 
                     success: false,
                     message: "User not found" 
                 });
             }
         }
+        
+        console.log("Found user:", user.name, "Type:", userType);
 
         // Check if user has any reviews
         if (!user.reviews || user.reviews.length === 0) {
-            return res.status(404).json({ 
-                success: false,
-                message: "No reviews found for this user" 
+            // Return success but with empty reviews array
+            console.log("User has no reviews");
+            return res.status(200).json({ 
+                success: true,
+                userType,
+                message: "No reviews found for this user",
+                reviews: []
             });
         }
 
-        // For backwards compatibility, also fetch from Review collection
-        // REMOVED: const oldReviews = await Review.find({ reviewee: revieweeId });
-        
         // Return ONLY reviews from user document
+        console.log("Returning", user.reviews.length, "reviews");
         res.status(200).json({
             success: true,
             userType,
             reviews: user.reviews
-            // No longer including legacyReviews
         });
 
     } catch (error) {
