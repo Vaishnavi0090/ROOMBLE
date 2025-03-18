@@ -3,8 +3,16 @@ import { useState, useRef } from "react";
 import logo from "../../../public/sampleUser_img.png";
 import "../../css/TenantProfilePageStyles/TenantProfilePage.css"; // Import the CSS specific to this component
 import { useNavigate } from "react-router-dom";
+import { useContext } from 'react'
+import { Basecontext } from '../../context/base/Basecontext'
+
 export default function TenantProfilePage() {
   const navigate = useNavigate();
+
+  const state = useContext(Basecontext)
+  const {user, setUser, fetuser} = state
+  fetuser()
+
   const handleSubmit = () => {
     navigate("/tenant-edit-page");
   };
@@ -33,7 +41,7 @@ export default function TenantProfilePage() {
             <p>
               <span>Full Name </span>
               <span>:</span>
-              <span> Alexa Rawles</span>
+              <span>{state.user.name}</span>
             </p>
           </div>
           <div className="tenant-profile-mail">

@@ -19,6 +19,8 @@ import SignupLandlord from "./components/SignupLandlord.jsx";
 import PropertyDisplayCall from "./components/PropertyDisplayCall.jsx";
 import FlatmateCardExpand from "./components/FlatmateCardExpand.jsx";
 
+import HomePage from "./components/LandlordDashboard/HomePage.jsx"
+
 function App() {
   const [id, setID] = useState("");
   useEffect(() => {
@@ -49,6 +51,7 @@ function App() {
         <Route path="/home" element ={<BookmarkedFlatmates/>}/>
         <Route path="/prop-display" element ={<PropertyDisplayCall/>}/>
         <Route path="/flatmate-card-expand" element ={<FlatmateCardExpand/>}/>
+        <Route path="/landlord-dashboard" element ={<HomePage/>}/>
       </Routes>
     </BaseState>
   );

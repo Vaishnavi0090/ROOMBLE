@@ -6,8 +6,8 @@ const router = express.Router();
 // Create a new review
 router.post('/', createReview);
 
-// Get all reviews for a user (Tenant/Landlord)
-router.get('/reviewee/:id', getReviewsForUser);
+// Get all reviews for a user (Tenant/Landlord) - CHANGED FROM GET TO POST
+router.post('/reviewee', getReviewsForUser);
 
 // Update a review
 router.put('/review/:reviewId', updateReview);

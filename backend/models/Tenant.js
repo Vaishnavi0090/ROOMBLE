@@ -5,6 +5,10 @@ const TenantSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    type: {
+        type: String,
+        default: 'tenant'
+    },
     email: {
         type: String,
         required: true,
