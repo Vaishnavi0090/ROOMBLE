@@ -13,8 +13,12 @@ const Tenant = require(`../models/Tenant`);
 const { Landlord_OTP, Tenant_OTP } = require(`../models/OTP_models`);
 
 async function Hashpassword(plainPassword) {
-  const saltRounds = 10;
-  return await bcrypt.hash(plainPassword, saltRounds);
+  try {
+    const saltRounds = 10;
+    return await bcrypt.hash(plainPassword, saltRounds);
+  } catch (error) {
+    throw new Error('Password hashing failed');
+  }
 }
 
 //Send accountType and email in the request body
@@ -194,8 +198,17 @@ router.post(`/ChangePassword`, authMiddleware, async (req, res) => {
     let useremail = req.user.email;
     let newPassword = req.body.newPassword;
     let oldPassword = req.body.oldPassword;
-    const Hashedpassword = await Hashpassword(newPassword);
     let accounttype = req.body.accounttype;
+
+    if (!newPassword || !oldPassword || !accounttype) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing required fields",
+      });
+    }
+
+    const Hashedpassword = await Hashpassword(newPassword);
+    
     if (accounttype === `tenant`) {
       let user = await Tenant_OTP.findOne({ email: useremail });
       if (!user) {
@@ -210,21 +223,23 @@ router.post(`/ChangePassword`, authMiddleware, async (req, res) => {
           message: "Not Authorized to make changes",
         });
       }
+      let tenant_user = await Tenant.findOne({ email: useremail });
       const isMatch = await bcrypt.compare(oldPassword, tenant_user.password);
       if (!isMatch) {
         return res.status(400).json({
           success: false,
           message: "Old password is incorrect",
         });
-      } else {
-        let tenant_user = await Tenant.findOne({ email: useremail });
-        tenant_user.password = Hashedpassword;
-        await tenant_user.save();
-        return res.status(200).json({
-          success: true,
-          message: "Successfully updated",
-        });
       }
+      
+      tenant_user.password = Hashedpassword;
+      await tenant_user.save();
+      await Tenant_OTP.deleteOne({ email: useremail }); // Cleanup OTP record
+      
+      return res.status(200).json({
+        success: true,
+        message: "Successfully updated",
+      });
     } else if (accounttype === `landlord`) {
       let user = await Landlord_OTP.findOne({ email: useremail });
       if (!user) {
@@ -232,28 +247,30 @@ router.post(`/ChangePassword`, authMiddleware, async (req, res) => {
           success: false,
           message: "OTP not found / OTP expired",
         });
-      }
+      }y
       if (user.Allow_changes === false) {
         return res.status(401).json({
           success: false,
           message: "Not Authorized to make changes",
         });
       }
-      const isMatch = await bcrypt.compare(oldPassword, tenant_user.password);
+      let landlord_user = await Landlord.findOne({ email: useremail });
+      const isMatch = await bcrypt.compare(oldPassword, landlord_user.password);
       if (!isMatch) {
         return res.status(400).json({
           success: false,
           message: "Old password is incorrect",
         });
-      } else {
-        let landlord_user = Landlord.findOne({ email: useremail });
-        landlord_user.password = Hashedpassword;
-        await landlord_user.save();
-        return res.status(404).json({
-          success: true,
-          message: "Successfully updated",
-        });
       }
+      
+      landlord_user.password = Hashedpassword;
+      await landlord_user.save();
+      await Landlord_OTP.deleteOne({ email: useremail }); // Cleanup OTP record
+      
+      return res.status(200).json({  // Fixed status code from 404 to 200
+        success: true,
+        message: "Successfully updated",
+      });
     }
   } catch (error) {
     console.log(error);
