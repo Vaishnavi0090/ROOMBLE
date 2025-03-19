@@ -62,7 +62,7 @@ const Login = () => {
                     localStorage.removeItem("rememberedUserType");
                 }
 
-                navigate("/dashboard");
+                navigate("/home");
                 window.location.reload();
             } else {
                 setError(data.message || "Invalid login credentials");

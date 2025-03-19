@@ -17,6 +17,8 @@ import TenantEditPage from "./components/TenantProfilePage/TenantEditPage.jsx";
 import BookmarkedFlatmates from "./components/BookmarkedFlatmates.jsx";
 import SignupLandlord from "./components/SignupLandlord.jsx";
 import PropertyDisplayCall from "./components/PropertyDisplayCall.jsx";
+import FlatmateCardExpand from "./components/FlatmateCardExpand.jsx";
+
 import HomePage from "./components/LandlordDashboard/HomePage.jsx"
 
 function App() {
@@ -48,6 +50,7 @@ function App() {
         <Route path="/tenant-edit-page" element={<TenantEditPage />} />
         <Route path="/home" element ={<BookmarkedFlatmates/>}/>
         <Route path="/prop-display" element ={<PropertyDisplayCall/>}/>
+        <Route path="/flatmate-card-expand" element ={<FlatmateCardExpand/>}/>
         <Route path="/landlord-dashboard" element ={<HomePage/>}/>
       </Routes>
     </BaseState>
