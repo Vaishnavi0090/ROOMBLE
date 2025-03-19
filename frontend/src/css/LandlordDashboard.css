@@ -35,12 +35,19 @@
   /* Responsive adjustments */
  
    
-   .property-cards-container {
-    display:flex;
-    gap:20px;
-    margin-top:20px;
-    padding-bottom:30px;
-    flex-wrap:wrap;
-    justify-content:center;
-  }
+  .property-cards-container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(300px, 1fr)); /* Max 3 cards per row */
+    gap: 10px;
+    margin-top: 20px;
+    padding-bottom: 30px;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.property-card{
+  max-width : 395px;
+}
+
    
