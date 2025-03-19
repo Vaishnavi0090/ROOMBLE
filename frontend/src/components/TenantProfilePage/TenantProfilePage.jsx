@@ -16,6 +16,11 @@ export default function TenantProfilePage() {
   const handleSubmit = () => {
     navigate("/tenant-edit-page");
   };
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+    window.location.reload();
+  }
   return (
     <div className="tenant-profile-container">
       {/* Left Column */}
@@ -86,10 +91,16 @@ export default function TenantProfilePage() {
             </p>
           </div>
         </div>
-        <button className="tenant-profile-edit-button" onClick={handleSubmit}>
-          Edit
-        </button>
+        <div className="tenant-profile-buttons">
+          <button className="tenant-profile-edit-button" onClick={handleSubmit}>
+            Edit
+          </button>
+          <button className="tenant-profile-logout-button" onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
+        </div>
       </div>
-    </div>
+    
   );
 }

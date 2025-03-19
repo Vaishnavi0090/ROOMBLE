@@ -62,7 +62,7 @@ const Login = () => {
                     localStorage.removeItem("rememberedUserType");
                 }
 
-                navigate("/home");
+                isLandlord? navigate("/landlord-dashboard") : navigate("/tenant-dashboard"); 
                 window.location.reload();
             } else {
                 setError(data.message || "Invalid login credentials");
