@@ -58,7 +58,7 @@ const TenantSchema = new mongoose.Schema({
     },
     Images : {
         type : String,
-        default : "",
+        default : "http://127.0.0.1:3000/Pictures/Default.png",
         required : false
     },
     reviews: [{

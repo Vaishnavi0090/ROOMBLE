@@ -24,7 +24,7 @@ const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
 router.put("/updateProfile",authMiddleware,async(req,res)=>{
     try{
         const userId = req.user.id;
-
+        //if you want to remove profile pic, then pass , remove : "profilepic"
         const {accounttype, ...updatedFields } = req.body;
         let user;
 
@@ -90,6 +90,12 @@ router.put("/updateProfile",authMiddleware,async(req,res)=>{
                 user[key] = updatedFields[key];
             }
         });
+
+
+        //Testing of remove is left
+        if(remove === `profilepic`){
+            user.Images = `http://127.0.0.1:3000/Pictures/Default.png`;
+        }
     
         //saving the user
         try{
