@@ -26,6 +26,11 @@ const LandlordSchema = new mongoose.Schema({
         type: Array,
         default: []
     },
+    Images : {
+        type : String,
+        default : "",
+        required : false
+    },
     reviews: [{
         reviewer: {
             type: mongoose.Schema.Types.ObjectId,

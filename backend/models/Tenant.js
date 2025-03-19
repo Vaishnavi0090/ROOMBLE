@@ -56,6 +56,11 @@ const TenantSchema = new mongoose.Schema({
         default : [],
         required : false
     },
+    Images : {
+        type : String,
+        default : "",
+        required : false
+    },
     reviews: [{
         reviewer: {
             type: mongoose.Schema.Types.ObjectId,

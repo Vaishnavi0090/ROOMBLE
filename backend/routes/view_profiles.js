@@ -40,7 +40,8 @@ router.post(`/Self_profile`, authMiddleware, async (req,res) => {
                 smoke : user.smoke,
                 veg : user.veg,
                 flatmates : user.flatmate,
-                reviews : user.reviews
+                reviews : user.reviews,
+                Images : user.Images
             })
         }
         else if(accountType === `landlord`){
@@ -66,7 +67,8 @@ router.post(`/Self_profile`, authMiddleware, async (req,res) => {
                 email : user.email,
                 message : `This user owns ${properyData.length} properties.`,
                 Properties : properyData,
-                reviews : user.reviews
+                reviews : user.reviews,
+                Images : user.Images
             })
 
         } else {
@@ -112,7 +114,8 @@ router.post(`/other_users` , authMiddleware , async (req, res) => {
                     smoke : user.smoke,
                     veg : user.veg,
                     flatmates : user.flatmate, 
-                    reviews : user.reviews
+                    reviews : user.reviews,
+                    Images : user.Images
                 })
             }
         } else if(accounttype === `landlord`){
@@ -138,7 +141,8 @@ router.post(`/other_users` , authMiddleware , async (req, res) => {
                 email : user.email,
                 message : `This user owns ${properyData.length} properties.`,
                 Properties : properyData, 
-                reviews : user.reviews
+                reviews : user.reviews,
+                Images : user.Images
             })
 
         } else {
