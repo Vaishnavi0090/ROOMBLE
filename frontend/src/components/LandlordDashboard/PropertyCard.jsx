@@ -1,27 +1,25 @@
 import React from "react";
 import "../../css/PropertyCard.css";
-import propertyImage from "../../../public/1111111.jpg";
 
-const PropertyCard = () => {
+const PropertyCard = ({ image, price, title, location, bhk, onView, onDelete }) => {
   return (
     <div className="property-card">
-       {/* Image Section */} 
+      {/* Image Section */}
       <div className="image-container">
-        <img src={propertyImage} alt="Property" />
+        <img src={image} alt={title} />
       </div>
-       
-       {/* Details Section */}
+
+      {/* Details Section */}
       <div className="details">
-        <p className="price">₹5990/month</p>
-        <p className="description">
-          Dutta’s Supreme Residency, Mall Road, Shimla, India
-        </p>
-        <p className="bhk">3BHK</p>
+        <p className="price">{price}</p>
+        <p className="description">{title}, {location}</p>
+        <p className="bhk">{bhk}</p>
       </div>
-        {/* Buttons Section */}
+
+      {/* Buttons Section */}
       <div className="buttons">
-        <button className="view-button">View</button>
-        <button className="delete-button">Delete</button>
+        <button className="view-button" onClick={onView}>View</button>
+        <button className="delete-button" onClick={onDelete}>Delete</button>
       </div>
     </div>
   );

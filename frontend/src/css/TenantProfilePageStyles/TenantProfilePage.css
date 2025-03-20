@@ -63,23 +63,37 @@
     min-width: 170px;
   }
   
-  .tenant-profile-edit-button {
-    width: 60px;
+  .tenant-profile-buttons {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    gap: 10px; /* Space between buttons */
     margin-top: 20px;
-    padding: 10px 10px;
+  }
+  
+  .tenant-profile-edit-button,
+  .tenant-profile-logout-button {
+    width: 80px; /* Adjust width to be consistent */
+    padding: 10px;
     font-size: 16px;
-    background-color: #ae3c42;
-    color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    position: relative;
-    left: 85%;
-    /* top: 3%; */
-    /* transform: translateX(-50%); */
+    color: white;
+  }
+  
+  .tenant-profile-edit-button {
+    background-color: #ae3c42;
   }
   
   .tenant-profile-edit-button:hover {
     background-color: #d74747;
+  }
+  
+  .tenant-profile-logout-button {
+    background-color: #ae3c42; 
+  }
+  
+  .tenant-profile-logout-button:hover {
+    background-color: #d74747 
   }
   
