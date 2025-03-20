@@ -58,16 +58,24 @@ function SearchArea() {
         <label>City</label>
         <select value={city} onChange={(e) => setCity(e.target.value)}>
           <option value="">Select City</option>
-          <option value="City 1">City 1</option>
-          <option value="City 2">City 2</option>
+          <option value="Mumbai">Mumbai</option>
         </select>
       </div>
       <div className="locality-search-container">
         <label>Locality</label>
         <select value={locality} onChange={(e) => setLocality(e.target.value)}>
           <option value="">Select Locality</option>
-          <option value="Locality 1">Locality 1</option>
-          <option value="Locality 2">Locality 2</option>
+          <option value="">Select Locality</option>
+          <option value="Andheri">Andheri</option>
+          <option value="Bandra">Bandra</option>
+          <option value="Juhu">Juhu</option>
+          <option value="Malad">Malad</option>
+          <option value="Kandivali">Kandivali</option>
+          <option value="Borivali">Borivali</option>
+          <option value="Dahisar">Dahisar</option>
+          <option value="Mira Road">Mira Road</option>
+          <option value="Thane">Thane</option>
+          <option value="Goregaon">Goregaon</option>
         </select>
       </div>
       <div className="price-range-container">

@@ -10,7 +10,7 @@ function SearchFlatmatesFilter() {
         smokeDrink: null,
         pets: null,
         eatNonVeg: null,
-        dayWorker: null
+        gender: null
     });
 
     const handleSearchChange = (e) => {
@@ -36,7 +36,7 @@ function SearchFlatmatesFilter() {
             smokeDrink: null,
             pets: null,
             eatNonVeg: null,
-            dayWorker: null
+            gender: null
         });
     };
 
@@ -51,50 +51,81 @@ function SearchFlatmatesFilter() {
                 <label>City</label>
                 <select value={city} onChange={(e) => setCity(e.target.value)}>
                     <option value="">Select City</option>
-                    <option value="City 1">City 1</option>
-                    <option value="City 2">City 2</option>
+                    <option value="Mumbai">Mumbai</option>
+                    
                 </select>
             </div>
             <div className="locality-search-container">
                 <label>Locality</label>
                 <select value={locality} onChange={(e) => setLocality(e.target.value)}>
                     <option value="">Select Locality</option>
-                    <option value="Locality 1">Locality 1</option>
-                    <option value="Locality 2">Locality 2</option>
+                    <option value="Andheri">Andheri</option>
+                    <option value="Bandra">Bandra</option>
+                    <option value="Juhu">Juhu</option>
+                    <option value="Malad">Malad</option>
+                    <option value="Kandivali">Kandivali</option>
+                    <option value="Borivali">Borivali</option>
+                    <option value="Dahisar">Dahisar</option>
+                    <option value="Mira Road">Mira Road</option>
+                    <option value="Thane">Thane</option>
+                    <option value="Goregaon">Goregaon</option>
                 </select>
             </div>
 
             {/* Yes/No Checkbox Filters */}
             <div className="filter-options">
-    {[
-        { label: "Smoke/drink?", key: "smokeDrink" },
-        { label: "Pets?", key: "pets" },
-        { label: "Eat non-veg?", key: "eatNonVeg" },
-        { label: "Day time worker?", key: "dayWorker" }
-    ].map((filter) => (
-            <div key={filter.key} className="filter-row">
-                <span className="filter-label">{filter.label}</span>
-                <div className="filter-choices">
-                    <label>
-                        <input 
-                            type="checkbox" 
-                            checked={filters[filter.key] === true} 
-                            onChange={() => handleFilterChange(filter.key, true)} 
-                        />
-                        Yes
-                    </label>
-                    <label>
-                        <input 
-                            type="checkbox" 
-                            checked={filters[filter.key] === false} 
-                            onChange={() => handleFilterChange(filter.key, false)} 
-                        />
-                        No
-                    </label>
+                {[
+                    { label: "Smoke/drink?", key: "smokeDrink" },
+                    { label: "Pets?", key: "pets" },
+                    { label: "Eat non-veg?", key: "eatNonVeg" }
+                ].map((filter) => (
+                    <div key={filter.key} className="filter-row">
+                        <span className="filter-label">{filter.label}</span>
+                        <div className="filter-choices">
+                            <label>
+                                <input 
+                                    type="checkbox" 
+                                    checked={filters[filter.key] === true} 
+                                    onChange={() => handleFilterChange(filter.key, true)} 
+                                />
+                                Yes
+                            </label>
+                            <label>
+                                <input 
+                                    type="checkbox" 
+                                    checked={filters[filter.key] === false} 
+                                    onChange={() => handleFilterChange(filter.key, false)} 
+                                />
+                                No
+                            </label>
+                        </div>
+                    </div>
+                ))}
+
+                {/* Gender Filter */}
+                <div className="filter-row">
+                    <span className="filter-label">Gender?</span>
+                    <div className="filter-choices">
+                        <label>
+                            <input 
+                                type="checkbox" 
+                                checked={filters.gender === "male"} 
+                                onChange={() => handleFilterChange("gender", "male")} 
+                            />
+                            Male
+                        </label>
+                        <label>
+                            <input 
+                                type="checkbox" 
+                                checked={filters.gender === "female"} 
+                                onChange={() => handleFilterChange("gender", "female")} 
+                            />
+                            Female
+                        </label>
+                    </div>
                 </div>
             </div>
-        ))}
-    </div>
+
             <div className="search-prop-buttons">
                 <button onClick={handleApplyChanges}>Apply</button>
                 <button onClick={handleClearChanges}>Clear filters</button>
