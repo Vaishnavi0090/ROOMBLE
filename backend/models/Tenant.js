@@ -24,7 +24,7 @@ const TenantSchema = new mongoose.Schema({
     },
     city: {
         type : String,
-        required : true,
+        required : false,
     },
     gender: {// false female,true male
         type: Boolean,
