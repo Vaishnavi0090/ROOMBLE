@@ -1,59 +1,29 @@
-import React, { useState } from "react";
+import React from "react";
 import "../../css/FindPropertyStyles/SearchArea.css";
-import SearchIcon from "@mui/icons-material/Search";
 import RangeSlider from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
 
-function SearchArea() {
-  const [search, setSearch] = useState("");
-  const [city, setCity] = useState("");
-  const [locality, setLocality] = useState("");
-  const [BHK, setBHK] = useState([1, 2, 3, 4]);
-  const [values, setValues] = useState([1000, 100000]); // Initial values [lower, upper]
-
-  const handleSearchChange = (e) => {
-    setSearch(e.target.value);
-  };
-
-  const handleSliderChange = (newValues) => {
-    setValues(newValues); // `newValues` is an array like [minValue, maxValue]
-  };
-
-  const handleBHKChange = (bhk) => {
-    if (BHK.includes(bhk)) {
-      setBHK(BHK.filter((b) => b !== bhk));
-    } else {
-      setBHK([...BHK, bhk]);
-    }
-  };
-
-  const handleApplyChanges = () => {
-    console.log("Search:", search);
-    console.log("City:", city);
-    console.log("Locality:", locality);
-    console.log("BHK:", BHK);
-    console.log("Price Range:", values);
-  };
-  const handleClearChanges = () => {
-    setSearch("");
-    setCity("");
-    setLocality("");
-    setBHK([1, 2, 3, 4]);
-    setValues([1000, 100000]);
-  };
+function SearchArea({
+  city,
+  setCity,
+  locality,
+  setLocality,
+  BHK,
+  setBHK,
+  values,
+  setValues,
+  area,
+  setArea,
+  handleSliderChange,
+  handleAreaChange,
+  handleBHKChange,
+  handleApplyChanges,
+  handleClearChanges,
+}) {
+  
   return (
     <div className="search-prop-container">
       <h1>Filters</h1>
-      <div className="search-prop-searchbar">
-        <SearchIcon style={{ fontSize: 30 }} />
-        <input
-          type="text"
-          placeholder="Search"
-          className="chat-search-input"
-          value={search}
-          onChange={handleSearchChange}
-        />
-      </div>
       <div className="city-search-container">
         <label>City</label>
         <select value={city} onChange={(e) => setCity(e.target.value)}>
@@ -90,6 +60,21 @@ function SearchArea() {
           step={250}
           value={values}
           onInput={handleSliderChange} // Updates values
+        />
+      </div>
+      <div className="area-range-container">
+        <label>Area Range</label>
+        <div className="area-range-values">
+          <p>
+            {area[0]}sqft-{area[1]}sqft
+          </p>
+        </div>
+        <RangeSlider
+          min={500}
+          max={10000}
+          step={50}
+          value={area}
+          onInput={handleAreaChange} // Updates values
         />
       </div>
       <div className="BHK-container">

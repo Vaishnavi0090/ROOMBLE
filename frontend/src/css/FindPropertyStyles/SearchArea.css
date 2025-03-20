@@ -66,6 +66,12 @@
     margin: 5%;
 }
 
+.area-range-container{
+    display: flex;
+    flex-direction: column;
+    margin: 5%;
+}
+
 .range-slider__range {
     background-color: #7D141D !important;  /* Maroon fill */
 }
