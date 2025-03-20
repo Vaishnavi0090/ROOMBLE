@@ -1,6 +1,6 @@
 .property-card {
     width: 100%;
-    max-width: 395px;/* Maximum width for responsiveness */
+    max-width: 355px;/* Maximum width for responsiveness */
     height: 100%;
     max-height: 370px;
     border-radius: 20px; /* Rounded corners */

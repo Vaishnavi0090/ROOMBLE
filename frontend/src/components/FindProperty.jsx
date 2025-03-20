@@ -11,7 +11,7 @@ function FindProperty() {
         </div>
         <div className="Property-card-div">
             <h1>Property Cards</h1>
-            <PropertyCard/>
+            {/* <PropertyCard/> */}
         </div>
         </div>
     );

@@ -35,7 +35,7 @@ router.get(`/get_bookmarks`, authMiddleware, async (req, res) => {
                 console.log(id);
                 return res.status(400).json({ error: `${id} is invalid ID` });
             }
-            let tenantToBookmark = await Tenant.findById(id).select(`email name locality`);
+            let tenantToBookmark = await Tenant.findById(id).select(`email name locality Images`);
             if(tenantToBookmark){
                 Flatmate_bookmarks.push(tenantToBookmark);
             }
@@ -46,7 +46,7 @@ router.get(`/get_bookmarks`, authMiddleware, async (req, res) => {
                 console.log(id);
                 return res.status(400).json({ error: `${id} is invalid ID` });
             }
-            let propertyToBookmark = await Property.findById(id).select(`name town address area bhk price`);
+            let propertyToBookmark = await Property.findById(id).select(`name town address area bhk price Images`);
             if(propertyToBookmark){
                 Property_bookmarks.push(propertyToBookmark);
             }

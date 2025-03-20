@@ -22,6 +22,10 @@ const TenantSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    city: {
+        type : String,
+        required : true,
+    },
     gender: {// false female,true male
         type: Boolean,
         required: true
@@ -42,6 +46,11 @@ const TenantSchema = new mongoose.Schema({
         type: Boolean,
         required: true
     },
+    description: {
+        type : String,
+        required : false,
+        default : "This user hasn't setup a description yet"
+    },
     conversations: {
         type: Array,
         default: []
@@ -54,6 +63,11 @@ const TenantSchema = new mongoose.Schema({
     bookmarks_property : { //Only stores the ID of the property
         type : [String],
         default : [],
+        required : false
+    },
+    Images : {
+        type : String,
+        default : "http://127.0.0.1:3000/Pictures/Default.png",
         required : false
     },
     reviews: [{

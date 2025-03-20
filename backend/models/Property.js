@@ -25,7 +25,7 @@ const PropertySchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    Description: {
+    description: {
         type: String,
         required: true
     },
@@ -42,6 +42,11 @@ const PropertySchema = new mongoose.Schema({
         required : false,
         default : true
     },
+    Images : {
+        type : [String],
+        default : [],
+        required : false
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Property', PropertySchema);

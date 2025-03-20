@@ -49,11 +49,10 @@ function App() {
         <Route path="/otp-page" element={<OTPPage id={id} />} />
         <Route path="/tenant-profile-page" element={<TenantProfilePage />} />
         <Route path="/tenant-edit-page" element={<TenantEditPage />} />
-        <Route path="/home" element ={<BookmarkedFlatmates/>}/>
+        <Route path="/tenant-dashboard" element ={<BookmarkedFlatmates/>}/>
         <Route path="/prop-display" element ={<PropertyDisplayCall/>}/>
         <Route path="/flatmate-card-expand" element ={<FlatmateCardExpand/>}/>
         <Route path="/landlord-dashboard" element ={<HomePage/>}/>
-        <Route path="/forgot-password" element ={<ForgotPassword/>}/>
       </Routes>
     </BaseState>
   );

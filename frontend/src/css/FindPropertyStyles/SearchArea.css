@@ -121,3 +121,26 @@ input[type="checkbox"] {
 .search-prop-buttons button:active{
     transform: scale(0.9);
 }
+
+.filter-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.filter-label {
+    width: 120px; /* Adjust label width to match Yes/No */
+   
+}
+
+.filter-choices {
+    display: flex;
+    gap: 15px; /* Adjust spacing between checkboxes */
+}
+
+.filter-choices label {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Space between checkbox and text */
+}

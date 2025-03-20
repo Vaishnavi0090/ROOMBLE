@@ -15,16 +15,20 @@ const changePassword = require('./routes/changePassword');
 const messageRoutes = require('./routes/message');
 const enlist_delist = require(`./routes/lisst_delist_prop`);
 const fileUpload = require('express-fileupload');
+const updates = require(`./routes/update.js`);
 const cors = require(`cors`);
+const path = require(`path`);
 const mongoconnect = require('./mongodb'); // Ensures MongoDB connects
 const { MongoClient } = require("mongodb");
 
 const SECRET_KEY = process.env.SECRET_KEY; // Change this to a secure secret key
 
 const app = express();
+app.use('/Pictures', express.static(path.join(__dirname, 'Pictures')));
 app.use(fileUpload());
 const server = createServer(app);
 app.use(cors());
+
 
 // Import database connection
 require('./mongodb'); // Ensures MongoDB connects
@@ -46,6 +50,7 @@ const Landlord = require('./models/Landlord');
 const Tenant = require('./models/Tenant'); // Added Tenant model
 
 // Routes
+app.use(`/api/updates`, updates);
 app.use(`/api/Listing_Delisting`, enlist_delist);
 app.use(`/api/view_profiles`, View_profiles);
 app.use(`/api/Deleting_routes`, Deleteprofile);
@@ -69,7 +74,7 @@ app.get('/', (req, res) => {
 
 
 // Start server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
