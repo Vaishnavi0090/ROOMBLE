@@ -28,6 +28,7 @@ function DragAndDrop({ images, setImages, updateFormData }) {
             newImages.push({
                 name: files[i].name,
                 url: URL.createObjectURL(files[i]),
+                file: files[i],
             });
             
         }

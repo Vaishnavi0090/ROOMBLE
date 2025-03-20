@@ -3,9 +3,10 @@ import React from 'react';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 
 function MessageCard() {
+
     return (
         //This is the card which contains the user details
-        <div className="card">
+        <div className="card" onClick={()=>{console.log("Clicked")}}>
         <img src="/sampleUser_Img.png" alt="Name" className="sender-img" />
         <div className="sender-info">
             <span className="senderName">Name</span>
