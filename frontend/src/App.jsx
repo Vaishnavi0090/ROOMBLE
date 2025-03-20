@@ -18,6 +18,7 @@ import BookmarkedFlatmates from "./components/BookmarkedFlatmates.jsx";
 import SignupLandlord from "./components/SignupLandlord.jsx";
 import PropertyDisplayCall from "./components/PropertyDisplayCall.jsx";
 import FlatmateCardExpand from "./components/FlatmateCardExpand.jsx";
+import ForgotPassword from "./components/OTPPage/ForgotPassword.jsx";
 
 import HomePage from "./components/LandlordDashboard/HomePage.jsx"
 
@@ -52,6 +53,7 @@ function App() {
         <Route path="/prop-display" element ={<PropertyDisplayCall/>}/>
         <Route path="/flatmate-card-expand" element ={<FlatmateCardExpand/>}/>
         <Route path="/landlord-dashboard" element ={<HomePage/>}/>
+        <Route path="/forgot-password" element ={<ForgotPassword/>}/>
       </Routes>
     </BaseState>
   );

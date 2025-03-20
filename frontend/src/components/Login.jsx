@@ -116,7 +116,7 @@ const Login = () => {
                             />
                             <label htmlFor="rememberMe" className="remember-label">Remember Me</label>
                         </span>
-                        <Link to="/otp-page" className="forgot-password">Forgot Password?</Link>
+                        <Link to="/forgot-password" className="forgot-password">Forgot Password?</Link>
                     </div>
 
                     {error && <p className="error-text">{error}</p>}
