@@ -25,7 +25,7 @@ async function ComparePassword(enteredPassword, storedHash) {
 //Send name, email, password, locality, gender, smoke, veg, pets, flatmate as body
 router.post(`/Tenant_register`, async (req, res) => {
     try {
-        const { name, email, password, locality, gender, smoke, veg, pets, flatmate , city } = req.body;
+        const { name, email, password, locality, city ,gender, smoke, veg, pets, flatmate  } = req.body;
         const checkExistingUser = await Tenant.findOne({ email });
 
         if (checkExistingUser) {
@@ -62,6 +62,8 @@ router.post(`/Tenant_register`, async (req, res) => {
             gender,
             flatmate,
         });
+
+        console.log(`${city} ${locality}`);
 
         await newlyCreatedUser.save();
 
@@ -115,12 +117,15 @@ router.post(`/verifyTenant/:id`, async (req, res) => {
                 email: Tenant_withOTP.email,
                 password: Tenant_withOTP.password,
                 locality: Tenant_withOTP.locality,
+                city: Tenant_withOTP.city,
                 gender: Tenant_withOTP.gender,
                 smoke: Tenant_withOTP.smoke,
                 veg: Tenant_withOTP.veg,
                 pets: Tenant_withOTP.pets,
                 flatmate: Tenant_withOTP.flatmate
             });
+
+            await Tenant_OTP.deleteOne( {email : Tenant_withOTP.email });
 
             await newTenant.save();
 

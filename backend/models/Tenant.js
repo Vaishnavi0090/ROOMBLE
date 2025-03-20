@@ -46,6 +46,11 @@ const TenantSchema = new mongoose.Schema({
         type: Boolean,
         required: true
     },
+    description: {
+        type : String,
+        required : false,
+        default : "This user hasn't setup a description yet"
+    },
     conversations: {
         type: Array,
         default: []

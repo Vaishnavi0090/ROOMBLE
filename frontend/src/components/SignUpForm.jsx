@@ -12,6 +12,7 @@ function SignUpForm({ setID }) {
     password: "",
     confirmPassword: "",
     locality: "",
+    city: "",
     smoke: null,
     pets: null,
     veg: null,
@@ -73,6 +74,7 @@ function SignUpForm({ setID }) {
       email: formInput.email,
       password: formInput.password,
       locality: formInput.locality,
+      city: formInput.city,
       smoke: formInput.smoke === "yes",
       pets: formInput.pets === "yes",
       veg: formInput.veg === "yes",
@@ -186,20 +188,42 @@ function SignUpForm({ setID }) {
             <select
               type="text"
               className="input-box"
+              name="city"
+              onChange={({ target }) => {
+                handleUserInput(target.name, target.value);
+              }}
+              required
+            >
+              <option value="Selected">
+                Select City
+              </option>
+              <option value="Mumbai">Mumbai</option>
+            </select>
+     
+          </div>
+          <select
+              type="text"
+              className="input-box"
               name="locality"
               onChange={({ target }) => {
                 handleUserInput(target.name, target.value);
               }}
               required
             >
-              <option value="Bangalore" selected>
-                Bangalore
+              <option value="Selected">
+                Select Locality
               </option>
-              <option value="Mumbai">Mumbai</option>
-              <option value="Delhi">Delhi</option>
+              <option value="Andheri">Andheri</option>
+              <option value="Bandra">Bandra</option>
+              <option value="Juhu">Juhu</option>
+              <option value="Malad">Malad</option>
+              <option value="Kandivali">Kandivali</option>
+              <option value="Borivali">Borivali</option>
+              <option value="Dahisar">Dahisar</option>
+              <option value="Mira Road">Mira Road</option>
+              <option value="Thane">Thane</option>
+              <option value="Goregaon">Goregaon</option>
             </select>
-          </div>
-
           <div className="options">
             <label>
               Do you smoke/drink?
