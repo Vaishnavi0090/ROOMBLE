@@ -3,7 +3,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import MessageCard from './MessageCard.jsx';
 import '../../css/MessageBoxStyle/MessageBox.css';
 
-function MessageBox() {
+function MessageBox({currentUserId, setCurrentUserId, currentMessages, setCurrentMessages}) {
     //This is the main container of the message box which contains the list of all the users
     //It is divided into two parts 1)Top 2)Bottom
     return (<div className="message-cards">
@@ -18,21 +18,6 @@ function MessageBox() {
         {/*Bottom contains the list of all the users*/}
         {/*All message are temporary now. Map function will be used afterwards*/}
         <div className="bottom">
-        <MessageCard/>
-        <MessageCard/>
-        <MessageCard/>
-        <MessageCard/>
-        <MessageCard/>
-        <MessageCard/>
-        <MessageCard/>
-        <MessageCard/>
-        <MessageCard/>
-        <MessageCard/>
-        <MessageCard/>
-        <MessageCard/>
-        <MessageCard/>
-        <MessageCard/>
-        <MessageCard/>
         <MessageCard/>
         </div>
     </div>);
