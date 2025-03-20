@@ -109,16 +109,16 @@ function SearchFlatmatesFilter() {
                         <label>
                             <input 
                                 type="checkbox" 
-                                checked={filters.gender === "male"} 
-                                onChange={() => handleFilterChange("gender", "male")} 
+                                checked={filters.gender === true} 
+                                onChange={() => handleFilterChange("gender", true)} 
                             />
                             Male
                         </label>
                         <label>
                             <input 
                                 type="checkbox" 
-                                checked={filters.gender === "female"} 
-                                onChange={() => handleFilterChange("gender", "female")} 
+                                checked={filters.gender === false} 
+                                onChange={() => handleFilterChange("gender", false)} 
                             />
                             Female
                         </label>

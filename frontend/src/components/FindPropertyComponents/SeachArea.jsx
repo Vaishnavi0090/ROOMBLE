@@ -35,7 +35,6 @@ function SearchArea({
         <label>Locality</label>
         <select value={locality} onChange={(e) => setLocality(e.target.value)}>
           <option value="">Select Locality</option>
-          <option value="">Select Locality</option>
           <option value="Andheri">Andheri</option>
           <option value="Bandra">Bandra</option>
           <option value="Juhu">Juhu</option>
