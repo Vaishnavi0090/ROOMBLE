@@ -28,13 +28,7 @@ export default function TenantProfilePage() {
         <img src={logo} alt="Profile" className="tenant-profile-photo" />
         <div className="tenant-bio-class">
           <p className="tenant-profile-bio">
-            HI, I am Alexa Rawles, a software engineer working in microsoft in
-            banglore. I am a responsible and tidy tenant who values a clean and
-            peaceful living space. I am looking for an Appartment that suits my
-            lifestyle. I have a steady income and i do always pays rent on time.
-            I take pride in maintaining the property and being very respectable
-            to neighbours . I would love to find a place i could treat as my
-            own.
+            {state.user.description}
           </p>
         </div>
       </div>
@@ -52,42 +46,42 @@ export default function TenantProfilePage() {
           <div className="tenant-profile-mail">
             <p>
               <span>Email Address </span>
-              <span>:</span> <span>alexarawles@gmail.com</span>
+              <span>:</span> <span>{state.user.email}</span>
             </p>
           </div>
           <div className="tenant-profile-city">
             <p>
               <span>City</span>
-              <span>:</span> <span>Bangalore</span>
+              <span>:</span> <span>{state.user.city}</span>
             </p>
           </div>
           <div className="tenant-profile-locality">
             <p>
               <span>Locality </span>
-              <span>:</span> <span>Koramangalam</span>
+              <span>:</span> <span>{state.user.locality}</span>
             </p>
           </div>
           <div className="tenant-profile-gender">
             <p>
               <span>Gender </span>
-              <span>:</span> <span>Female</span>
+              <span>:</span> <span>{state.user.gender ?"Male":"Female"}</span>
             </p>
           </div>
           <div className="tenant-profile-smoke">
             <p>
-              <span>Alcohol/smoking </span> <span>:</span> <span>Yes</span>
+              <span>Alcohol/smoking </span> <span>:</span> <span>{state.user.smoke ? "Smokes":"Doesn't Smoke"}</span>
             </p>
           </div>
           <div className="tenant-profile-veg">
             <p>
               <span>Veg/Non Veg </span>
-              <span>:</span> <span>Veg</span>
+              <span>:</span> <span>{state.user.veg ? "Veg":"Non-Veg"}</span>
             </p>
           </div>
           <div className="tenant-profile-pets">
             <p>
               <span>Domesticated animals </span>
-              <span>:</span> <span>Yes</span>
+              <span>:</span> <span>{state.user.pets? "Has Pets":"No Pets"}</span>
             </p>
           </div>
         </div>
