@@ -15,6 +15,26 @@ const maxSize = 2*1024*1024; // Maximum allowed size : 2mb
 const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
 
 
+
+function moveImage(image, UploadPath) {
+    return new Promise((resolve, reject) => {
+        image.mv(UploadPath, (err) => {
+            if (err) {
+                console.log("Error uploading image while updating");
+                console.log(err);
+                reject({
+                    success: false,
+                    message: "Some internal server error, in uploading the picture."
+                });
+            } else {
+                resolve();
+            }
+        });
+    });
+}
+
+
+
 router.post("/listProperty",authMiddleware, async(req,res)=>{
     try{
         const landlordId = req.user.id;
@@ -41,7 +61,7 @@ router.post("/listProperty",authMiddleware, async(req,res)=>{
             })
         }
 
-        const landlord = await Landlord.findById(landlordId);
+        let landlord = await Landlord.findById(landlordId);
         if(!landlord){
             return res.status(404).json({
                 success : false,
@@ -61,7 +81,7 @@ router.post("/listProperty",authMiddleware, async(req,res)=>{
         }
 
 
-        const newProperty = new Property(propertyData);
+        let newProperty = new Property(propertyData);
 
         if(!req.files || !req.files.image){
             return res.status(400).json({
@@ -94,30 +114,16 @@ router.post("/listProperty",authMiddleware, async(req,res)=>{
             } else{
                 //Save the image into Pictures/accounttype
                 let UploadPath = path.join(__dirname , `../Pictures` , `property`, `${newProperty.id}` , `${Image_count}${path.extname(image.name).toLowerCase()}`);
-                image.mv(UploadPath, (err) => {
-                    if (err) {
-                        console.log("Error uploading image while updating");
-                        console.log(err);
-                        return res.status(500).json({
-                            success : false,
-                            message : "Some internal server error, in uploading the picture."
-                        });
-                    }
-                    else{
-                        newProperty.Images.push(`http://127.0.0.1:${PORT}/Pictures/property/${newProperty.id}/${Image_count}${path.extname(image.name).toLowerCase()}`);
-                        console.log(Image_count);
-                        console.log(`http://127.0.0.1:${PORT}/Pictures/property/${newProperty.id}/${Image_count}${path.extname(image.name).toLowerCase()}`)
-                        Image_count = Image_count + 1;
-                        //Debugging
-                        // // console.log(`http://127.0.0.1:${PORT}/Pictures/${accounttype}/${user.id}${path.extname(image.name).toLowerCase()}`);
-                        //Debugging
-                    }
-                });
+                await moveImage(image, UploadPath);
+                newProperty.Images.push(`http://127.0.0.1:${PORT}/Pictures/property/${newProperty.id}/${Image_count}${path.extname(image.name).toLowerCase()}`);
+                Image_count++;
             }
         }
 
-
+        console.log(`hi fucher`);
         try{
+            console.log(`saving property`);
+            console.log(newProperty);
             console.log(newProperty.Images);
             await newProperty.save();
         }
