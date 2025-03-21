@@ -18,8 +18,9 @@ import BookmarkedFlatmates from "./components/BookmarkedFlatmates.jsx";
 import SignupLandlord from "./components/SignupLandlord.jsx";
 import PropertyDisplayCall from "./components/PropertyDisplayCall.jsx";
 import FlatmateCardExpand from "./components/FlatmateCardExpand.jsx";
-import ForgotPassword from "./components/OTPPage/ForgotPassword.jsx";
-import SetNewPassword from "./components/OTPPage/SetNewPassword.jsx";
+import ForgotPassword from "./components/ForgotPassword/ForgotPassword.jsx";
+import SetNewPassword from "./components/ForgotPassword/SetNewPassword.jsx";
+import OTPPageForgot from "./components/ForgotPassword/OTPPageForgot.jsx";
 import OTPDeletePage from "./components/OTPPage/OTPDeletePage.jsx";
 import HomePage from "./components/LandlordDashboard/HomePage.jsx"
 import EditProperty from "./components/EditProperty.jsx";
@@ -59,6 +60,7 @@ function App() {
         <Route path="/edit-property" element={<EditProperty />} />
         <Route path="/set-new-password" element={<SetNewPassword />} />
         <Route path="/otp-delete-page" element={<OTPDeletePage/>}/>
+        <Route path="/otp-forgot" element={<OTPPageForgot />} />
       </Routes>
     </BaseState>
   );

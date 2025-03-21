@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import "../../css/OTPPage/ForgotPassword.css"; // Import the CSS specific to this component
+import "../../css/ForgotPassword/ForgotPassword.css"; // Import the CSS specific to this component
 import logo from "../../../public/logo.png";
+import { useContext } from 'react'
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
@@ -10,18 +11,22 @@ const ForgotPassword = () => {
     const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
 
+    const state = useContext(Basecontext)
+    const {user, setUser, fetuser} = state
+    fetuser()
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
         setLoading(true);
 
         try {
-            const response = await fetch("http://127.0.0.1:3000/api/auth/forgot_password", {
+            const response = await fetch("http://127.0.0.1:3000//api/forgotPassword/enteremail", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ email }),
+                body: JSON.stringify({ accounttype: state.user.type, email: email }),
             });
 
             const data = await response.json();
@@ -29,7 +34,7 @@ const ForgotPassword = () => {
 
             if (data.success) {
                 setSuccess(true);
-                setTimeout(() => navigate("/otp-page"), 1500); // Redirect after success
+                setTimeout(() => navigate("/otp-forgot"), 1500); // Redirect after success
             } else {
                 setError(data.message || "Email not found. Please try again.");
             }

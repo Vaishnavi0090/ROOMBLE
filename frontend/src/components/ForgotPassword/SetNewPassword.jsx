@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import "../../css/OTPPage/SetNewPassword.css";
+import "../../css/ForgotPassword/SetNewPassword.css";
 import logo from "../../../public/logo.png";
 
 const SetNewPassword = () => {
