@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "../../css/LandlordProfileStyles/LandlordProfile.css";
 import PropertyCard from "../LandlordDashboard/PropertyCard.jsx";
+import logo from "../../../public/property-img.png";
+import pfp from "../../../public/sampleUser_Img.png";
 const LandlordProfile = () => {
   const [respData, setRespData] = useState(null);
 
@@ -37,52 +39,54 @@ const LandlordProfile = () => {
 
   return (
     <div className="landlord-profile-container">
-      {/* Profile Section */}
-      <div className="landlord-profile-header">
-        <img src={""} alt="Profile" className="landlord-profile-image" />
-        <div className="landlord-profile-details">
-          <p>
-            <span>Full Name</span> <span>:</span>
-            <span>{respData.name}</span>
-          </p>
-          <p>
-            <span>Email Address</span> <span>:</span>
-            <span>{respData.email}</span>
-          </p>
-          <p>
-            <span>Properties Count</span> <span>:</span>
-            <span>{respData.message}</span>
-          </p>
-        </div>
-        <button className="landlord-profile-edit">Edit</button>
-      </div>
+      {/* Combined Profile & Properties Section */}
+      <div className="landlord-profile-content">
+        <div className="landlord-profile-header">
+          <img src={pfp} alt="Profile" className="landlord-profile-image" />
+          <div className="landlord-profile-details">
+            <div className="landlord-profile-item">
+              <div className="landlord-profile-name">
+                <p>
+                  <span className="label">Full Name</span>{" "}
+                  <span className="separator">:</span>
+                  <span className="value">{respData.name}</span>
+                </p>
+              </div>
+              <div className="landlord-profile-email">
+                <p>
+                  <span className="label">Email Address</span>{" "}
+                  <span className="separator">:</span>
+                  <span className="value">{respData.email}</span>
+                </p>
+              </div>
+              <div className="landlord-profile-propCount">
+                <p>
+                  <span className="label">Properties Count</span>{" "}
+                  <span className="separator">:</span>
+                  <span className="value">{respData.message}</span>
+                </p>
+              </div>
 
-      {/* Properties Section */}
-      <div className="landlord-profile-properties">
-        {respData.Properties.map(
-          ({
-            _id,
-            city,
-            town,
-            address,
-            area,
-            bhk,
-            description,
-            amenities,
-            price,
-            available,
-            Images,
-            reviews,
-          }) => (
+              <div className="landlord-profile-edit-button">
+                <button className="landlord-profile-edit">Edit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Properties Section (Still Inside the Same Container) */}
+        <div className="landlord-profile-properties">
+          {respData.Properties.map(({ _id, town, bhk, price, Images }) => (
             <PropertyCard
-              img={Images[0]}
+              key={_id}
+              image={logo}
               price={price}
-              title={"Prop Card"}
-              locality={town}
+              title="Prop Card"
+              location={town}
               bhk={bhk}
             />
-          )
-        )}
+          ))}
+        </div>
       </div>
     </div>
   );
