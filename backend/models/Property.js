@@ -5,13 +5,13 @@ const PropertySchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    town: {
-        type: String,
-        required: true
-    },
     city: {
         type : String,
         required : true
+    },
+    town: {
+        type: String,
+        required: true
     },
     address: {
         type: String,
@@ -23,6 +23,11 @@ const PropertySchema = new mongoose.Schema({
     },
     bhk: {
         type: Number,
+        required: true
+    },
+    type: {
+        type: String,
+        enum: ["Apartment", "Bungalow", "Housing"],
         required: true
     },
     description: {
@@ -39,14 +44,30 @@ const PropertySchema = new mongoose.Schema({
     },
     available : { // true if not delisted, false if delisted
         type : Boolean,
-        required : false,
         default : true
     },
     Images : {
         type : [String],
-        default : [],
-        required : false
-    }
+        default : []
+    },
+    reviews: [{
+        reviewer: {
+            type: mongoose.Schema.Types.ObjectId,
+            refPath: 'reviews.reviewerType',
+            required: true
+        },
+        rating: {
+            type: Number,
+            min: 1,
+            max: 5,
+            required: true
+        },
+        comment: String,
+        createdAt: {
+            type: Date,
+            default: Date.now
+        }
+    }]
 }, { timestamps: true });
 
 module.exports = mongoose.model('Property', PropertySchema);

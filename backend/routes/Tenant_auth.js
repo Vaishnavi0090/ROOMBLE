@@ -166,7 +166,7 @@ router.post(`/Tenant_login`, async (req, res) => {
 
         if (result) {
             // Generate JWT token
-            const token = jwt.sign({ id: findTenant._id, email: findTenant.email }, SECRET_KEY, { expiresIn: "1h" });
+            const token = jwt.sign({ id: findTenant._id, email: findTenant.email }, SECRET_KEY, { expiresIn: "5h" });
 
             res.status(200).json({
                 success: true,

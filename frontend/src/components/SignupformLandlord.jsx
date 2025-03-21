@@ -161,7 +161,7 @@ function SignupformLandlord({ setID }) {
             <p className="Success-message">{formInput.successMsg}</p>
 
           </div>
-        <button className="signup-button">Sign up</button>
+        <button className="Signup-button">Sign up</button>
       </form>
 
       <p className="Footer-text-signup">
