@@ -21,6 +21,25 @@ export default function TenantProfilePage() {
     navigate("/login");
     window.location.reload();
   }
+  const handleDelete = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:3000/api/Deleting_routes/deleteInitiate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: state.user.email, accounttype: "tenant" }),
+      });
+  
+      const data = await response.json();
+      if (data.success) {
+        localStorage.setItem("deleteToken", data.authtoken); 
+        navigate("/otp-delete-page", { state: { email: state.user.email, accountType: "tenant" } }); 
+        
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Could not initiate account deletion.");
+    }
+  };
   return (
     <div className="tenant-profile-container">
       {/* Left Column */}
@@ -31,8 +50,9 @@ export default function TenantProfilePage() {
             {state.user.description}
           </p>
         </div>
+        
       </div>
-
+    
       {/* Right Column */}
       <div className="tenant-profile-right-column">
         <div className="tenant-profile-details">
@@ -85,12 +105,16 @@ export default function TenantProfilePage() {
             </p>
           </div>
         </div>
+        
         <div className="tenant-profile-buttons">
           <button className="tenant-profile-edit-button" onClick={handleSubmit}>
             Edit
           </button>
           <button className="tenant-profile-logout-button" onClick={handleLogout}>
             Logout
+          </button>
+          <button className="tenant-profile-delete-button" onClick={handleDelete}>
+            Delete
           </button>
         </div>
         </div>
