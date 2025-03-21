@@ -1,14 +1,25 @@
 import React, { useEffect, useState } from "react";
-import "../css/LandlordProfile.css";
-import "./PropertyCard.jsx";
+import "../../css/LandlordProfileStyles/LandlordProfile.css";
+import PropertyCard from "../LandlordDashboard/PropertyCard.jsx";
 const LandlordProfile = () => {
   const [respData, setRespData] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const token = localStorage.getItem("token");
+        console.log(token);
         const response = await fetch(
-          "http://127.0.0.1:3000/api/view_profiles/Self_profile"
+          "http://127.0.0.1:3000/api/view_profiles/Self_profile",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              authtoken: token, // ✅ Change from "Authorization" to "authtoken"
+              accounttype: "landlord", // ✅ Also send account type separately
+            },
+            body: JSON.stringify({ ngj: "bkjmhkn" }),
+          }
         );
         const data = await response.json();
         setRespData(data);
@@ -39,12 +50,8 @@ const LandlordProfile = () => {
             <span>{respData.email}</span>
           </p>
           <p>
-            <span>Gender</span> <span>:</span>
-            <span>{respData.gender}</span>
-          </p>
-          <p>
             <span>Properties Count</span> <span>:</span>
-            <span>{respData.propertiesCount}</span>
+            <span>{respData.message}</span>
           </p>
         </div>
         <button className="landlord-profile-edit">Edit</button>
@@ -52,15 +59,30 @@ const LandlordProfile = () => {
 
       {/* Properties Section */}
       <div className="landlord-profile-properties">
-        {respData.Properties.map((property) => (
-          <PropertyCard
-            img={property.image}
-            price={property.price}
-            title={property.name}
-            locality={property.address}
-            bhk={property.bhk}
-          />
-        ))}
+        {respData.Properties.map(
+          ({
+            _id,
+            city,
+            town,
+            address,
+            area,
+            bhk,
+            description,
+            amenities,
+            price,
+            available,
+            Images,
+            reviews,
+          }) => (
+            <PropertyCard
+              img={Images[0]}
+              price={price}
+              title={"Prop Card"}
+              locality={town}
+              bhk={bhk}
+            />
+          )
+        )}
       </div>
     </div>
   );
