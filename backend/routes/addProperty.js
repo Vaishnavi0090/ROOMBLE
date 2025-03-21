@@ -4,6 +4,7 @@ const Landlord = require("../models/Landlord");
 const Property = require("../models/Property");
 const path = require(`path`);
 const fs = require(`fs`);
+const moveImage = require(`../helper_funcs/Saveimage`);//async fucntion which helps upload images
 const authMiddleware = require("../middlewares/checkuser");
 require(`dotenv`).config(`../.env`);
 
@@ -16,39 +17,11 @@ const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
 
 
 
-function moveImage(image, UploadPath) {
-    return new Promise((resolve, reject) => {
-        image.mv(UploadPath, (err) => {
-            if (err) {
-                console.log("Error uploading image while updating");
-                console.log(err);
-                reject({
-                    success: false,
-                    message: "Some internal server error, in uploading the picture."
-                });
-            } else {
-                resolve();
-            }
-        });
-    });
-}
-
-
 
 router.post("/listProperty",authMiddleware, async(req,res)=>{
     try{
         const landlordId = req.user.id;
         const propertyData = req.body;
-        // city: 
-        // town: 
-        // address: 
-        // area: 
-        // bhk: 
-        // description: 
-        // amenities:
-        // price:
-        // available : 
-        // Images :
 
         const requiredFields = ["city","town","address","area","bhk","description","price","amenities"];
 
@@ -83,6 +56,9 @@ router.post("/listProperty",authMiddleware, async(req,res)=>{
 
         let newProperty = new Property(propertyData);
 
+
+
+        /**Code for handling images */
         if(!req.files || !req.files.image){
             return res.status(400).json({
                 success : false,
@@ -90,6 +66,7 @@ router.post("/listProperty",authMiddleware, async(req,res)=>{
             })
         }
         
+        //make a new directory for each property
         let imageData = req.files.image;
         fs.mkdirSync(path.join(__dirname , `../Pictures` , `property` ,`${newProperty.id}`));
 
@@ -99,6 +76,8 @@ router.post("/listProperty",authMiddleware, async(req,res)=>{
                 message : `More than ${MAX_ALLOWED_PICS} uploaded, there isn't space in database`
             })
         }
+
+        //This variable helps store the images as 0.jpg, 1.jpg
         let Image_count = 0;
         for(let image of imageData){
             if(image.size > maxSize){
@@ -120,11 +99,7 @@ router.post("/listProperty",authMiddleware, async(req,res)=>{
             }
         }
 
-        console.log(`hi fucher`);
         try{
-            console.log(`saving property`);
-            console.log(newProperty);
-            console.log(newProperty.Images);
             await newProperty.save();
         }
         catch(saveError){
