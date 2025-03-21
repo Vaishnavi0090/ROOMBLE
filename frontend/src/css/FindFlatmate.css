@@ -52,3 +52,19 @@
     accent-color: #7D141D;
     cursor: pointer;
 }
+/* Ensures flatmate cards are displayed in a proper grid */
+.flatmate-cards-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(300px, 1fr)); /* 2 columns */
+    gap: 20px 30px; /* Reduced row gap, increased column gap */
+    padding: 20px;
+    width: 100%;
+    align-items: start;
+    justify-content: center; /* Keeps it centered */
+}
+
+.flatmate-cards-container > *:nth-child(odd) {
+    margin-left: 80px; /* Pushes the first column right */
+}
+
+/* Keeps all flatmate cards at the same height */

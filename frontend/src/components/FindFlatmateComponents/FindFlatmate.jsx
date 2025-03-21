@@ -14,7 +14,7 @@ function FindFlatmate() {
             </div>
 
             <div className="Flatmate-card-div">
-                <h1>FlatMate Cards</h1>
+               
                 
                 {/* Display flatmate cards */}
                 <div className="flatmate-cards-container">

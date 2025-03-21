@@ -131,10 +131,11 @@ router.get("/SearchFlatmates", authMiddleware, async (req, res) => {
         const { locality, gender, smoke, veg, pets } = req.query;
 
         // Convert to Boolean only if defined
-        const genderFilter = gender !== undefined ? Boolean(gender) : undefined;
-        const smokeFilter = smoke !== undefined ? Boolean(smoke) : undefined;
-        const vegFilter = veg !== undefined ? Boolean(veg) : undefined;
-        const petsFilter = pets !== undefined ? Boolean(pets) : undefined;
+        const genderFilter = gender !== undefined ? gender === "true" : undefined;
+        const smokeFilter = smoke !== undefined ? smoke === "true" : undefined;
+        const vegFilter = veg !== undefined ? veg === "true" : undefined;
+        const petsFilter = pets !== undefined ? pets === "true" : undefined;
+
 
         // **Filtering based on user-specified parameters (ONLY if present)**
         if (Object.keys(req.query).length > 0) {  // Apply filters only if user specified anything
