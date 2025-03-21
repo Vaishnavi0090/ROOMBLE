@@ -59,12 +59,8 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/edit-property" element={<EditProperty />} />
         <Route path="/set-new-password" element={<SetNewPassword />} />
-<<<<<<< HEAD
         <Route path="/otp-delete-page" element={<OTPDeletePage/>}/>
         <Route path="/otp-forgot" element={<OTPPageForgot />} />
-=======
-        <Route path="/otp-delete-page" element={<OTPDeletePage />} />
->>>>>>> bd9322bb0d2bc615397677742e7309268f9f0b72
       </Routes>
     </BaseState>
   );

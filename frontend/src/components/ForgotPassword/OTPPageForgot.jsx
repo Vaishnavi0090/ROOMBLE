@@ -1,18 +1,38 @@
 import React from "react";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../css/ForgotPassword/OTPPageForgot.css"; // Import the CSS specific to this component
 import logo from "../../../public/logo.png";
+import { Basecontext } from '../../context/base/Basecontext'
 
-export default function OTPPageForgot({ id }) {
+export default function OTPPageForgot() {
   const navigate = useNavigate();
-    console.log(`id is ${id}`);
-  const respURL = `http://127.0.0.1:3000/api/Tenant/auth/verifyTenant/${id}`;
+
+  const state = useContext(Basecontext)
+  const {user, setUser, fetuser} = state
+  fetuser()
+
+  const respURL = `http://127.0.0.1:3000/api/forgotPassword/enterOTP/`;
   //   console.log(respURL);
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(null);
   const inputRefs = useRef([]);
+  const [authtoken, setAuthtoken] = useState(null);
+ 
+  useEffect(() => {
+    const token = localStorage.getItem("authtoken");
+    
+    console.log("Retrieved Token:", token);
+
+    if (token) {
+        setAuthtoken(token);
+        setAccounttype(type);
+    } else {
+        console.error("Token missing.");
+        navigate("/forgot-password");
+    }
+  }, [navigate]);
 
   const handleChange = (index, value) => {
     if (!/^[0-9]?$/.test(value)) return; // Allow only digits
@@ -45,7 +65,7 @@ export default function OTPPageForgot({ id }) {
       console.log(enteredOTP);
       const response = await fetch(respURL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "authtoken": token, "accounttype": "tenant" },
         body: JSON.stringify({ Entered_OTP: enteredOTP }),
       });
       const data = await response.json();

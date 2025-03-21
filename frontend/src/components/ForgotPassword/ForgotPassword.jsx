@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "../../css/ForgotPassword/ForgotPassword.css"; // Import the CSS specific to this component
 import logo from "../../../public/logo.png";
-import { useContext } from 'react'
+import { Basecontext } from '../../context/base/Basecontext';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
@@ -21,20 +21,23 @@ const ForgotPassword = () => {
         setLoading(true);
 
         try {
-            const response = await fetch("http://127.0.0.1:3000//api/forgotPassword/enteremail", {
+            const response = await fetch("http://127.0.0.1:3000/api/forgotPassword/enteremail", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ accounttype: state.user.type, email: email }),
+                body: JSON.stringify({ accounttype: "tenant", email: email }),
             });
 
             const data = await response.json();
             setLoading(false);
 
             if (data.success) {
+                localStorage.setItem("token", data.authtoken);
+                console.log("Stored Token:", data.authtoken); 
+
                 setSuccess(true);
-                setTimeout(() => navigate("/otp-forgot"), 1500); // Redirect after success
+                setTimeout(() => navigate("/otp-forgot"), 1500);
             } else {
                 setError(data.message || "Email not found. Please try again.");
             }

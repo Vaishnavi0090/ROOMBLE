@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "../../css/ForgotPassword/SetNewPassword.css";
 import logo from "../../../public/logo.png";
+import { Basecontext } from '../../context/base/Basecontext'
 
 const SetNewPassword = () => {
     const [newPassword, setNewPassword] = useState("");
@@ -11,6 +12,10 @@ const SetNewPassword = () => {
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
+
+    const state = useContext(Basecontext)
+    const {user, setUser, fetuser} = state
+    fetuser()
 
     // Simulating email being passed from the previous page
     const email = localStorage.getItem("resetEmail");
@@ -27,8 +32,8 @@ const SetNewPassword = () => {
             try {
                 const response = await fetch(`http://127.0.0.1:3000/api/forgotPassword/ForgotPassword`, {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ email }),
+                    headers: { "Content-Type": "application/json", "authtoken": token, "accounttype": state.user.type },
+                    body: JSON.stringify({ newPassword }),
                 });
 
                 const data = await response.json();
