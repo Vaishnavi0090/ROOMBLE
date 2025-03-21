@@ -18,7 +18,7 @@ const TenantSchema_OTP = new mongoose.Schema({
   password: { type: String, required: true },
   OTP: { type: String },
   locality: { type: String, required: true },
-  city: {type: String, required:true},
+  city: {type: String, required:false},
   gender: { type: String, required: true },
   smoke: { type: Boolean, required: true },
   veg: { type: Boolean, required: true },
