@@ -5,7 +5,7 @@ import "../../css/FindFlatmate.css";
 
 function FindFlatmate() {
     const [flatmates, setFlatmates] = useState([]); // Store fetched data
-
+    
     return (
         <div className="find-flatmate-body">
             <div className="search-flatmate-div">
@@ -29,6 +29,7 @@ function FindFlatmate() {
                                 smoke={flatmate.smoke}
                                 eatNonVeg={flatmate.veg}
                                 pets={flatmate.pets}
+                                compatibilityScore={flatmate.recommendationScore}
                             />
                         ))
                     ) : (

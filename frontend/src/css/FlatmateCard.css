@@ -92,4 +92,28 @@
   .bookmark-btn:hover {
     transform: scale(1.1); /* Slight zoom on hover */
   }
+
+  .compatibility-score {
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, #7D141D, #D83A56);
+    padding: 6px 12px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.compatibility-score:hover {
+    transform: scale(1.1);
+}
+
+.compatibility-score .star-icon {
+    color: gold;
+    font-size: 1.2rem;
+}
+
   

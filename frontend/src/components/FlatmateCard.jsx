@@ -1,25 +1,39 @@
 import React, { useState } from "react";
 import "../css/FlatMateCard.css";
 
-const FlatmateCard = ({ name, image, location }) => {
+const FlatmateCard = ({ name, locality, city, gender, smoke, eatNonVeg, pets, compatibilityScore }) => {
   const [bookmarked, setBookmarked] = useState(false);
 
   const toggleBookmark = () => {
     setBookmarked(!bookmarked);
   };
-
+  const score = Math.round(parseFloat(compatibilityScore) * 100) || 0;
   return (
     <div className="flatmate-card">
+      {/* Card Header */}
       <div className="card-header">
-        <img src={image} alt={name} className="profile-pic" />
+        <img
+          src="https://via.placeholder.com/50" // Placeholder for profile pic
+          alt={name}
+          className="profile-pic"
+        />
         <span className="flatmate-name">{name}</span>
+        
+        {/* Fancy Compatibility Score */}
+        <span className="compatibility-score">
+          <span className="star-icon">⭐</span> {score}%
+        </span>
       </div>
 
+      {/* Card Body */}
       <div className="card-body">
         <p className="location-title">Preferred Location</p>
-        <p className="location-text">{location}</p>
+        <p className="location-text">{locality}, {city}</p>
+
+       
       </div>
 
+      {/* Card Footer */}
       <div className="card-footer">
         <button className="bookmark-btn" onClick={toggleBookmark}>
           {bookmarked ? (

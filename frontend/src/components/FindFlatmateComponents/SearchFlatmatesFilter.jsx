@@ -74,10 +74,7 @@ function SearchFlatmatesFilter({ setFlatmates }) {
     return (
         <div className="search-prop-container">
             <h1>Filters</h1>
-            <div className="search-prop-searchbar">
-                <SearchIcon style={{ fontSize: 30 }} />
-                <input type="text" placeholder="Search" className="chat-search-input" value={search} onChange={handleSearchChange} />
-            </div>
+            
 
             <div className="city-search-container">
                 <label>City</label>
