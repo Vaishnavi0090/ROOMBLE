@@ -14,7 +14,7 @@ const SECRET_KEY = process.env.SECRET_KEY;
 //Send the query as locality, gender, smoke, veg, pets, flatmates : accounttype and authtoken in header
 // router.get(`/SearchFlatmates`, async (req,res) => {
 //     try{           
-//         const { locality, gender, smoke, veg, pets, flatmate } = req.body;
+//         const { locality, gender, smoke, veg, pets, flatmate } = req.query;
 //         let query = {};
 //         if(locality !== undefined){query.locality = locality;}
 //         if(gender !== undefined){query.gender = gender;}
@@ -128,7 +128,7 @@ router.get("/SearchFlatmates", authMiddleware, async (req, res) => {
         scoredResults.sort((a, b) => b.recommendationScore - a.recommendationScore);
 
         // **Extract filter parameters from the request body**
-        const { locality, gender, smoke, veg, pets } = req.body;
+        const { locality, gender, smoke, veg, pets } = req.query;
 
         // Convert to Boolean only if defined
         const genderFilter = gender !== undefined ? Boolean(gender) : undefined;
@@ -137,7 +137,7 @@ router.get("/SearchFlatmates", authMiddleware, async (req, res) => {
         const petsFilter = pets !== undefined ? Boolean(pets) : undefined;
 
         // **Filtering based on user-specified parameters (ONLY if present)**
-        if (Object.keys(req.body).length > 0) {  // Apply filters only if user specified anything
+        if (Object.keys(req.query).length > 0) {  // Apply filters only if user specified anything
             scoredResults = scoredResults.filter(flatmate => {
                 if (locality !== undefined && flatmate.locality !== locality) return false;
                 if (genderFilter !== undefined && flatmate.gender !== genderFilter) return false;
@@ -164,7 +164,7 @@ router.get("/SearchFlatmates", authMiddleware, async (req, res) => {
 // Searching Properties
 
 router.get('/SearchProperties', authMiddleware, async (req, res) => {  
-    const { town, min_price, max_price, min_area, max_area, ...filters } = req.body; // Extract filters from request body
+    const { town, min_price, max_price, min_area, max_area, ...filters } = req.query; // Extract filters from request body
 
     if (!town) {
         return res.status(400).json({ error: "Town is required in the request body" });

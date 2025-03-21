@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "../../css/FindPropertyStyles/SearchArea.css";
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from "@mui/icons-material/Search";
 
-function SearchFlatmatesFilter() {
+function SearchFlatmatesFilter({ setFlatmates }) {  // Accept setFlatmates as a prop
     const [search, setSearch] = useState("");
     const [city, setCity] = useState("");
     const [locality, setLocality] = useState("");
@@ -10,7 +10,7 @@ function SearchFlatmatesFilter() {
         smokeDrink: null,
         pets: null,
         eatNonVeg: null,
-        gender: null
+        gender: null,
     });
 
     const handleSearchChange = (e) => {
@@ -21,11 +21,39 @@ function SearchFlatmatesFilter() {
         setFilters({ ...filters, [filter]: value });
     };
 
-    const handleApplyChanges = () => {
-        console.log("Search:", search);
-        console.log("City:", city);
-        console.log("Locality:", locality);
-        console.log("Filters:", filters);
+    const handleApplyChanges = async () => {
+        const token = localStorage.getItem("token"); // Get token from storage
+
+        const queryParams = new URLSearchParams();
+        if (locality) queryParams.append("locality", locality);
+        if (filters.gender !== null) queryParams.append("gender", filters.gender);
+        if (filters.smokeDrink !== null) queryParams.append("smoke", filters.smokeDrink);
+        if (filters.eatNonVeg !== null) queryParams.append("veg", filters.eatNonVeg);
+        if (filters.pets !== null) queryParams.append("pets", filters.pets);
+
+        try {
+            const response = await fetch(
+                `http://localhost:3000/api/Search_Routes/SearchFlatmates?${queryParams.toString()}`,
+                {
+                    method: "GET",
+                    headers: {
+                        authtoken: token,
+                        accounttype: "tenant",
+                    },
+                }
+            );
+
+            const data = await response.json();
+
+            if (data.success) {
+                setFlatmates(data.data); // Update state in parent
+                console.log("Flatmates Found:", data.data);
+            } else {
+                console.error("Error:", data.message);
+            }
+        } catch (error) {
+            console.error("Request failed:", error);
+        }
     };
 
     const handleClearChanges = () => {
@@ -36,8 +64,9 @@ function SearchFlatmatesFilter() {
             smokeDrink: null,
             pets: null,
             eatNonVeg: null,
-            gender: null
+            gender: null,
         });
+        setFlatmates([]); // Clear the displayed flatmates
     };
 
     return (
@@ -47,14 +76,15 @@ function SearchFlatmatesFilter() {
                 <SearchIcon style={{ fontSize: 30 }} />
                 <input type="text" placeholder="Search" className="chat-search-input" value={search} onChange={handleSearchChange} />
             </div>
+
             <div className="city-search-container">
                 <label>City</label>
                 <select value={city} onChange={(e) => setCity(e.target.value)}>
                     <option value="">Select City</option>
                     <option value="Mumbai">Mumbai</option>
-                    
                 </select>
             </div>
+
             <div className="locality-search-container">
                 <label>Locality</label>
                 <select value={locality} onChange={(e) => setLocality(e.target.value)}>
@@ -72,30 +102,18 @@ function SearchFlatmatesFilter() {
                 </select>
             </div>
 
-            {/* Yes/No Checkbox Filters */}
+            {/* Filters */}
             <div className="filter-options">
-                {[
-                    { label: "Smoke/drink?", key: "smokeDrink" },
-                    { label: "Pets?", key: "pets" },
-                    { label: "Eat non-veg?", key: "eatNonVeg" }
-                ].map((filter) => (
-                    <div key={filter.key} className="filter-row">
-                        <span className="filter-label">{filter.label}</span>
+                {["smokeDrink", "pets", "eatNonVeg"].map((key) => (
+                    <div key={key} className="filter-row">
+                        <span className="filter-label">{key.replace(/([A-Z])/g, " $1").trim()}?</span>
                         <div className="filter-choices">
                             <label>
-                                <input 
-                                    type="checkbox" 
-                                    checked={filters[filter.key] === true} 
-                                    onChange={() => handleFilterChange(filter.key, true)} 
-                                />
+                                <input type="radio" name={key} checked={filters[key] === true} onChange={() => handleFilterChange(key, true)} />
                                 Yes
                             </label>
                             <label>
-                                <input 
-                                    type="checkbox" 
-                                    checked={filters[filter.key] === false} 
-                                    onChange={() => handleFilterChange(filter.key, false)} 
-                                />
+                                <input type="radio" name={key} checked={filters[key] === false} onChange={() => handleFilterChange(key, false)} />
                                 No
                             </label>
                         </div>
@@ -107,19 +125,11 @@ function SearchFlatmatesFilter() {
                     <span className="filter-label">Gender?</span>
                     <div className="filter-choices">
                         <label>
-                            <input 
-                                type="checkbox" 
-                                checked={filters.gender === true} 
-                                onChange={() => handleFilterChange("gender", true)} 
-                            />
+                            <input type="radio" name="gender" checked={filters.gender === "male"} onChange={() => handleFilterChange("gender", "male")} />
                             Male
                         </label>
                         <label>
-                            <input 
-                                type="checkbox" 
-                                checked={filters.gender === false} 
-                                onChange={() => handleFilterChange("gender", false)} 
-                            />
+                            <input type="radio" name="gender" checked={filters.gender === "female"} onChange={() => handleFilterChange("gender", "female")} />
                             Female
                         </label>
                     </div>
