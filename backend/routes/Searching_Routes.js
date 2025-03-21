@@ -165,7 +165,7 @@ router.get("/SearchFlatmates", authMiddleware, async (req, res) => {
 // Searching Properties
 
 router.get('/SearchProperties', authMiddleware, async (req, res) => {  
-    const { town, min_price, max_price, min_area, max_area, ...filters } = req.query; // Extract filters from request body
+    const { town, min_price, max_price, min_area, max_area, bhk, ...filters } = req.query; // Extract filters from request body
 
     if (!town) {
         return res.status(400).json({ error: "Town is required in the request body" });
@@ -174,11 +174,10 @@ router.get('/SearchProperties', authMiddleware, async (req, res) => {
     try {
         // Get town data (including sorted nearest towns)
         const townData = await Towns.findOne({ name: town });
-        // const townData = await db.collection("towns").findOne({ name: town });
         if (!townData) return res.status(404).json({ error: "Town not found" });
 
-        // Ensure nearest_towns is an array
-        const nearestTowns = Array.isArray(townData?.nearest_towns) ? townData.nearest_towns : [];
+        // Ensure nearest_towns is an array and extract only the first two nearest towns
+        const nearestTowns = Array.isArray(townData?.nearest_towns) ? townData.nearest_towns.slice(0, 2) : [];
         const queryTowns = [town, ...nearestTowns];
 
         // Construct the filter query
@@ -187,15 +186,15 @@ router.get('/SearchProperties', authMiddleware, async (req, res) => {
         // Add price range filtering
         if (min_price || max_price) {
             query.price = {};
-            if (min_price) query.price.$gte = Number(min_price); // Use min_price in argument
-            if (max_price) query.price.$lte = Number(max_price); // Use max_price in argument
+            if (min_price) query.price.$gte = Number(min_price);
+            if (max_price) query.price.$lte = Number(max_price);
         }
 
         // Add area range filtering
         if (min_area || max_area) {
             query.area = {};
-            if (min_area) query.area.$gte = Number(min_area); // Use min_area in argument
-            if (max_area) query.area.$lte = Number(max_area); // Use max_area in argument
+            if (min_area) query.area.$gte = Number(min_area);
+            if (max_area) query.area.$lte = Number(max_area);
         }
 
         // Handle BHK filtering
@@ -218,7 +217,7 @@ router.get('/SearchProperties', authMiddleware, async (req, res) => {
         // Fetch properties with filtering
         const properties = await Property.find(query).lean();
 
-        // Preserve sorting order based on nearest towns
+        // Preserve sorting order based on queryTowns
         const sortedProperties = properties.sort((a, b) => {
             return queryTowns.indexOf(a.town) - queryTowns.indexOf(b.town);
         });
