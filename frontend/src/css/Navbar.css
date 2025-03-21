@@ -1,99 +1,140 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:700');
+@import url('https://fonts.googleapis.com/css?family=DM+Sans:400,700');
+
+/* Reset margins and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .navbar {
   background-color: #FDE6E8;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-.logo{
-    display: flex;
-    align-items: center;
+
+.logo {
+  display: flex;
+  align-items: center;
 }
-.logo-img{
-    width: 80px;
-    height: 60px;
-    padding: 5px;
+
+.logo-img {
+  width: 80px;
+  height: 60px;
+  padding: 5px;
 }
-.menu{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-left: 20px;
-    user-select: none;
+
+.menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 20px;
+  user-select: none;
+  font-family: 'Open Sans Condensed', sans-serif;
 }
-.menu>ul{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-    list-style: none;
+
+.menu ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
-.menu>ul>li{
-    padding: 10px;
-    margin: 0 10px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 800;
-    
+
+.menu li {
+  padding: 10px;
+  margin: 0 10px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  position: relative;
 }
-.menu>ul>li>a{
-    text-decoration: none;
-    color: #7D141D;
-    transition: 0.3s;
-    cursor: pointer;
+
+.menu li a {
+  text-decoration: none;
+  color: #7D141D;
+  transition: 0.3s;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: block;
+  position: relative;
+  padding: 4px 0;
 }
-.menu>ul>li>a:hover{
-    color: #934a50;
+
+/* Animated underline effect */
+.menu li a::before {
+  content: "";
+  width: 100%;
+  height: 4px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background: #9c1b23; /* Pink underline */
+  transition: 0.5s transform ease;
+  transform: scale3d(0,1,1);
+  transform-origin: 50% 50%;
+  border-radius: 5px;
 }
-.account-logo{
-    display: flex;
-    align-items: center;
-    padding-right: 20px;
-    margin-left: auto;
-    cursor: pointer;
+
+.menu li a:hover::before {
+  transform: scale3d(1,1,1);
 }
-.account-logo img{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 10px;
+
+.menu li a:hover {
+  color: #9c1b23;
 }
-.login-btn{
-    background-color: #7D141D;
-    color: white;
-    /* padding: 5px 7px; */
-    height: 40px;
-    width: 70px;
-    margin: 2px;
-    border: none;
-    border-radius: 5px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: 0.3s;
+
+.account-logo {
+  display: flex;
+  align-items: center;
+  padding-right: 20px;
+  margin-left: auto;
+  cursor: pointer;
 }
-.login-btn>a{
-    text-decoration: none;
-    color: white;
+
+.account-logo img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
 }
-.login-btn:hover{
-    background-color: #9c1b23/*#a51b27*/;
+
+.login-btn, .signup-btn {
+  background-color: #7D141D;
+  color: white;
+  height: 40px;
+  margin: 2px;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 4px 7px rgba(0, 0, 0, 0.1);
 }
-.signup-btn{
-    background-color: #7D141D;
-    color: white;
-    /* padding: 5px 7px; */
-    height: 40px;
-    width: 90px;
-    margin: 2px;
-    border: none;
-    border-radius: 5px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: 0.3s;
+
+.login-btn {
+  width: 70px;
 }
-.signup-btn>a{
-    text-decoration: none;
-    color: white;
+
+.signup-btn {
+  width: 90px;
 }
-.signup-btn:hover{
-    background-color: #9c1b23; /*#a51b27*/
+
+.login-btn a, .signup-btn a {
+  text-decoration: none;
+  color: white;
+  display: block;
+  width: 100%;
+  height: 100%;
+  line-height: 40px;
+  text-align: center;
+}
+
+.login-btn:hover, .signup-btn:hover {
+  background-color: #9c1b23;
 }

@@ -112,16 +112,16 @@ function SignUpForm({ setID }) {
   };
 
   return (
-    <div className="signup-box">
-      <h2 className="title">Signup as a Tenant</h2>
+    <div className="signup-tenant-box">
+      <h2 className="signup-tenant-title">Signup as a Tenant</h2>
 
-      <form className="signup-form" onSubmit={validateFormInput}>
-        <div className="scroll-div">
+      <form className="signup-tenant-form" onSubmit={validateFormInput}>
+        <div className="signup-tenant-scroll-div">
           <div>
             <label>Your good name</label>
             <input
               type="text"
-              className="input-box"
+              className="signup-tenant-input-box"
               placeholder="name"
               required
               name="name"
@@ -135,7 +135,7 @@ function SignUpForm({ setID }) {
             <label>Your Email (please check regularly)</label>
             <input
               type="email"
-              className="input-box"
+              className="signup-tenant-input-box"
               placeholder="mail@abc.com"
               name="email"
               onChange={({ target }) =>
@@ -149,7 +149,7 @@ function SignUpForm({ setID }) {
             <label>Password</label>
             <input
               type="password"
-              className="input-box"
+              className="signup-tenant-input-box"
               placeholder="*************"
               name="password"
               value={formInput.password}
@@ -158,14 +158,14 @@ function SignUpForm({ setID }) {
               }}
               required
             />
-            <p className="error-password">{formError.password}</p>
+            <p className="signup-tenant-error-password">{formError.password}</p>
           </div>
 
           <div>
             <label>Confirm Password</label>
             <input
               type="password"
-              className="input-box"
+              className="signup-tenant-input-box"
               placeholder="*************"
               name="confirmPassword"
               value={formInput.confirmPassword}
@@ -174,12 +174,16 @@ function SignUpForm({ setID }) {
               }}
               required
             />
-            <p className="error-confirm-password">
+            <p className="signup-tenant-error-confirm-password">
               {formError.confirmPassword}
             </p>
-            <p className="success-message">{formInput.successMsg}</p>
+            <p className="signup-tenant-success-message">
+              {formInput.successMsg}
+            </p>
 
-            <p className="question">A few questions about you :</p>
+            <p className="signup-tenant-question">
+              A few questions about you :
+            </p>
             <label>
               Where would you like to look for a property?
               <br />
@@ -187,44 +191,39 @@ function SignUpForm({ setID }) {
             </label>
             <select
               type="text"
-              className="input-box"
+              className="signup-tenant-input-box"
               name="city"
               onChange={({ target }) => {
                 handleUserInput(target.name, target.value);
               }}
               required
             >
-              <option value="Selected">
-                Select City
-              </option>
+              <option value="Selected">Select City</option>
               <option value="Mumbai">Mumbai</option>
             </select>
-     
           </div>
           <select
-              type="text"
-              className="input-box"
-              name="locality"
-              onChange={({ target }) => {
-                handleUserInput(target.name, target.value);
-              }}
-              required
-            >
-              <option value="Selected">
-                Select Locality
-              </option>
-              <option value="Andheri">Andheri</option>
-              <option value="Bandra">Bandra</option>
-              <option value="Juhu">Juhu</option>
-              <option value="Malad">Malad</option>
-              <option value="Kandivali">Kandivali</option>
-              <option value="Borivali">Borivali</option>
-              <option value="Dahisar">Dahisar</option>
-              <option value="Mira Road">Mira Road</option>
-              <option value="Thane">Thane</option>
-              <option value="Goregaon">Goregaon</option>
-            </select>
-          <div className="options">
+            type="text"
+            className="signup-tenant-input-box"
+            name="locality"
+            onChange={({ target }) => {
+              handleUserInput(target.name, target.value);
+            }}
+            required
+          >
+            <option value="Selected">Select Locality</option>
+            <option value="Andheri">Andheri</option>
+            <option value="Bandra">Bandra</option>
+            <option value="Juhu">Juhu</option>
+            <option value="Malad">Malad</option>
+            <option value="Kandivali">Kandivali</option>
+            <option value="Borivali">Borivali</option>
+            <option value="Dahisar">Dahisar</option>
+            <option value="Mira Road">Mira Road</option>
+            <option value="Thane">Thane</option>
+            <option value="Goregaon">Goregaon</option>
+          </select>
+          <div className="signup-tenant-options">
             <label>
               Do you smoke/drink?
               <label htmlFor="smoke-yes">
@@ -232,7 +231,7 @@ function SignUpForm({ setID }) {
                   type="radio"
                   id="smoke-yes"
                   name="smoke"
-                  className="radio"
+                  className="signup-tenant-radio"
                   value="yes"
                   required
                   onChange={({ target }) => {
@@ -246,7 +245,7 @@ function SignUpForm({ setID }) {
                   type="radio"
                   id="smoke-no"
                   name="smoke"
-                  className="radio"
+                  className="signup-tenant-radio"
                   value="no"
                   onChange={({ target }) => {
                     handleUserInput(target.name, target.value);
@@ -263,7 +262,7 @@ function SignUpForm({ setID }) {
                   type="radio"
                   id="pets-yes"
                   name="pets"
-                  className="radio"
+                  className="signup-tenant-radio"
                   value="yes"
                   required
                   onChange={({ target }) => {
@@ -277,7 +276,7 @@ function SignUpForm({ setID }) {
                   type="radio"
                   id="pets-no"
                   name="pets"
-                  className="radio"
+                  className="signup-tenant-radio"
                   value="no"
                   onChange={({ target }) => {
                     handleUserInput(target.name, target.value);
@@ -294,7 +293,7 @@ function SignUpForm({ setID }) {
                   type="radio"
                   id="veg-yes"
                   name="veg"
-                  className="radio"
+                  className="signup-tenant-radio"
                   value="yes"
                   required
                   onChange={({ target }) => {
@@ -308,7 +307,7 @@ function SignUpForm({ setID }) {
                   type="radio"
                   id="veg-no"
                   name="veg"
-                  className="radio"
+                  className="signup-tenant-radio"
                   value="no"
                   onChange={({ target }) => {
                     handleUserInput(target.name, target.value);
@@ -325,7 +324,7 @@ function SignUpForm({ setID }) {
                   type="radio"
                   id="flatmate-yes"
                   name="flatmate"
-                  className="radio"
+                  className="signup-tenant-radio"
                   value="yes"
                   required
                   onChange={({ target }) => {
@@ -339,7 +338,7 @@ function SignUpForm({ setID }) {
                   type="radio"
                   id="flatmate-no"
                   name="flatmate"
-                  className="radio"
+                  className="signup-tenant-radio"
                   value="no"
                   onChange={({ target }) => {
                     handleUserInput(target.name, target.value);
@@ -356,7 +355,7 @@ function SignUpForm({ setID }) {
                   type="radio"
                   id="gender-male"
                   name="gender"
-                  className="radio"
+                  className="signup-tenant-radio"
                   value="male"
                   required
                   onChange={({ target }) => {
@@ -370,7 +369,7 @@ function SignUpForm({ setID }) {
                   type="radio"
                   id="gender-female"
                   name="gender"
-                  className="radio"
+                  className="signup-tenant-radio"
                   value="female"
                   onChange={({ target }) => {
                     handleUserInput(target.name, target.value);
@@ -381,10 +380,10 @@ function SignUpForm({ setID }) {
             </label>
           </div>
         </div>
-        <button className="signup-button">Sign up</button>
+        <button className="signup-tenant-signup-button">Sign up</button>
       </form>
 
-      <p className="footer-text-signup">
+      <p className="signup-tenant-footer-text-signup">
         With Roomble, you'll stumble on the perfect place to rumble!
       </p>
     </div>

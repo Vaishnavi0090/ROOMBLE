@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../css/PropertyCard.css";
 
 const PropertyCard = ({ image, price, title, location, bhk, onView, onDelete }) => {
+  const [isPopping, setIsPopping] = useState(false);
+
+  const triggerPop = () => {
+    setIsPopping(true);
+    setTimeout(() => setIsPopping(false), 300); // Duration should match CSS animation
+  };
+
+  const handleView = () => {
+    triggerPop();
+    onView();
+  };
+
+  const handleDelete = () => {
+    triggerPop();
+    onDelete();
+  };
+
   return (
-    <div className="property-card">
+    <div className={`property-card ${isPopping ? "pop-animate" : ""}`}>
       {/* Image Section */}
       <div className="image-container">
         <img src={image} alt={title} />
@@ -18,8 +35,8 @@ const PropertyCard = ({ image, price, title, location, bhk, onView, onDelete }) 
 
       {/* Buttons Section */}
       <div className="buttons">
-        <button className="view-button" onClick={onView}>View</button>
-        <button className="delete-button" onClick={onDelete}>Delete</button>
+        <button className="view-button" onClick={handleView}>View</button>
+        <button className="delete-button" onClick={handleDelete}>Delete</button>
       </div>
     </div>
   );
