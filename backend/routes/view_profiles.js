@@ -51,7 +51,7 @@ router.post(`/Self_profile`, authMiddleware, async (req,res) => {
                     success : false,
                     message : "Account not found"
                 })
-            }
+            }//abcdeg
             
             let properyData = [];
             for (let propid of user.propertyList){

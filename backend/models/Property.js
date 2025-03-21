@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 const PropertySchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
     city: {
         type : String,
         required : true
@@ -23,11 +19,6 @@ const PropertySchema = new mongoose.Schema({
     },
     bhk: {
         type: Number,
-        required: true
-    },
-    type: {
-        type: String,
-        enum: ["Apartment", "Bungalow", "Housing"],
         required: true
     },
     description: {

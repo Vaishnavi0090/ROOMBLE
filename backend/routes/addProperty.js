@@ -1,17 +1,36 @@
 const express = require("express")
 const router = express.Router();
-const Landlord = require("../models/Landlord")
-const Property = require("../models/Property")
+const Landlord = require("../models/Landlord");
+const Property = require("../models/Property");
+const path = require(`path`);
+const fs = require(`fs`);
 const authMiddleware = require("../middlewares/checkuser");
+require(`dotenv`).config(`../.env`);
+
+const SECRET_KEY = process.env.SECRET_KEY;
+const PORT = process.env.PORT;
+
+const MAX_ALLOWED_PICS = 10;
+const maxSize = 2*1024*1024; // Maximum allowed size : 2mb
+const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+
 
 router.post("/listProperty",authMiddleware, async(req,res)=>{
     try{
         const landlordId = req.user.id;
         const propertyData = req.body;
+        // city: 
+        // town: 
+        // address: 
+        // area: 
+        // bhk: 
+        // description: 
+        // amenities:
+        // price:
+        // available : 
+        // Images :
 
-        
-
-        const requiredFields = ["name","town","address","area","bhk","description","price","amenities"];
+        const requiredFields = ["city","town","address","area","bhk","description","price","amenities"];
 
         const missingFields = requiredFields.filter(field => (propertyData[field] === undefined));
 
@@ -40,8 +59,66 @@ router.post("/listProperty",authMiddleware, async(req,res)=>{
                 message : "You have already listed a property at this address"
             });
         }
+
+
         const newProperty = new Property(propertyData);
+
+        if(!req.files || !req.files.image){
+            return res.status(400).json({
+                success : false,
+                message : "Kindly upload photos as well"
+            })
+        }
+        
+        let imageData = req.files.image;
+        fs.mkdirSync(path.join(__dirname , `../Pictures` , `property` ,`${newProperty.id}`));
+
+        if(imageData.size > MAX_ALLOWED_PICS){
+            return res.status(400).json({
+                success : false,
+                message : `More than ${MAX_ALLOWED_PICS} uploaded, there isn't space in database`
+            })
+        }
+        let Image_count = 0;
+        for(let image of imageData){
+            if(image.size > maxSize){
+                return res.json(400).json({
+                    success : false,
+                    message : `Image size is ${image.size} but maximum allowed is only ${maxSize}`
+                })
+            } else if(!allowedExtensions.test(image.name)) {
+                return res.status(400).json({
+                    success : false,
+                    message : `Only png, jpg and jpeg allowed in image.`
+                })
+            } else{
+                //Save the image into Pictures/accounttype
+                let UploadPath = path.join(__dirname , `../Pictures` , `property`, `${newProperty.id}` , `${Image_count}${path.extname(image.name).toLowerCase()}`);
+                image.mv(UploadPath, (err) => {
+                    if (err) {
+                        console.log("Error uploading image while updating");
+                        console.log(err);
+                        return res.status(500).json({
+                            success : false,
+                            message : "Some internal server error, in uploading the picture."
+                        });
+                    }
+                    else{
+                        newProperty.Images.push(`http://127.0.0.1:${PORT}/Pictures/property/${newProperty.id}/${Image_count}${path.extname(image.name).toLowerCase()}`);
+                        console.log(Image_count);
+                        console.log(`http://127.0.0.1:${PORT}/Pictures/property/${newProperty.id}/${Image_count}${path.extname(image.name).toLowerCase()}`)
+                        Image_count = Image_count + 1;
+                        //Debugging
+                        // // console.log(`http://127.0.0.1:${PORT}/Pictures/${accounttype}/${user.id}${path.extname(image.name).toLowerCase()}`);
+                        //Debugging
+                    }
+                });
+            }
+        }
+
+
         try{
+            console.log(newProperty.Images);
             await newProperty.save();
         }
         catch(saveError){
@@ -51,6 +128,7 @@ router.post("/listProperty",authMiddleware, async(req,res)=>{
                 message: "Failed to save the property",
             })
         }
+
 
         landlord.propertyList.push(newProperty._id);
 
