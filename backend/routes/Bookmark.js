@@ -159,7 +159,7 @@ router.post(`/edit_bookmarks`, authMiddleware, async (req, res) => {
             }
 
         } else {
-            return res.status().json({
+            return res.status(400).json({
                 success : false,
                 message : "Incorrect thing to be bookmarked"
             })
