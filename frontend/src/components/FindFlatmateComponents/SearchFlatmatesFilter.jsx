@@ -22,7 +22,7 @@ function SearchFlatmatesFilter({ setFlatmates }) {
   };
 
   const handleApplyChanges = async () => {
-    const token = localStorage.getItem("authtoken");
+    const token = localStorage.getItem("authauthtoken");
 
     const queryParams = new URLSearchParams();
     if (locality) queryParams.append("locality", locality);
@@ -50,7 +50,7 @@ function SearchFlatmatesFilter({ setFlatmates }) {
       );
 
       const data = await response.json();
-
+            console.log("API Response:", data);
       if (data.success) {
         setFlatmates(data.data);
         console.log("Flatmates Found:", data.data);

@@ -18,24 +18,29 @@ function FindFlatmate() {
                 
                 {/* Display flatmate cards */}
                 <div className="flatmate-cards-container">
-                    {flatmates.length > 0 ? (
-                        flatmates.map((flatmate) => (
-                            <FlatmateCard
-                                key={flatmate._id}
-                                name={flatmate.name}
-                                locality={flatmate.locality}
-                                city={flatmate.city}
-                                gender={flatmate.gender}
-                                smoke={flatmate.smoke}
-                                eatNonVeg={flatmate.veg}
-                                pets={flatmate.pets}
-                                compatibilityScore={flatmate.recommendationScore}
-                                image={flatmate.Images}
-                            />
-                        ))
+                {flatmates.length > 0 ? (
+                    flatmates.map((flatmate, index) => (
+                        
+                        <FlatmateCard
+                        id={flatmate._id}
+                        key={flatmate._id }  // ✅ Ensure unique key
+                        
+                        name={flatmate.name}
+                        locality={flatmate.locality}
+                        city={flatmate.city}
+                        gender={flatmate.gender}
+                        smoke={flatmate.smoke}
+                        eatNonVeg={flatmate.veg}
+                        pets={flatmate.pets}
+                        compatibilityScore={flatmate.recommendationScore}
+                        image={flatmate.Images}
+                        isBookmarked={false}
+                        />
+                    ))
                     ) : (
-                        <p>No flatmates found.</p>
+                    <p>No flatmates found.</p>
                     )}
+
                 </div>
             </div>
         </div>

@@ -51,6 +51,7 @@ router.get(`/get_bookmarks`, authMiddleware, async (req, res) => {
         //Code to delete the user id that has deleted it's account is left to add
         for( let id of user.bookmarks_tenants){
             if (!mongoose.Types.ObjectId.isValid(id)) {
+                
                 console.log(`!!!!INVALID ID FOUND!!!!!`);
                 console.log(id);
                 return res.status(400).json({ error: `${id} is invalid ID` });

@@ -1,25 +1,66 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../css/FlatMateCard.css";
+import { Basecontext } from "../context/base/Basecontext";
 
-const FlatmateCard = ({ name, locality, city, gender, smoke, eatNonVeg, pets, compatibilityScore, image }) => {
-  const [bookmarked, setBookmarked] = useState(false);
+const FlatmateCard = ({ id, name, locality, city, gender, smoke, eatNonVeg, pets, compatibilityScore, image, isBookmarked }) => {
+  const [bookmarked, setBookmarked] = useState(isBookmarked);
+  const { user } = useContext(Basecontext); // Context to get user token
 
-  const toggleBookmark = () => {
-    setBookmarked(!bookmarked);
+  useEffect(() => {
+    setBookmarked(isBookmarked); // Ensure correct initial state from props
+  }, [isBookmarked]);
+  // const id = {id};
+  const toggleBookmark = async () => {
+    const newBookmarkState = !bookmarked;
+    const token = localStorage.getItem("authtoken");
+    console.log(id);
+    const requestBody = {
+      action: newBookmarkState ? "bookmark" : "unmark",
+      thing: "flatmate",
+      id,
+    };
+  
+    console.log("Request Body:", requestBody);
+  
+    if (!token) {
+      alert("Authentication token is missing!");
+      return;
+    }
+  
+    try {
+      const response = await fetch("http://127.0.0.1:3000/api/Bookmarking_Routes/edit_bookmarks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authtoken: token, 
+        },
+        body: JSON.stringify(requestBody),
+      });
+  
+      const data = await response.json();
+  
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to update bookmark");
+      }
+  
+      setBookmarked(newBookmarkState);
+    } catch (error) {
+      console.error("Error updating bookmark:", error);
+      alert(`Error: ${error.message}`);
+    }
   };
+  
+
   const score = Math.round(parseFloat(compatibilityScore) * 100) || 0;
+
   return (
     <div className="flatmate-card">
       {/* Card Header */}
       <div className="card-header">
-        <img
-          src={image}// Placeholder for profile pic
-          alt={name}
-          className="profile-pic"
-        />
+        <img src={image} alt={name} className="profile-pic" />
         <span className="flatmate-name">{name}</span>
-        
-        {/* Fancy Compatibility Score */}
+
+        {/* Compatibility Score */}
         <span className="compatibility-score">
           <span className="star-icon">⭐</span> {score}%
         </span>
@@ -28,9 +69,9 @@ const FlatmateCard = ({ name, locality, city, gender, smoke, eatNonVeg, pets, co
       {/* Card Body */}
       <div className="card-body">
         <p className="location-title">Preferred Location</p>
-        <p className="location-text">{locality}, {city}</p>
-
-       
+        <p className="location-text">
+          {locality}, {city}
+        </p>
       </div>
 
       {/* Card Footer */}
