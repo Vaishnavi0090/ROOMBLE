@@ -4,21 +4,26 @@ import EmojiEmotionsOutlinedIcon from '@mui/icons-material/EmojiEmotionsOutlined
 import SendIcon from '@mui/icons-material/Send';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import EmojiPicker from 'emoji-picker-react';//For Emojis
-
 import '../../css/MessageBoxStyle/ChatBox.css';//Importing CSS
 import { useRef,useEffect } from "react";
 import SampleMessages from "./SampleMessages";//Temporary Messages actually it will be fetched from the backend once the backend is ready
 import OwnMessage from "./OwnMessage";
 import RecievedMessage from "./RecievedMessage";
+import { useContext } from 'react'
+import { Basecontext } from '../../context/base/Basecontext'
 
-function ChatBox({currentUserId,setCurrentUserId,currentMessages,setCurrentMessages}) {
+function ChatBox({currentConvId,setCurrentConvId,currentMessages,setCurrentMessages}) {
+
+    const state = useContext(Basecontext)
+    const {user, setUser, fetuser} = state
+
     const [emojiopen, setEmojiopen] = React.useState(false);//For Emoji Picker to make it open and close
     const [message, setMessage] = React.useState('');//For the message input
     const endRef=useRef(null);
     
-        useEffect(()=>{
-            endRef.current?.scrollIntoView({behavior:"smooth"});
-        },[]);
+    useEffect(()=>{
+        endRef.current?.scrollIntoView({behavior:"smooth"});
+    },[]);
     
     //For Emoji to add on the message
     function handleEmojiClick(event){
@@ -54,8 +59,31 @@ function ChatBox({currentUserId,setCurrentUserId,currentMessages,setCurrentMessa
        {/*This contains messages which are temporary now*/}
        <div className="chatBody">
             
-            <RecievedMessage/>
-            <OwnMessage/>
+            {/* <RecievedMessage/>
+            <OwnMessage/> */}
+            {currentMessages.messages.map((msg) => {
+                // console.log(msg);
+                if (msg.senderID == user._id){
+                    var blue = false;
+                    // currentMessages.members has two members, one of them is the user. read1 and read2 are the read status of the two members respectively
+                    // one of them is true trivially, so we check if the other is false
+                    //first check if members[0] or members[1] is the user
+                    if (currentMessages.members[0] == user._id){
+                        if (msg.read2 == false){
+                            blue = true;
+                        }
+                    }
+                    else{
+                        if (msg.read1 == false){
+                            blue = true;
+                        }
+                    }
+                    return <OwnMessage message={msg.message} timestamp={msg.timestamp} blue={blue}/>
+                }
+                else{
+                    return <RecievedMessage message={msg.message} timestamp={msg.timestamp}/>
+                }
+            })}
             <div ref={endRef}></div>
        </div>
         {/*chatInput is where user types the message*/}
