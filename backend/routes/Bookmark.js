@@ -44,7 +44,7 @@ router.get(`/get_bookmarks`, authMiddleware, async (req, res) => {
     /*If lets say some user Bookmarked a user previously but now he has deleted his account, then I simply dont return that user and remove it from this bookmarked property as well */
     Flatmate_bookmarks = [];
     Property_bookmarks = [];
-    const townData = await Towns.findOne({ town: user.locality });
+    const townData = await Towns.findOne({ name: user.locality });
     //Code to delete the user id that has deleted it's account is left to add
     for (let id of user.bookmarks_tenants) {
       if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -56,6 +56,7 @@ router.get(`/get_bookmarks`, authMiddleware, async (req, res) => {
         `email name locality city Images`
       );
       if (tenantToBookmark) {
+        console.log(`Your town data is ${townData}`);
         if (townData) {
           const score = calculateRecommendationScore(
             user,
@@ -63,11 +64,14 @@ router.get(`/get_bookmarks`, authMiddleware, async (req, res) => {
             townData
           );
           tenantToBookmark = tenantToBookmark.toObject(); // Convert to plain object
-          tenantToBookmark.score = score.toFixed(2); // Add score
+          tenantToBookmark.score = score; // Add score
+          console.log(tenantToBookmark);
+          console.log(`your score is ${score}`);
         }
         Flatmate_bookmarks.push(tenantToBookmark);
       }
     }
+    console.log(Flatmate_bookmarks);
     for (let id of user.bookmarks_property) {
       if (!mongoose.Types.ObjectId.isValid(id)) {
         console.log(`!!!!INVALID ID FOUND!!!!!`);
