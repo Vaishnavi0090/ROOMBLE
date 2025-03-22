@@ -151,6 +151,23 @@ module.exports = (io, onlineUsers) => {
                 messages: []
             })
             await newConversation.save();
+
+            //add this conversation to both users
+            var user1Doc = await Tenant.findById(user1);
+            if (!user1Doc) {
+                user1Doc = await Landlord.findById(user1);
+            }
+            user1Doc.conversations.push(newConversation._id);
+            await user1Doc.save();
+
+            var user2Doc = await Tenant.findById(user2_id);
+            if (!user2Doc) {
+                user2Doc = await Landlord.findById(user2_id);
+            }
+            user2Doc.conversations.push(newConversation._id);
+            await user2Doc.save();
+
+
             return res.send({ conversation_id: newConversation._id, success: true });
         }
         catch(err){
