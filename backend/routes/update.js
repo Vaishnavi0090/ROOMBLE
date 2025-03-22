@@ -7,6 +7,7 @@ const Property = require("../models/Property");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken")
 require(`dotenv`).config(`../.env`);
+const SaveImage = require(`../helper_funcs/Saveimage`);
 const path = require(`path`);
 // const { route } = require("./ForgotPassword")
 
@@ -64,22 +65,10 @@ router.put("/updateProfile",authMiddleware,async(req,res)=>{
             else{
                 //Save the image into Pictures/accounttype
                 let UploadPath = path.join(__dirname , `../Pictures` , `${accounttype}` , `${user.id}${path.extname(image.name).toLowerCase()}`);
-                image.mv(UploadPath, (err) => {
-                    if (err) {
-                        console.log("Error uploading image while updating");
-                        console.log(err);
-                        return res.status(500).json({
-                            success : false,
-                            message : "Some internal server error, in uploading the picture."
-                        });
-                    }
-                    else{
-                        user.Images = `http://127.0.0.1:${PORT}/Pictures/${accounttype}/${user.id}${path.extname(image.name).toLowerCase()}`;
-                        //Debugging
-                        console.log(`http://127.0.0.1:${PORT}/Pictures/${accounttype}/${user.id}${path.extname(image.name).toLowerCase()}`);
-                        //Debugging
-                    }
-                });
+                console.log(UploadPath);
+                await SaveImage(image,UploadPath);
+                user.Images = `http://127.0.0.1:3000/Pictures/${accounttype}/${user.id}${path.extname(image.name).toLowerCase()}`;
+                console.log(user.Images);
             }
         }
 

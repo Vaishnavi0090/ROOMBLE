@@ -53,11 +53,10 @@ router.post("/listProperty",authMiddleware, async(req,res)=>{
             });
         }
 
-
+        
         let newProperty = new Property(propertyData);
-
-
-
+        
+        
         /**Code for handling images */
         if(!req.files || !req.files.image){
             return res.status(400).json({
@@ -66,11 +65,18 @@ router.post("/listProperty",authMiddleware, async(req,res)=>{
             })
         }
         
+        //convert the images into an array
+        if(!Array.isArray(req.files.image)){
+            req.files.image = [req.files.image];
+        }
+        // console.log(req.files)
+        
         //make a new directory for each property
         let imageData = req.files.image;
         fs.mkdirSync(path.join(__dirname , `../Pictures` , `property` ,`${newProperty.id}`));
-
-        if(imageData.size > MAX_ALLOWED_PICS){
+        // console.log(imageData);
+        // return;
+        if(imageData.length > MAX_ALLOWED_PICS){
             return res.status(400).json({
                 success : false,
                 message : `More than ${MAX_ALLOWED_PICS} uploaded, there isn't space in database`
