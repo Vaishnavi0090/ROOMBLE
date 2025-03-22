@@ -1,51 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import "../../css/OTPPage/SetNewPassword.css";
+import { useNavigate, Link, useSearchParams } from "react-router-dom";
+import "../../css/ForgotPassword/SetNewPassword.css";
 import logo from "../../../public/logo.png";
 
 const SetNewPassword = () => {
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [oldPassword, setOldPassword] = useState(""); // Fetched from backend
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
 
-    // Simulating email being passed from the previous page
-    const email = localStorage.getItem("resetEmail");
+    const token = searchParams.get("token");
+    const email = searchParams.get("email");
+    const accounttype = searchParams.get("accounttype");
 
     useEffect(() => {
-        if (!email) {
+        if (!token || !email || !accounttype) {
+            setError("Invalid or missing authentication details.");
             navigate("/forgot-password");
-            return;
         }
-
-        // Fetch the old password from the backend using the email
-        const fetchOldPassword = async () => {
-            setLoading(true);
-            try {
-                const response = await fetch(`http://127.0.0.1:3000/api/auth/get_old_password`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ email }),
-                });
-
-                const data = await response.json();
-                if (data.success) {
-                    setOldPassword(data.oldPassword);
-                } else {
-                    setError("Failed to retrieve old password.");
-                }
-            } catch (error) {
-                setError("Network error. Please try again.");
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchOldPassword();
-    }, [email]);
+    }, [token, email, accounttype, navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -56,34 +32,50 @@ const SetNewPassword = () => {
             return;
         }
 
-        if (newPassword === oldPassword) {
-            setError("New password cannot be the same as the old password.");
-            return;
-        }
-
-        // Simulate a password reset request
         try {
-            const response = await fetch(`http://127.0.0.1:3000/api/auth/reset_password`, {
+            setLoading(true)
+            console.log("Submitting request...");
+            console.log("Token:", token);
+            console.log("Email:", email);
+            console.log("Account Type:", accounttype);
+
+            const response = await fetch(`http://127.0.0.1:3000/api/forgotPassword/ForgotPassword`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    "authtoken": token,           // Send token
+                    "accounttype": accounttype    // Send account type
+                },
                 body: JSON.stringify({
                     email,
                     newPassword,
+                    accounttype
                 }),
             });
 
+            console.log("Response Status:", response.status);
+
+            if (!response.ok) {
+            const errorText = await response.text();
+            console.error("Error response:", errorText);
+            setError(`Error: ${response.status} - ${errorText}`);
+            return;
+            }
+
             const data = await response.json();
-            
+            console.log("Server Response:", data);
+
             if (data.success) {
                 alert("Password reset successful!");
-                navigate("/");
+                navigate("/login");
             } else {
                 setError(data.message || "Failed to reset password.");
             }
         } catch (error) {
-            setError("Network error. Please try again.");
-        }
-    };
+            console.error("Network/Parsing Error:", error);
+            setError(`Network error: ${error.message}`);
+          }
+        };
     
     return (
         <div className="main-container">

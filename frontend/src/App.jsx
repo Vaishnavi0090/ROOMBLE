@@ -4,7 +4,7 @@ import { socket } from "./socket";
 import { Navbar } from "./components/Navbar";
 import BaseState from "./context/base/Basestate.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Messages from "./components/Messages";
 import SignUpTenant from "./components/SignUpTenant";
 import Login from "./components/Login.jsx";
@@ -18,8 +18,9 @@ import BookmarkedFlatmates from "./components/BookmarkedFlatmates.jsx";
 import SignupLandlord from "./components/SignupLandlord.jsx";
 import PropertyDisplayCall from "./components/PropertyDisplayCall.jsx";
 import FlatmateCardExpand from "./components/FlatmateCardExpand.jsx";
-import ForgotPassword from "./components/OTPPage/ForgotPassword.jsx";
-import SetNewPassword from "./components/OTPPage/SetNewPassword.jsx";
+import ForgotPassword from "./components/ForgotPassword/ForgotPassword.jsx";
+import SetNewPassword from "./components/ForgotPassword/SetNewPassword.jsx";
+import OTPPageForgot from "./components/ForgotPassword/OTPPageForgot.jsx";
 import OTPDeletePage from "./components/OTPPage/OTPDeletePage.jsx";
 import HomePage from "./components/LandlordDashboard/HomePage.jsx";
 import EditProperty from "./components/EditProperty.jsx";
@@ -29,6 +30,7 @@ import OtherTenantProfile from "./components/OtherTenantProfile.jsx";
 
 function App() {
   const [id, setID] = useState("");
+
   useEffect(() => {
     function handleConnection() {
       console.log("a user connected");
@@ -38,13 +40,19 @@ function App() {
     socket.on("online_users", (data) => {
       console.log(data);
     });
+
+    return () => {
+      socket.off("connect", handleConnection);
+    };
   }, []);
 
   return (
     <BaseState>
       <Navbar />
       <Routes>
-        <Route path="/messages" element={<MessageStart />} />
+        <Route path="/" element={<Navigate to="/login" />} />  
+      
+        <Route path="/messages" element={<Messages />} />
         <Route path="/signup-tenant" element={<SignUpTenant setID={setID} />} />
         <Route path="/signup-landlord" element={<SignupLandlord />} />
         <Route path="/login" element={<Login />} />
