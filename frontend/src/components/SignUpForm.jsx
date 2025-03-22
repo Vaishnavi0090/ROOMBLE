@@ -94,7 +94,7 @@ function SignUpForm({ setID }) {
       if (responseData.success) {
         setFormInput((prev) => ({ ...prev, successMsg: responseData.message }));
         setID(responseData.message);
-        navigate("/otp-page");
+        navigate("/otp-page-tenant");
         // navigate("/otp-page", { id: successMsg })
       } else {
         setFormInput((prev) => ({ ...prev, successMsg: responseData.message }));

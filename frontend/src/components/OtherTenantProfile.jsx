@@ -28,7 +28,6 @@ export default function OtherTenantProfile() {
                 const data = await response.json();
                 if (data.success) {
                     setUser(data.tenant);
-                    console.log(data.tenant.name);
                 } else {
                     console.log("Failed to fetch user");
                 }
@@ -41,7 +40,6 @@ export default function OtherTenantProfile() {
     }, []);
 
     const messageClick = async ()=>{
-        console.log(params.id)
         const response = await fetch('http://localhost:3000/messages/createConversation', {
             method: 'POST',
             headers: {
@@ -52,7 +50,7 @@ export default function OtherTenantProfile() {
         });
         const data = await response.json();
         if (data.success) {
-            navigate('/messages/' + data.conversation_id);
+            navigate('/chat/' + data.conversation_id);
         } else {
             console.log("Failed to create conversation");
         }

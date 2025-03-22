@@ -10,7 +10,7 @@ export const Navbar = () => {
 
   useEffect(() => {
     fetuser();
-    console.log(user.type);
+    // console.log(user.type);
   }, []);
 
   return (

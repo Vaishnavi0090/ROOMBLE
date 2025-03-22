@@ -13,7 +13,8 @@ const propertyData = {
     "Balcony With A Scenic View",
     "Gated Community With Security"
   ],
-  area: 9000
+  area: 9000,
+  landlord : "pranay"
 };
 
 const handleDelist = () => {

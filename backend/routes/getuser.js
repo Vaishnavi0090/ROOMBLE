@@ -13,6 +13,7 @@ const SECRET_KEY = process.env.SECRET_KEY;
 router.post('/user', checkUser, async (req, res) => {
     try {
         const user = req.user;
+        console.log(user)
         res.json({ user, success: true });
     } catch (err) {
         console.log(err);
