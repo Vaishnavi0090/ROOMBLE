@@ -1,35 +1,53 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import "../../css/OTPPage/ForgotPassword.css"; // Import the CSS specific to this component
+import "../../css/ForgotPassword/ForgotPassword.css"; // Import the CSS specific to this component
 import logo from "../../../public/logo.png";
+import { Basecontext } from '../../context/base/Basecontext';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [isLandlord, setIsLandlord] = useState(false);
     const navigate = useNavigate();
+
+    const state = useContext(Basecontext)
+    const {user, setUser, fetuser} = state
+    fetuser()
+    
+    const handleToggle = () => {
+        setIsLandlord(!isLandlord);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
         setLoading(true);
 
+        const accounttype = isLandlord ? "landlord" : "tenant";
+
         try {
-            const response = await fetch("http://127.0.0.1:3000/api/auth/forgot_password", {
+            const response = await fetch("http://127.0.0.1:3000/api/forgotPassword/enteremail", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ email }),
+                body: JSON.stringify({ accounttype: accounttype, email: email }),
             });
 
             const data = await response.json();
             setLoading(false);
 
             if (data.success) {
-                setSuccess(true);
-                setTimeout(() => navigate("/otp-page"), 1500); // Redirect after success
+                localStorage.setItem("authtoken", data.authtoken);
+                navigate(`/otp-forgot?accounttype=${accounttype}`);
+
+                setTimeout(() => {
+                    console.log("Saved Token:", localStorage.getItem("authtoken"));
+                }, 1500);
+
+                navigate("/otp-forgot");
             } else {
                 setError(data.message || "Email not found. Please try again.");
             }
@@ -68,6 +86,15 @@ const ForgotPassword = () => {
                         {loading ? "Redirecting..." : "Submit"}
                     </button>
                 </form>
+
+                {/* Toggle Switch */}
+                <div className="toggle-container">
+                    <div className={`toggle-switch ${isLandlord ? "landlord-selected" : ""}`} onClick={handleToggle}>
+                        <span className="toggle-text tenant">Tenant</span>
+                        <span className="toggle-slider"></span>
+                        <span className="toggle-text landlord">Landlord</span>
+                    </div>
+                </div>
 
                 {/* Navigation Links */}
                 <p className="register-text">
