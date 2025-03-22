@@ -1,14 +1,27 @@
 import React, { useEffect, useState } from "react";
-import "../css/LandlordProfile.css";
-import "./PropertyCard.jsx";
+import "../../css/LandlordProfileStyles/LandlordProfile.css";
+import PropertyCard from "../LandlordDashboard/PropertyCard.jsx";
+import logo from "../../../public/property-img.png";
+import pfp from "../../../public/sampleUser_Img.png";
 const LandlordProfile = () => {
   const [respData, setRespData] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const token = localStorage.getItem("token");
+        console.log(token);
         const response = await fetch(
-          "http://127.0.0.1:3000/api/view_profiles/Self_profile"
+          "http://127.0.0.1:3000/api/view_profiles/Self_profile",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              authtoken: token, // ✅ Change from "Authorization" to "authtoken"
+              accounttype: "landlord", // ✅ Also send account type separately
+            },
+            body: JSON.stringify({ ngj: "bkjmhkn" }),
+          }
         );
         const data = await response.json();
         setRespData(data);
@@ -26,41 +39,54 @@ const LandlordProfile = () => {
 
   return (
     <div className="landlord-profile-container">
-      {/* Profile Section */}
-      <div className="landlord-profile-header">
-        <img src={""} alt="Profile" className="landlord-profile-image" />
-        <div className="landlord-profile-details">
-          <p>
-            <span>Full Name</span> <span>:</span>
-            <span>{respData.name}</span>
-          </p>
-          <p>
-            <span>Email Address</span> <span>:</span>
-            <span>{respData.email}</span>
-          </p>
-          <p>
-            <span>Gender</span> <span>:</span>
-            <span>{respData.gender}</span>
-          </p>
-          <p>
-            <span>Properties Count</span> <span>:</span>
-            <span>{respData.propertiesCount}</span>
-          </p>
-        </div>
-        <button className="landlord-profile-edit">Edit</button>
-      </div>
+      {/* Combined Profile & Properties Section */}
+      <div className="landlord-profile-content">
+        <div className="landlord-profile-header">
+          <img src={pfp} alt="Profile" className="landlord-profile-image" />
+          <div className="landlord-profile-details">
+            <div className="landlord-profile-item">
+              <div className="landlord-profile-name">
+                <p>
+                  <span className="label">Full Name</span>{" "}
+                  <span className="separator">:</span>
+                  <span className="value">{respData.name}</span>
+                </p>
+              </div>
+              <div className="landlord-profile-email">
+                <p>
+                  <span className="label">Email Address</span>{" "}
+                  <span className="separator">:</span>
+                  <span className="value">{respData.email}</span>
+                </p>
+              </div>
+              <div className="landlord-profile-propCount">
+                <p>
+                  <span className="label">Properties Count</span>{" "}
+                  <span className="separator">:</span>
+                  <span className="value">{respData.message}</span>
+                </p>
+              </div>
 
-      {/* Properties Section */}
-      <div className="landlord-profile-properties">
-        {respData.Properties.map((property) => (
-          <PropertyCard
-            img={property.image}
-            price={property.price}
-            title={property.name}
-            locality={property.address}
-            bhk={property.bhk}
-          />
-        ))}
+              <div className="landlord-profile-edit-button">
+                <button className="landlord-profile-edit">Edit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Properties Section (Still Inside the Same Container) */}
+        <div className="landlord-profile-properties">
+          {respData.Properties.map(({ _id, town, bhk, price, Images }) => (
+            <PropertyCard
+              key={_id}
+              image={logo}
+              price={price}
+              title="Prop Card"
+              location={town}
+              bhk={bhk}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

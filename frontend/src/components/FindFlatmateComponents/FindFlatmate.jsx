@@ -30,6 +30,7 @@ function FindFlatmate() {
                                 eatNonVeg={flatmate.veg}
                                 pets={flatmate.pets}
                                 compatibilityScore={flatmate.recommendationScore}
+                                image={flatmate.Images}
                             />
                         ))
                     ) : (

@@ -24,6 +24,7 @@ import OTPDeletePage from "./components/OTPPage/OTPDeletePage.jsx";
 import HomePage from "./components/LandlordDashboard/HomePage.jsx";
 import EditProperty from "./components/EditProperty.jsx";
 import MessageStart from "./components/MessageStart.jsx";
+import LandlordProfile from "./components/LandlordProfile/LandlordProfile.jsx";
 
 function App() {
   const [id, setID] = useState("");
@@ -60,6 +61,7 @@ function App() {
         <Route path="/edit-property" element={<EditProperty />} />
         <Route path="/set-new-password" element={<SetNewPassword />} />
         <Route path="/otp-delete-page" element={<OTPDeletePage />} />
+        <Route path="/landlord-profile" element={<LandlordProfile />} />
       </Routes>
     </BaseState>
   );
