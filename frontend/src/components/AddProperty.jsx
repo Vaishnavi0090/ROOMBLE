@@ -1,6 +1,8 @@
 import React,{useState} from 'react';
 import DragAndDrop from './AddPropertyComponents/DragAndDrop';
 import "../css/AddPropertyStyles/AddProperty.css";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 
 function AddProperty() {
     const initialFormState = {
@@ -17,6 +19,8 @@ function AddProperty() {
     const [formData, setFormData] = useState(initialFormState);
     const [images,setImages]=useState([]);
     const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
+    const notify = (message) => toast(message);
 
     const updateFormData = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -61,6 +65,9 @@ function AddProperty() {
 
         try {
             const token = localStorage.getItem("authtoken");
+            if(!token){
+                return navigate("/login");
+            }
             const response = await fetch("http://127.0.0.1:3000/api/listproperty/listProperty", {
                 method: "POST",
                 headers: {
@@ -73,24 +80,22 @@ function AddProperty() {
             const data = await response.json();
     
             if (response.ok) {
-                alert("Property added successfully!");
-                /* setImages([]);
+                notify("Property added successfully!");
+                setImages([]);
                 setFormData(initialFormState);
-                setErrors({}); */
+                setErrors({});
             } else {
-                alert(`Error: ${data.message}`);
+                notify(`Error: ${data.message}`);
             }
         } catch (error) {
             console.error("Error submitting property:", error);
-            alert("An error occurred. Please try again.");
+            notify("An error occurred. Please try again.");
         }
-        /* setImages([]);
-        setFormData(initialFormState);
-        setErrors({}); */
     };
 
     return (
         <div className="add-prop-container">
+            <ToastContainer />
             <div className="add-prop-top">
                 <h4 style={{ color: "#7D141D", fontSize: "20px", fontWeight: "bold" }}>Add Property</h4>
                 <div className="input-top">
