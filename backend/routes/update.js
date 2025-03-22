@@ -26,8 +26,7 @@ router.put("/updateProfile",authMiddleware,async(req,res)=>{
     try{
         const userId = req.user.id;
         //if you want to remove profile pic, then pass , remove : "profilepic"
-        const {accounttype, ...updatedFields } = req.body;
-        let user;
+        const { accounttype, remove, ...updatedFields } = req.body;        let user;
 
         if(accounttype === "tenant"){
             user = await Tenant.findById(userId);
@@ -58,7 +57,7 @@ router.put("/updateProfile",authMiddleware,async(req,res)=>{
             // console.log('in here'); //FOR Debugging
             let image = req.files.image;
             if(image.size > maxSize){
-                return res.json(400).json({
+                return res.status(400).json({
                     success : false,
                     message : `Image size is ${image.size} but maximum allowed is only ${maxSize}`
                 })
