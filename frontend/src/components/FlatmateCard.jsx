@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../css/FlatMateCard.css";
 
-const FlatmateCard = ({ name, locality, city, gender, smoke, eatNonVeg, pets, compatibilityScore }) => {
+const FlatmateCard = ({ name, locality, city, gender, smoke, eatNonVeg, pets, compatibilityScore, image }) => {
   const [bookmarked, setBookmarked] = useState(false);
 
   const toggleBookmark = () => {
@@ -13,7 +13,7 @@ const FlatmateCard = ({ name, locality, city, gender, smoke, eatNonVeg, pets, co
       {/* Card Header */}
       <div className="card-header">
         <img
-          src="https://via.placeholder.com/50" // Placeholder for profile pic
+          src={image}// Placeholder for profile pic
           alt={name}
           className="profile-pic"
         />

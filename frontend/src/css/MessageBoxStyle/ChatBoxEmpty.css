@@ -1,0 +1,11 @@
+.chatBoxEmpty{
+    flex:5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Open Sans Condensed', sans-serif;
+}
+
+.heading-conversation{
+    color:#7D141D;
+}

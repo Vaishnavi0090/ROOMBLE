@@ -49,7 +49,7 @@ router.put("/updateProfile",authMiddleware,async(req,res)=>{
         }
 
         if(req.files && req.files.image){
-            console.log('in here');
+            // console.log('in here'); //FOR Debugging
             let image = req.files.image;
             if(image.size > maxSize){
                 return res.json(400).json({

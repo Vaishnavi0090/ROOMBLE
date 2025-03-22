@@ -24,6 +24,8 @@ import OTPPageForgot from "./components/ForgotPassword/OTPPageForgot.jsx";
 import OTPDeletePage from "./components/OTPPage/OTPDeletePage.jsx";
 import HomePage from "./components/LandlordDashboard/HomePage.jsx";
 import EditProperty from "./components/EditProperty.jsx";
+import MessageStart from "./components/MessageStart.jsx";
+import LandlordProfile from "./components/LandlordProfile/LandlordProfile.jsx";
 
 function App() {
   const [id, setID] = useState("");
@@ -47,7 +49,7 @@ function App() {
     <BaseState>
       <Navbar />
       <Routes>
-      <Route path="/" element={<Navigate to="/login" />} />  
+        <Route path="/" element={<Navigate to="/login" />} />  
       
         <Route path="/messages" element={<Messages />} />
         <Route path="/signup-tenant" element={<SignUpTenant setID={setID} />} />

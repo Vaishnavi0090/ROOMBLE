@@ -8,9 +8,22 @@
     height: 100%;    
 }
 
-.Property-card-div{
+.Property-card-div {
     flex: 4;
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly; /* Distributes space evenly */
+    gap: 20px; /* Adds space between cards */
+    padding: 20px; /* Adds padding to prevent overcrowding */
+    overflow-y: auto;
     height: 100%;
 }
 
+.Property-card-div h2{
+    text-align: center;
+    width: 100%;
+}
+
+.property-card:hover {
+    transform: scale(1.05); /* Adds a subtle hover effect */
+}
