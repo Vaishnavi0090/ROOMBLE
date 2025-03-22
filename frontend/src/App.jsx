@@ -64,7 +64,7 @@ function App() {
         <Route path="/tenant-edit-page" element={<TenantEditPage />} />
         <Route path="/tenant-dashboard" element={<BookmarkedFlatmates />} />
         <Route path="/prop-display" element={<PropertyDisplayCall />} />
-        <Route path="/flatmate-card-expand" element={<FlatmateCardExpand />} />
+        <Route path="/flatmate/:id" element={<FlatmateCardExpand />} />
         <Route path="/landlord-dashboard" element={<HomePage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/edit-property" element={<EditProperty />} />
