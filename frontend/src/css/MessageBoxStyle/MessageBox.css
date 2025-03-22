@@ -10,6 +10,7 @@
         .search-bar{
             display: flex;
             align-items: center;
+            
             padding: 5px;
             margin: 10px;
             background-color: white;
