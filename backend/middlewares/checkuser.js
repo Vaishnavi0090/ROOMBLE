@@ -7,28 +7,18 @@ const SECRET_KEY = process.env.SECRET_KEY;
 
 const checkUser = async (req, res, next) => {
     const token = req.header('authtoken');
-    const accountType = req.header('accounttype');
     if (!token) {
         return res.status(401).json({ message: 'Access Denied' });
     }
-
     try {
         const verified = jwt.verify(token, SECRET_KEY);
-        let user;
-
-        if (accountType === 'landlord') {
-            user = await Landlord.findById(verified.id);
-        } else if (accountType === 'tenant') {
-            user = await Tenant.findById(verified.id);
-        } else {
-            console.log(accountType);
-            return res.status(400).json({ message: 'Invalid account type' });
-        }
-
+        const user = await Tenant.findById(verified.id);
         if (!user) {
-            return res.status(404).json({ message: 'User not found' });
+            const user = await Landlord.findById(verified.id);
+            if (!user) {
+                return res.status(400).json({ message: 'Invalid Token' });
+            }
         }
-
         req.user = user;
         next();
     } catch (err) {

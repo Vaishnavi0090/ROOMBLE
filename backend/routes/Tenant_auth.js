@@ -167,12 +167,12 @@ router.post(`/Tenant_login`, async (req, res) => {
         if (result) {
             // Generate JWT token
             const token = jwt.sign({ id: findTenant._id, email: findTenant.email }, SECRET_KEY, { expiresIn: "5h" });
-
+            console.log(token)
             res.status(200).json({
                 success: true,
                 name: findTenant.name,
                 message: "Successful Login",
-                token : token// Returning the token
+                authtoken : token// Returning the token
             });
         } else {
             res.status(401).json({
@@ -195,5 +195,22 @@ router.post(`/Tenant_login`, async (req, res) => {
 // router.get("/protected-route", authMiddleware, (req, res) => {
 //     res.json({ success: true, message: "You have accessed a protected route!" });
 // });
+
+// --------------------- Get Tenant Profile ---------------------
+router.post('/getuser', async (req, res) => {
+    try{
+        const { id } = req.body;
+        const tenant = await Tenant.findById(id);
+        if(!tenant){
+            res.send({success: false});
+            return;
+        }
+        res.send({tenant, success: true});
+    }
+    catch(err){
+        console.log(err);
+        res.send({success: false});
+    }
+})
 
 module.exports = router;

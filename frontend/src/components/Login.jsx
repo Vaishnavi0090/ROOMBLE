@@ -57,7 +57,7 @@ const Login = () => {
       setLoading(false);
 
       if (data.success) {
-        localStorage.setItem("token", data.authtoken);
+        localStorage.setItem("authtoken", data.authtoken);
         console.log(data.authtoken);
         if (rememberMe) {
           localStorage.setItem("rememberedEmail", email);
