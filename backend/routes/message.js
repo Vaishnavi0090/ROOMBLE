@@ -6,6 +6,7 @@ const Tenant = require('../models/Tenant');
 const Landlord = require('../models/Landlord');
 const Conversation = require('../models/Conversation');
 const checkuser = require('../middlewares/checkuser');
+const mongoose = require('mongoose');
 
 module.exports = (io, onlineUsers) => {
     router.post('/getUserStatus', async (req, res) => {
@@ -131,6 +132,32 @@ module.exports = (io, onlineUsers) => {
         }
         await conversation.save();
         return res.send({ success: true });
+    })
+
+    router.post('/createConversation', checkuser, async (req, res) => {
+        try{
+            const { user2 } = req.body;
+            const user1 = req.user._id;
+            // console.log(req.body)
+            const user2_id = new mongoose.Types.ObjectId(user2);
+            // Check if conversation already exists
+            const conversation = await Conversation.findOne({ members: { $all: [user1, user2_id] } });
+            if (conversation) {
+                return res.send({ conversation_id: conversation._id, success: true });
+            }
+            // Create new conversation
+            const newConversation = new Conversation({
+                members: [user1, user2_id],
+                messages: []
+            })
+            await newConversation.save();
+            return res.send({ conversation_id: newConversation._id, success: true });
+        }
+        catch(err){
+            console.log(err);
+            res.send({ success: false });
+        }
+
     })
 
     return router;

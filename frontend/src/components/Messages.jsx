@@ -1,47 +1,45 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import '../css/MessageBoxStyle/Messages.css';
 import MessageBox from './MessageComponents/MessageBox';
 import ChatBox from './MessageComponents/ChatBox';
-import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 function Messages() {
-  const state = useContext(Basecontext);
-  const {user, setUser, fetuser} = state;
-  const [currentUserId, setCurrentUserId] = useState(user.userID);
-  const [conversations, setConversations] = useState([]);
-  useEffect(() => {
-    const fetchConversations = async () => {
-      try {
-        const userID = user.userID;
-        if (!userID) {
-          console.log(user);
-          console.error("User ID not found");
-          return;
-        }
-        const response = await axios.post('http://localhost:3000/api/messages/getConversations', { userID });
+  const [currentConvId, setCurrentConvId] = useState(null);
+  const [currentMessages, setCurrentMessages] = useState([]);
   
-        if (response.data.success) {
-          setConversations(response.data.conversations);
-        } else {
-          console.error("Failed to fetch conversations");
-        }
-      } catch (error) {
-        console.error("Error fetching conversations:", error);
+  const params = useParams();
+  const id = params.id;
+
+  useEffect(()=>{
+    setCurrentConvId(id);
+    fetch('http://localhost:3000/messages/getConversation',{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'authtoken': localStorage.getItem('authtoken')
+      },
+      body: JSON.stringify({conversation_id: id})
+    })
+    .then(res=>res.json())
+    .then(data=>{
+      if(data.success){
+        setCurrentMessages(data.conversation);
       }
-    };
-  
-    fetchConversations();
-  }, []); 
-  
+      else{
+        console.log("Failed to fetch conversation");
+      }
+    })
+  },[id]);
 
   return (
     //Main container of the BOX which is divided into two parts
     //MessageBox and ChatBox
     <div className="message-container">
         {/*MessageBox contains the list of all the users*/}
-        <MessageBox currentUserId={currentUserId} setCurrentUserId={setCurrentUserId} conversations={conversations} setConversations={setConversations}/> 
+        <MessageBox currentConvId={currentConvId} setCurrentConvId={setCurrentConvId} currentMessages={currentMessages} setCurrentMessages={setCurrentMessages}/> 
         {/*ChatBox contains the chat of the selected user*/}
-        <ChatBox currentUserId={currentUserId} setCurrentUserId={setCurrentUserId} conversations={conversations} setConversations={setConversations}/>
+        <ChatBox currentConvId={currentConvId} setCurrentConvId={setCurrentConvId} currentMessages={currentMessages} setCurrentMessages={setCurrentMessages}/>
     </div>
   );
 }
