@@ -1,6 +1,7 @@
 .find-property-body{
     display: flex;
     height: calc(100vh - 80px);
+    font-family: sans-serif;
 }
 
 .search-area-div{
