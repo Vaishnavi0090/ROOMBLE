@@ -9,16 +9,23 @@ const ForgotPassword = () => {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [isLandlord, setIsLandlord] = useState(false);
     const navigate = useNavigate();
 
     const state = useContext(Basecontext)
     const {user, setUser, fetuser} = state
     fetuser()
     
+    const handleToggle = () => {
+        setIsLandlord(!isLandlord);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
         setLoading(true);
+
+        const accounttype = isLandlord ? "landlord" : "tenant";
 
         try {
             const response = await fetch("http://127.0.0.1:3000/api/forgotPassword/enteremail", {
@@ -26,18 +33,21 @@ const ForgotPassword = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ accounttype: "tenant", email: email }),
+                body: JSON.stringify({ accounttype: accounttype, email: email }),
             });
 
             const data = await response.json();
             setLoading(false);
 
             if (data.success) {
-                localStorage.setItem("token", data.authtoken);
-                console.log("Stored Token:", data.authtoken); 
+                localStorage.setItem("authtoken", data.authtoken);
+                navigate(`/otp-forgot?accounttype=${accounttype}`);
 
-                setSuccess(true);
-                setTimeout(() => navigate("/otp-forgot"), 1500);
+                setTimeout(() => {
+                    console.log("Saved Token:", localStorage.getItem("authtoken"));
+                }, 1500);
+
+                navigate("/otp-forgot");
             } else {
                 setError(data.message || "Email not found. Please try again.");
             }
@@ -76,6 +86,15 @@ const ForgotPassword = () => {
                         {loading ? "Redirecting..." : "Submit"}
                     </button>
                 </form>
+
+                {/* Toggle Switch */}
+                <div className="toggle-container">
+                    <div className={`toggle-switch ${isLandlord ? "landlord-selected" : ""}`} onClick={handleToggle}>
+                        <span className="toggle-text tenant">Tenant</span>
+                        <span className="toggle-slider"></span>
+                        <span className="toggle-text landlord">Landlord</span>
+                    </div>
+                </div>
 
                 {/* Navigation Links */}
                 <p className="register-text">

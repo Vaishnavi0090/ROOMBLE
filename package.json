@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "express-fileupload": "^1.5.1"
+    "express-fileupload": "^1.5.1",
+    "jwt-decode": "^4.0.0"
   }
 }

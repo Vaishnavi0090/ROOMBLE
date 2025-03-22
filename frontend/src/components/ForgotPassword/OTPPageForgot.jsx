@@ -1,9 +1,10 @@
 import React from "react";
 import { useState, useRef, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "../../css/ForgotPassword/OTPPageForgot.css"; // Import the CSS specific to this component
 import logo from "../../../public/logo.png";
 import { Basecontext } from '../../context/base/Basecontext'
+import { jwtDecode } from "jwt-decode";
 
 export default function OTPPageForgot() {
   const navigate = useNavigate();
@@ -12,27 +13,25 @@ export default function OTPPageForgot() {
   const {user, setUser, fetuser} = state
   fetuser()
 
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const accounttype = queryParams.get("accounttype") || "tenant";  // Default to tenant if missing
+
   const respURL = `http://127.0.0.1:3000/api/forgotPassword/enterOTP/`;
-  //   console.log(respURL);
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(null);
   const inputRefs = useRef([]);
-  const [authtoken, setAuthtoken] = useState(null);
+  const [token, setToken] = useState("");
+  const [loading, setLoading] = useState(true);
  
   useEffect(() => {
-    const token = localStorage.getItem("authtoken");
-    
-    console.log("Retrieved Token:", token);
-
-    if (token) {
-        setAuthtoken(token);
-        setAccounttype(type);
-    } else {
-        console.error("Token missing.");
-        navigate("/forgot-password");
+    const savedToken = localStorage.getItem("authtoken");
+    if (savedToken) {
+      setToken(savedToken);
     }
-  }, [navigate]);
+    setLoading(false);   // Set loading to false once the token is loaded
+  }, []);
 
   const handleChange = (index, value) => {
     if (!/^[0-9]?$/.test(value)) return; // Allow only digits
@@ -54,7 +53,19 @@ export default function OTPPageForgot() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (loading) {
+      setMessage("Loading... Please wait.");
+      return;
+    }
+  
+    if (!token) {
+      setMessage("Authentication token is missing. Please try again.");
+      return;
+    }
+
     const enteredOTP = otp.join("");
+
     if (enteredOTP.length !== 6) {
       setMessage("Please enter a complete 6-digit OTP.");
       setSuccess(false);
@@ -62,20 +73,34 @@ export default function OTPPageForgot() {
     }
 
     try {
+      console.log("Using Token:", token);
       console.log(enteredOTP);
       const response = await fetch(respURL, {
         method: "POST",
-        headers: { "Content-Type": "application/json", "authtoken": token, "accounttype": "tenant" },
-        body: JSON.stringify({ Entered_OTP: enteredOTP }),
+        headers: {
+          "Content-Type": "application/json",
+          "authtoken": token,              
+          "accounttype": accounttype
+        },
+        body: JSON.stringify({ Entered_OTP: enteredOTP, accounttype : accounttype }),
       });
       const data = await response.json();
       setMessage(data.message);
       setSuccess(data.success);
       if (data.success) {
-        navigate("/login");
+        // Decode the token to extract the email
+        const decodedToken = jwtDecode(token);
+        const email = decodedToken.email;     // Extract email from token
+  
+        // Navigate with token, email, and accounttype as URL params
+        navigate(`/set-new-password?token=${token}&email=${email}&accounttype=${accounttype}`);
+      } else {
+        setMessage(data.message || "Failed to verify OTP.");
+        setSuccess(false);
       }
     } catch (error) {
-      setMessage("Something went wrong. Please try again.");
+      console.error("Network/Parsing Error:", error);
+      setMessage("Network error or invalid server response. Please try again.");
       setSuccess(false);
     }
   };

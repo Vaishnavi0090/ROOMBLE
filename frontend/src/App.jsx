@@ -4,7 +4,7 @@ import { socket } from "./socket";
 import { Navbar } from "./components/Navbar";
 import BaseState from "./context/base/Basestate.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Messages from "./components/Messages";
 import SignUpTenant from "./components/SignUpTenant";
 import Login from "./components/Login.jsx";
@@ -27,6 +27,7 @@ import EditProperty from "./components/EditProperty.jsx";
 
 function App() {
   const [id, setID] = useState("");
+
   useEffect(() => {
     function handleConnection() {
       console.log("a user connected");
@@ -36,12 +37,18 @@ function App() {
     socket.on("online_users", (data) => {
       console.log(data);
     });
+
+    return () => {
+      socket.off("connect", handleConnection);
+    };
   }, []);
 
   return (
     <BaseState>
       <Navbar />
       <Routes>
+      <Route path="/" element={<Navigate to="/login" />} />  
+      
         <Route path="/messages" element={<Messages />} />
         <Route path="/signup-tenant" element={<SignUpTenant setID={setID} />} />
         <Route path="/signup-landlord" element={<SignupLandlord />} />
