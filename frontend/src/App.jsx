@@ -78,7 +78,7 @@ function App() {
         <Route path="/edit-property" element={<EditProperty />} />
         <Route path="/set-new-password" element={<SetNewPassword />} />
         <Route path="/otp-delete-page" element={<OTPDeletePage />} />
-        <Route path="/landlord-profile" element={<LandlordProfile />} />
+        <Route path="/landlord-profile-page" element={<LandlordProfile />} />
         <Route path="/chat/:id" element={<Messages />} />
         <Route path="/tenant/:id" element={<OtherTenantProfile />} />
       </Routes>
