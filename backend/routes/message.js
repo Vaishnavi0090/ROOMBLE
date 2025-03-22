@@ -7,6 +7,7 @@ const Landlord = require('../models/Landlord');
 const Conversation = require('../models/Conversation');
 const checkuser = require('../middlewares/checkuser');
 const mongoose = require('mongoose');
+const checkUser = require('../middlewares/checkuser');
 
 module.exports = (io, onlineUsers) => {
     router.post('/getUserStatus', async (req, res) => {
@@ -24,33 +25,63 @@ module.exports = (io, onlineUsers) => {
         }
     })
 
-    router.post('/getConversations', async (req, res) => {
+    router.post('/getConversations', checkUser , async (req, res) => {
         // Get all conversations of a user
         try {
-            const { userID } = req.body;
-            // find all conversations where userID is a member
-            var conversations = await Conversation.find({ members: userID });
-            // also include the name of the other user, number of unread messages, and timestamp of the last message
-            for (let i = 0; i < conversations.length; i++) {
-                const conversation = conversations[i];
-                const otherUserID = conversation.members[0] == userID ? conversation.members[1] : conversation.members[0];
-                const otherUser = await Tenant.findById(otherUserID);
+            const list = req.user.conversations;
+            // pass
+            // last message
+            // name of other user
+            // profile picture of other user
+            // timestamp of last message
+            // conversation_id
+            // number of unread messages
+
+            const conversations = [];
+            for (let i = 0; i < list.length; i++) {
+                // console.log(list[i])
+                const conversation = await Conversation.findById(list[i]);
+                if (!conversation) {
+                    continue;
+                }
+                const otherID = conversation.members[0] == req.user._id ? conversation.members[1] : conversation.members[0];
+                var otherUser = await Tenant.findById(otherID);
                 if (!otherUser) {
-                    const otherUser = await Landlord.findById(otherUserID);
-                    if (!otherUser) {
-                        res.send({ success: false });
-                        return;
-                    }
+                    otherUser = await Landlord.findById(otherID);
                 }
-                conversations[i] = {
+                if (!otherUser) {
+                    continue;
+                }
+                const lastMessage = conversation.messages[conversation.messages.length - 1];
+                var lasttimestamp = null;
+                if (lastMessage){
+                    lasttimestamp = lastMessage.timestamp;
+                }
+                var unread = 0;
+                if (conversation.members[0] == req.user._id) {
+                    conversation.messages.forEach(message => {
+                        if (message.senderID != req.user._id && !message.read1) {
+                            unread++;
+                        }
+                    })
+                } else {
+                    conversation.messages.forEach(message => {
+                        if (message.senderID != req.user._id && !message.read2) {
+                            unread++;
+                        }
+                    })
+                }
+                conversations.push({
                     conversation_id: conversation._id,
-                    otherUser: otherUser.name,
-                    otherUserID: otherUserID,
-                    unread: conversation.messages.filter(message => message.sender != userID && message.read1 == false).length,
-                    timestamp: conversation.messages[conversation.messages.length - 1].timestamp
-                }
+                    lastMessage: lastMessage,
+                    name: otherUser.name,
+                    profilePic: otherUser.Images,
+                    unread: unread,
+                    timestamp: lasttimestamp
+                })
             }
-            res.send({ conversations, success: true });
+            return res.send({ conversations, success: true });
+
         } catch (err) {
             console.log(err);
             res.send({ success: false });
