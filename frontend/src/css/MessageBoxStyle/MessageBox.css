@@ -5,6 +5,7 @@
     margin:6px;
     margin-right: 3px;
     border-radius: 15px;
+    font-family: 'Open Sans Condensed', sans-serif;
     .top{
         .search-bar{
             display: flex;
