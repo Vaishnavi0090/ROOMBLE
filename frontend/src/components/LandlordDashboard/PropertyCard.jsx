@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import "../../css/PropertyCard.css";
 
-const PropertyCard = ({ image, price, title, location, bhk, onView, onDelete }) => {
+const PropertyCard = ({
+  image,
+  price,
+  title,
+  location,
+  bhk,
+  onView,
+  onDelete,
+}) => {
   const [isPopping, setIsPopping] = useState(false);
 
   const triggerPop = () => {
@@ -28,15 +36,23 @@ const PropertyCard = ({ image, price, title, location, bhk, onView, onDelete }) 
 
       {/* Details Section */}
       <div className="details">
-        <p className="price">{price}</p>
-        <p className="description">{title}, {location}</p>
-        <p className="bhk">{bhk}</p>
+        <p className="price">Price : {price}</p>
+        <p className="description">
+          Title : {title}, Location : {location}
+        </p>
+        <p className="bhk">BHK : {bhk}</p>
       </div>
 
       {/* Buttons Section */}
       <div className="buttons">
-        <button className="view-button" onClick={handleView}>View</button>
-        <button className="delete-button" onClick={handleDelete}>Delete</button>
+        <button className="view-button" onClick={handleView}>
+          View
+        </button>
+        <div className="delete-btn">
+          <button className="delete-button" onClick={handleDelete}>
+            Delete
+          </button>
+        </div>
       </div>
     </div>
   );

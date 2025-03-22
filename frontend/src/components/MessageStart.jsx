@@ -27,6 +27,7 @@ function MessageStart() {
         const data = await res.json();
         console.log(data);
         if(data.success){
+          console.log(data.conversations);
           setCurrentMessages(data.conversations);
         }
         else{

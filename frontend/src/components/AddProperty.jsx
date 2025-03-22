@@ -37,13 +37,56 @@ function AddProperty() {
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async() => {
+
+        // console.log(images)
 
         if (!validateForm()) return;
         console.log("Final Form Data:", formData);
-        setImages([]);
+        const formDataToSend = new FormData();
+
+        // Append text fields
+        formDataToSend.append("description", formData.description);
+        formDataToSend.append("bhk", formData.bhk);
+        formDataToSend.append("area", formData.area);
+        formDataToSend.append("price", formData.rent); // Backend expects "price"
+        formDataToSend.append("city", formData.city);
+        formDataToSend.append("town", formData.location); // Match backend field names
+        formDataToSend.append("address", formData.address);
+        formDataToSend.append("amenities", formData.amenities);
+
+        images.forEach((image) => {
+            formDataToSend.append("image", image.file); // Ensures backend receives images correctly
+        });
+
+        try {
+            const token = localStorage.getItem("authtoken");
+            const response = await fetch("http://127.0.0.1:3000/api/listproperty/listProperty", {
+                method: "POST",
+                headers: {
+                    authtoken: token,
+                    accounttype: "landlord", // Include auth token
+                },
+                body: formDataToSend, // Send FormData directly
+            });
+    
+            const data = await response.json();
+    
+            if (response.ok) {
+                alert("Property added successfully!");
+                /* setImages([]);
+                setFormData(initialFormState);
+                setErrors({}); */
+            } else {
+                alert(`Error: ${data.message}`);
+            }
+        } catch (error) {
+            console.error("Error submitting property:", error);
+            alert("An error occurred. Please try again.");
+        }
+        /* setImages([]);
         setFormData(initialFormState);
-        setErrors({});
+        setErrors({}); */
     };
 
     return (
@@ -105,9 +148,7 @@ function AddProperty() {
                         onChange={(e) => updateFormData("city", e.target.value)}
                     >
                         <option value="">Select City</option>
-                        <option value="City1">Mumbai</option>
-                        <option value="City2">Bengaluru</option>
-                        <option value="City2">Delhi</option>
+                        <option value="Mumbai">Mumbai</option>
                     </select>
                     {errors.city && <p className="addProp-form-error">{errors.city}</p>}
                 </div>
@@ -118,8 +159,16 @@ function AddProperty() {
                         onChange={(e) => updateFormData("location", e.target.value)}
                     >
                         <option value="">Select Location</option>
-                        <option value="location1">Location 1</option>
-                        <option value="location2">Location 2</option>
+                        <option value="Andheri">Andheri</option>
+                        <option value="Bandra">Bandra</option>
+                        <option value="Juhu">Juhu</option>
+                        <option value="Malad">Malad</option>
+                        <option value="Kandivali">Kandivali</option>
+                        <option value="Borivali">Borivali</option>
+                        <option value="Dahisar">Dahisar</option>
+                        <option value="Mira Road">Mira Road</option>
+                        <option value="Thane">Thane</option>
+                        <option value="Goregaon">Goregaon</option>
                     </select>
                     {errors.location && <p className="addProp-form-error">{errors.location}</p>}
                 </div>
