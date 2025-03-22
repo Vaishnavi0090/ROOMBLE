@@ -8,32 +8,31 @@ import axios from 'axios';
 function MessageStart() {
   const state = useContext(Basecontext);
   const {user, setUser, fetuser} = state;
-  const [currentUserId, setCurrentUserId] = useState(user._id);
   const [currentMessages, setCurrentMessages] = useState([]);
+  const [currentUserId, setCurrentUserId] = useState("");
+
+
   useEffect(() => {
+    setCurrentUserId(user._id);
     const fetchConversations = async () => {
       try {
-        if (!user || !user._id) {  // Wait until user is available
-          return;  // Don't run the API call
-        }
-        const userID = user._id;
-        const authToken = localStorage.getItem("authtoken");
-        if (!userID) {
-          console.error("User ID not found");
-          return;
-        }
-        const response = await axios.post('http://localhost:3000/messages/getConversations', { userID },{
+        
+        const res = await fetch('http://localhost:3000/messages/getConversations', {
+          method: "POST",
           headers: {
-            Authorization: `Bearer ${authToken}`, // Pass the token in the Authorization header
-          },
-        });
-        if (response.data.success) {
-          setCurrentMessages(response.data.conversations);
-          console.log("Conversations fetched Successfully");
-          console.log("Conversations fetched:", response.data.conversations);
-        } else {
-          console.error("Failed to fetch conversations");
+            "Content-Type": "application/json",
+            "authtoken": localStorage.getItem("authtoken")
+          }
+        })
+        const data = await res.json();
+        // console.log(data);
+        if(data.success){
+          setCurrentMessages(data.conversations);
         }
+        else{
+          console.log("Error fetching conversations");
+        }
+
       } catch (error) {
         console.error("Error fetching conversations:", error);
       }

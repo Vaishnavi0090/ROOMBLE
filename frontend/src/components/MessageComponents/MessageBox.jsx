@@ -20,6 +20,7 @@ function MessageBox({currentUserId, setCurrentUserId, currentMessages, setCurren
         <div className="bottom">
             {currentMessages.map((conversation, index) => {
                 return <MessageCard key={index} conversation={conversation}/>})}
+
         </div>
     </div>);
 }
