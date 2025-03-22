@@ -11,6 +11,7 @@ function MessageStart() {
   const [currentUserId, setCurrentUserId] = useState(user._id);
   const [currentMessages, setCurrentMessages] = useState([]);
   useEffect(() => {
+
     const fetchConversations = async () => {
       try {
         if (!user || !user._id) {  // Wait until user is available
@@ -18,13 +19,17 @@ function MessageStart() {
         }
         const userID = user._id;
         const authToken = localStorage.getItem("authtoken");
+        if(!authToken){
+          console.error("Auth token not found");
+          return;
+        }
         if (!userID) {
           console.error("User ID not found");
           return;
         }
         const response = await axios.post('http://localhost:3000/messages/getConversations', { userID },{
           headers: {
-            Authorization: `Bearer ${authToken}`, // Pass the token in the Authorization header
+            authtoken: token,
           },
         });
         if (response.data.success) {
