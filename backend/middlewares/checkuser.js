@@ -7,6 +7,7 @@ const SECRET_KEY = process.env.SECRET_KEY;
 
 const checkUser = async (req, res, next) => {
     const token = req.header('authtoken');
+
     if (!token) {
         return res.status(401).json({ message: 'Access Denied' });
     }
