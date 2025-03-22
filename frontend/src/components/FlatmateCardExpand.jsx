@@ -1,7 +1,7 @@
 import React from 'react';
 import "../css/FlatmateCardExpand.css";
 import { BsBookmark, BsBookmarkFill, BsChatDots } from 'react-icons/bs';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom'; // Import useNavigate
 import { Basecontext } from '../context/base/Basecontext';
 
@@ -9,6 +9,7 @@ const FlatmateCardExpand = () => {
     const [isBookmarked, setIsBookmarked] = useState(false);
     const navigate = useNavigate(); // Initialize useNavigate
     const { id } = useParams(); // Get the ID from the URL
+    console.log("Fetched ID:", id);
 
     const handleBookmarkClick = () => {
         setIsBookmarked(!isBookmarked);
@@ -19,12 +20,14 @@ const FlatmateCardExpand = () => {
     };
 
     const state = useContext(Basecontext);
-    const { fetUserById } = state;
-    const [profileData, setProfileData] = useState(null);
+    const { fetuserById } = state;
+    const [profileData, setProfileData] = useState({});
 
     useEffect(() => {
+        console.log("Fetched ID:", [id]);  
+
         const fetchData = async () => {
-            const data = await fetuserById(id);  // Fetch the user by ID
+            const data = await fetuserById(id);
             if (data) {
                 setProfileData({
                     Name: data.name,
