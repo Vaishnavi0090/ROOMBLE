@@ -82,6 +82,9 @@ const SECRET_KEY = process.env.SECRET_KEY;
 router.get("/SearchFlatmates", authMiddleware, async (req, res) => {
     try {
         const tenant_id = req.user.id;
+
+        let user = await Tenant.findById(tenant_id);
+
         if (!tenant_id) {
             return res.status(400).json({ success: false, message: "Tenant ID is required" });
         }
@@ -103,7 +106,7 @@ router.get("/SearchFlatmates", authMiddleware, async (req, res) => {
             _id: { $ne: tenant_id },
             locality: { $exists: true },
             flatmate: true // **Only consider those actually looking for a flatmate**
-        }).select("-password -_id");
+        }).select("-password");
 
         // Compute recommendation scores
         const alpha = 0.7; // Weight for locality importance
@@ -121,7 +124,8 @@ router.get("/SearchFlatmates", authMiddleware, async (req, res) => {
 
             const score = alpha * localitySimilarity + (1 - alpha) * booleanSimilarity;
 
-            return { ...flatmate.toObject(), recommendationScore: score };
+
+            return { ...flatmate.toObject(), recommendationScore: score , bookmarked : user.bookmarks_tenants.includes(flatmate._id)};
         });
 
         // Sort by score in descending order
@@ -156,6 +160,7 @@ router.get("/SearchFlatmates", authMiddleware, async (req, res) => {
         });
 
     } catch (err) {
+        console.log(`Error in Searching Flatamates`);
         console.error(err);
         return res.status(500).json({ success: false, message: "Server error" });
     }

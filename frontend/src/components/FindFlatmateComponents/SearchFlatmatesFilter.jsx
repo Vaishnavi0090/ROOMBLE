@@ -50,7 +50,7 @@ function SearchFlatmatesFilter({ setFlatmates }) {
       );
 
       const data = await response.json();
-
+            console.log("API Response:", data);
       if (data.success) {
         setFlatmates(data.data);
         console.log("Flatmates Found:", data.data);
