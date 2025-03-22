@@ -6,6 +6,7 @@ const Landlord = require(`../models/Landlord`);
 const Property = require(`../models/Property`)
 const mongoose = require(`mongoose`);
 const router = express.Router();
+const SaveImage = require(`../helper_funcs/Saveimage`);
 require(`dotenv`).config(`../.env`); // Load environment variables
 const authMiddleware = require("../middlewares/checkuser"); // Middleware for JWT auth
 

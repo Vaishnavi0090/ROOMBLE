@@ -18,8 +18,8 @@ function MessageBox({currentUserId, setCurrentUserId, currentMessages, setCurren
         {/*Bottom contains the list of all the users*/}
         {/*All message are temporary now. Map function will be used afterwards*/}
         <div className="bottom">
-            {currentMessages.map((conversation, index) => {
-                return <MessageCard key={index} conversation={conversation}/>})}
+            {/* {currentMessages.map((conversation, index) => {
+                return <MessageCard key={index} conversation={conversation}/>})} */}
 
         </div>
     </div>);

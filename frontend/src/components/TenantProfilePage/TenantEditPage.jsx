@@ -1,36 +1,84 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../css/TenantProfilePageStyles/TenantEditPage.css";
 import logo from "../../../public/sampleUser_img.png";
-
+import { useContext } from "react";
+import { Basecontext } from "../../context/base/Basecontext";
+import { useNavigate } from "react-router-dom";
 const TenantEditPage = () => {
-  const [profileImage, setProfileImage] = useState(null);
+  const navigate = useNavigate();
+  const state = useContext(Basecontext);
+  const { user, setUser, fetuser } = state;
+  fetuser();
+  const [file, setFile] = useState(null);
+  const token = localStorage.getItem("authtoken");
+  useEffect(() => {
+    setFormData({
+      name: state.user.name,
+      email: state.user.email,
+      gender: state.user.gender === "Male",
+      city: state.user.city,
+      locality: state.user.locality,
+      smoke: state.user.smoke,
+      veg: state.user.veg,
+      pets: state.user.pets,
+      description: state.user.description,
+      accounttype: state.user.type,
+      remove: "",
+    });
+  }, [user]);
   const [formData, setFormData] = useState({
-    fullName: "Alexa Rawles",
-    email: "alexarawles@gmail.com",
-    gender: "Female",
-    city: "Bangalore",
-    locality: "Koramangala, Bangalore, Karnataka - 560034",
-    religion: "Christian",
-    alcoholSmoking: "NO",
-    foodPreference: "VEG",
-    pets: "NO",
-    briefIntro:
-      "HI, I am Alexa Rawles, a software engineer working in Microsoft in Bangalore. I am a responsible and tidy tenant who values a clean and peaceful living space. I am looking for an apartment that suits my lifestyle.",
+    name: state.user.name,
+    email: state.user.email,
+    gender: state.user.gender,
+    city: state.user.city,
+    locality: state.user.locality,
+    smoke: state.user.smoke,
+    veg: state.user.veg,
+    pets: state.user.pets,
+    description: state.user.description,
+    accounttype: state.user.type,
+    remove: "",
   });
-
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setProfileImage(URL.createObjectURL(file));
-    }
-  };
   // NEED TO SEND DATA TO BACKEND FROM HERE
-  const handleSubmit = () => {
-    alert("Profile Updated Successfully!");
+  const handleSubmit = async () => {
+    const formDataCopy = new FormData(); // ✅ Create a FormData object
+
+    // Append text fields to FormData
+    Object.keys(formData).forEach((key) => {
+      formDataCopy.append(key, formData[key]);
+    });
+
+    // Append the file (assuming 'file' is a valid File object)
+    if (file) {
+      formDataCopy.append("image", file); // ✅ Correct way to append a file
+    }
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:3000/api/updates/updateProfile",
+        {
+          method: "PUT",
+          body: formDataCopy,
+          headers: {
+            // "Content-Type": "application/json",
+            authtoken: token, // Replace with actual data
+            accounttype: "tenant",
+          },
+        }
+      ); //67dd4b17afb6c9aafaa20f3c
+      const data = await response.json();
+      if (data.success) {
+        console.log("Form submitted successfully");
+        navigate("/tenant-profile-page");
+        window.location.reload();
+      } else {
+        console.error("Failed to submit form");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -40,21 +88,23 @@ const TenantEditPage = () => {
         <div className="tenant-edit-profile">
           <label htmlFor="tenant-edit-image-upload">
             <img
-              src={logo || "https://via.placeholder.com/80"}
+              src={state.user.Images || "https://via.placeholder.com/80"}
               alt="Profile"
               className="tenant-edit-profile-img"
             />
           </label>
           <input
             type="file"
-            id="tenant-edit-image-upload"
-            accept="image/*"
-            onChange={handleImageUpload}
+            id="image_input"
+            accept="image/png, image/gif, image/jpeg, image/jpg"
+            onChange={(e) => {
+              setFile(e.target.files[0]);
+            }}
           />
 
           <div className="tenant-edit-info">
-            <h2>Alexa Rawles</h2>
-            <p>alexarawles@gmail.com</p>
+            <h2>{state.user.name}</h2>
+            <p>{state.user.email}</p>
           </div>
         </div>
         <button className="tenant-edit-btn" onClick={handleSubmit}>
@@ -69,8 +119,8 @@ const TenantEditPage = () => {
           <label>Full Name</label>
           <input
             type="text"
-            name="fullName"
-            value={formData.fullName}
+            name="name"
+            value={formData.name}
             onChange={handleInputChange}
           />
 
@@ -85,30 +135,28 @@ const TenantEditPage = () => {
           <label>Gender</label>
           <select
             name="gender"
-            value={formData.gender}
+            // value={formData.gender === "Male" ? true : false}
             onChange={handleInputChange}
           >
-            <option value="Female">Female</option>
-            <option value="Male">Male</option>
-            <option value="Other">Other</option>
+            <option value={undefined} selected>
+              gender
+            </option>
+            <option value={false}>Female</option>
+            <option value={true}>Male</option>
           </select>
           <div className="tenant-edit-choices">
             <div className="tenant-edit-choices-smoke">
               <label>Alcohol/Smoking</label>
               <div className="edit-smoke-btn">
                 <button
-                  className={formData.alcoholSmoking === "YES" ? "active" : ""}
-                  onClick={() =>
-                    setFormData({ ...formData, alcoholSmoking: "YES" })
-                  }
+                  className={formData.smoke ? "active" : ""}
+                  onClick={() => setFormData({ ...formData, smoke: true })}
                 >
                   YES
                 </button>
                 <button
-                  className={formData.alcoholSmoking === "NO" ? "active" : ""}
-                  onClick={() =>
-                    setFormData({ ...formData, alcoholSmoking: "NO" })
-                  }
+                  className={!formData.smoke ? "active" : ""}
+                  onClick={() => setFormData({ ...formData, smoke: false })}
                 >
                   NO
                 </button>
@@ -119,20 +167,14 @@ const TenantEditPage = () => {
               <label>VEG/NON VEG</label>
               <div className="edit-veg-btn">
                 <button
-                  className={formData.foodPreference === "VEG" ? "active" : ""}
-                  onClick={() =>
-                    setFormData({ ...formData, foodPreference: "VEG" })
-                  }
+                  className={formData.veg ? "active" : ""}
+                  onClick={() => setFormData({ ...formData, veg: true })}
                 >
                   VEG
                 </button>
                 <button
-                  className={
-                    formData.foodPreference === "NON VEG" ? "active" : ""
-                  }
-                  onClick={() =>
-                    setFormData({ ...formData, foodPreference: "NON VEG" })
-                  }
+                  className={!formData.veg ? "active" : ""}
+                  onClick={() => setFormData({ ...formData, veg: false })}
                 >
                   NON VEG
                 </button>
@@ -143,14 +185,14 @@ const TenantEditPage = () => {
               <label>Domesticated Animal</label>
               <div className="edit-pets-btn">
                 <button
-                  className={formData.pets === "YES" ? "active" : ""}
-                  onClick={() => setFormData({ ...formData, pets: "YES" })}
+                  className={formData.pets ? "active" : ""}
+                  onClick={() => setFormData({ ...formData, pets: true })}
                 >
                   YES
                 </button>
                 <button
-                  className={formData.pets === "NO" ? "active" : ""}
-                  onClick={() => setFormData({ ...formData, pets: "NO" })}
+                  className={!formData.pets ? "active" : ""}
+                  onClick={() => setFormData({ ...formData, pets: false })}
                 >
                   NO
                 </button>
@@ -182,7 +224,7 @@ const TenantEditPage = () => {
             onChange={handleInputChange}
           />
 
-          <span>Religion</span>
+          {/* <span>Religion</span>
 
           <select
             name="religion"
@@ -193,14 +235,14 @@ const TenantEditPage = () => {
             <option value="Hindu">Hindu</option>
             <option value="Muslim">Muslim</option>
             <option value="Other">Other</option>
-          </select>
+          </select> */}
 
           <span>My Brief Intro</span>
           <textarea
             type="text"
             id="briefIntro"
-            name="briefIntro"
-            value={formData.briefIntro}
+            name="description"
+            value={formData.description}
             onChange={handleInputChange}
           />
         </div>
