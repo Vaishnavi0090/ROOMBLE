@@ -103,7 +103,7 @@ router.get("/SearchFlatmates", authMiddleware, async (req, res) => {
             _id: { $ne: tenant_id },
             locality: { $exists: true },
             flatmate: true // **Only consider those actually looking for a flatmate**
-        }).select("-password -_id");
+        }).select("-password");
 
         // Compute recommendation scores
         const alpha = 0.7; // Weight for locality importance
