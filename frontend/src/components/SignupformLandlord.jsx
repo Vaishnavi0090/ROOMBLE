@@ -11,7 +11,7 @@ function SignupformLandlord({ setID }) {
     email: "",
     password: "",
     confirmPassword: "",
-  });  
+  });
   const [formError, setFormError] = useState({
     password: "",
     confirmPassword: "",
@@ -32,7 +32,7 @@ function SignupformLandlord({ setID }) {
       });
       // setFormInput({...formInput, successMsg: "",})
       return;
-    }  
+    }
     if (formInput.password.length > 10) {
       setFormError({
         ...inputError,
@@ -76,7 +76,7 @@ function SignupformLandlord({ setID }) {
       if (responseData.success) {
         setFormInput((prev) => ({ ...prev, successMsg: responseData.message }));
         setID(responseData.message);
-        navigate("/otp-page");
+        navigate("/otp-page-landlord");
         // navigate("/otp-page", { id: successMsg })
       } else {
         setFormInput((prev) => ({ ...prev, successMsg: responseData.message }));
@@ -98,69 +98,66 @@ function SignupformLandlord({ setID }) {
       <h2 className="Title">Signup as a Landlord</h2>
 
       <form className="Signup-form" onSubmit={validateFormInput}>
-          <div>
-            <label>Your good name</label>
-            <input
-              type="text"
-              className="Input-box"
-              placeholder="name"
-              required
-              name="name"
-              onChange={({ target }) =>
-                handleUserInput(target.name, target.value)
-              }
-            />
-          </div>
+        <div>
+          <label>Your good name</label>
+          <input
+            type="text"
+            className="Input-box"
+            placeholder="name"
+            required
+            name="name"
+            onChange={({ target }) =>
+              handleUserInput(target.name, target.value)
+            }
+          />
+        </div>
 
-          <div>
-            <label>Your Email (please check regularly)</label>
-            <input
-              type="email"
-              className="Input-box"
-              placeholder="mail@abc.com"
-              name="email"
-              onChange={({ target }) =>
-                handleUserInput(target.name, target.value)
-              }
-              required
-            />
-          </div>
+        <div>
+          <label>Your Email (please check regularly)</label>
+          <input
+            type="email"
+            className="Input-box"
+            placeholder="mail@abc.com"
+            name="email"
+            onChange={({ target }) =>
+              handleUserInput(target.name, target.value)
+            }
+            required
+          />
+        </div>
 
-          <div>
-            <label>Password</label>
-            <input
-              type="password"
-              className="Input-box"
-              placeholder="*************"
-              name="password"
-              value={formInput.password}
-              onChange={({ target }) => {
-                handleUserInput(target.name, target.value);
-              }}
-              required
-            />
-            <p className="Error-password">{formError.password}</p>
-          </div>
+        <div>
+          <label>Password</label>
+          <input
+            type="password"
+            className="Input-box"
+            placeholder="*************"
+            name="password"
+            value={formInput.password}
+            onChange={({ target }) => {
+              handleUserInput(target.name, target.value);
+            }}
+            required
+          />
+          <p className="Error-password">{formError.password}</p>
+        </div>
 
-          <div>
-            <label>Confirm Password</label>
-            <input
-              type="password"
-              className="Input-box"
-              placeholder="*************"
-              name="confirmPassword"
-              value={formInput.confirmPassword}
-              onChange={({ target }) => {
-                handleUserInput(target.name, target.value);
-              }}
-              required
-            />
-            <p className="Error-confirm-password">
-              {formError.confirmPassword}
-            </p>
-            <p className="Success-message">{formInput.successMsg}</p>
-
-          </div>
+        <div>
+          <label>Confirm Password</label>
+          <input
+            type="password"
+            className="Input-box"
+            placeholder="*************"
+            name="confirmPassword"
+            value={formInput.confirmPassword}
+            onChange={({ target }) => {
+              handleUserInput(target.name, target.value);
+            }}
+            required
+          />
+          <p className="Error-confirm-password">{formError.confirmPassword}</p>
+          <p className="Success-message">{formInput.successMsg}</p>
+        </div>
         <button className="Signup-button">Sign up</button>
       </form>
 
@@ -168,12 +165,6 @@ function SignupformLandlord({ setID }) {
         With Roomble, you'll stumble on the perfect place to rumble!
       </p>
     </div>
- );
+  );
 }
 export default SignupformLandlord;
-
-
-
-
-
-
