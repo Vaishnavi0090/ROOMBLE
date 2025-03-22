@@ -27,7 +27,6 @@ function MessageStart() {
             Authorization: `Bearer ${authToken}`, // Pass the token in the Authorization header
           },
         });
-  
         if (response.data.success) {
           setCurrentMessages(response.data.conversations);
           console.log("Conversations fetched Successfully");

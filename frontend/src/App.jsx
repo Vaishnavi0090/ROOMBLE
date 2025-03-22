@@ -52,7 +52,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />  
       
-        <Route path="/messages" element={<Messages />} />
+        <Route path="/messages" element={<MessageStart />} />
         <Route path="/signup-tenant" element={<SignUpTenant setID={setID} />} />
         <Route path="/signup-landlord" element={<SignupLandlord />} />
         <Route path="/login" element={<Login />} />
