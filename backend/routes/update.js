@@ -42,6 +42,11 @@ router.put("/updateProfile",authMiddleware,async(req,res)=>{
             });
         }
 
+        //The frontend guys had difficulty in sending gender, so I added this line
+        if(gender === undefined){
+            gender = user.gender;
+        }
+
         if(!user){
             return res.status(404).json({
                 success:false,
