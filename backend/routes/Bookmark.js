@@ -6,8 +6,28 @@ const Tenant = require("../models/Tenant");
 const mongoose = require(`mongoose`);
 const Property = require(`../models/Property`)
 const authMiddleware = require(`../middlewares/checkuser`);
-
+const Towns = require('../models/Towns');
 const SECRET_KEY = process.env.SECRET_KEY;
+
+
+const calculateRecommendationScore = (tenant, flatmate, townData) => {
+    const alpha = 0.7; // Weight for locality importance
+
+    const distance = townData.distances[flatmate.locality] || 100; // Default 100 if unknown
+    const localitySimilarity = 1 / (1 + distance);
+
+    let booleanMatches = 0;
+    if (flatmate.gender === tenant.gender) booleanMatches++;
+    if (flatmate.smoke === tenant.smoke) booleanMatches++;
+    if (flatmate.veg === tenant.veg) booleanMatches++;
+    if (flatmate.pets === tenant.pets) booleanMatches++;
+
+    const booleanSimilarity = booleanMatches / 4; // Normalize to [0,1]
+
+    const score = alpha * localitySimilarity + (1 - alpha) * booleanSimilarity;
+    return score;
+};
+
 
 //pass the authtoken and accounttype into header
 router.get(`/get_bookmarks`, authMiddleware, async (req, res) => {
@@ -26,8 +46,8 @@ router.get(`/get_bookmarks`, authMiddleware, async (req, res) => {
         /*If lets say some user Bookmarked a user previously but now he has deleted his account, then I simply dont return that user and remove it from this bookmarked property as well */
         Flatmate_bookmarks = [];
         Property_bookmarks = [];
-
-
+        scoresArray = []; 
+        const townData = await Towns.findOne({ town: user.locality });
         //Code to delete the user id that has deleted it's account is left to add
         for( let id of user.bookmarks_tenants){
             if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -35,11 +55,24 @@ router.get(`/get_bookmarks`, authMiddleware, async (req, res) => {
                 console.log(id);
                 return res.status(400).json({ error: `${id} is invalid ID` });
             }
-            let tenantToBookmark = await Tenant.findById(id).select(`email name locality Images`);
+            let tenantToBookmark = await Tenant.findById(id).select(`email name locality city Images`);
             if(tenantToBookmark){
                 Flatmate_bookmarks.push(tenantToBookmark);
+                if (townData) {
+                    const score = calculateRecommendationScore(
+                        user,
+                        tenantToBookmark,
+                        townData
+                    );
+                    scoresArray.push({
+                        tenantId: id,
+                        name: tenantToBookmark.name,
+                        locality: tenantToBookmark.locality,
+                        score: score.toFixed(2),
+                    });
             }
         }
+    }
         for(let id of user.bookmarks_property){
             if (!mongoose.Types.ObjectId.isValid(id)) {
                 console.log(`!!!!INVALID ID FOUND!!!!!`);
@@ -56,7 +89,8 @@ router.get(`/get_bookmarks`, authMiddleware, async (req, res) => {
             success : true,
             message : `Found ${Flatmate_bookmarks.length} Flatmate Bookmarks and ${Property_bookmarks.length} Property Bookmarks`,
             FlatmateBookMarks : Flatmate_bookmarks,
-            PropertyBookMarks : Property_bookmarks
+            PropertyBookMarks : Property_bookmarks,
+            scoresArray: scoresArray
         })
         
     } catch (error) {
