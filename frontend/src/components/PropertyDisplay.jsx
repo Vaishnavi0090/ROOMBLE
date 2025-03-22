@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext , useEffect} from "react";
 import "../css/PropertyDisplay.css";
+import { Basecontext } from '../context/base/Basecontext';
 
 const PropertyDisplay = ({ 
-  images, price, address, description, amenities, area, onDelist, onDelete 
+  images, price, address, description, amenities, area, onDelist, onDelete, landlord 
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const state = useContext(Basecontext);
+  const { user, setUser, fetuser } = state;
+
+  useEffect(() => {
+    fetuser();
+    console.log(user.type);
+  }, []);
 
   const handlePrev = () => {
     setCurrentIndex((prevIndex) => (prevIndex === 0 ? images.length - 1 : prevIndex - 1));
@@ -41,10 +49,17 @@ const PropertyDisplay = ({
           <h3>Area</h3>
           <p>{area} sqft</p>
         </div>
-        <div className="property-display-buttons">
-          <button className="property-display-delist" onClick={onDelist}>Delist</button>
-          <button className="property-display-delete" onClick={onDelete}>Delete</button>
-        </div>
+          {user.type === "landlord" ? (
+            <div className="property-display-buttons">
+              <button className="property-display-delist" onClick={onDelist}>Delist</button>
+              <button className="property-display-delete" onClick={onDelete}>Delete</button>
+            </div>
+          ) : (
+            <div className="property-display-section">
+              <h3>Landlord</h3>
+              <p>{landlord}</p>
+            </div>
+          )}
       </div>
     </div>
   );

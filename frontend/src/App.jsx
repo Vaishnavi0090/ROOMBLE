@@ -11,7 +11,8 @@ import Login from "./components/Login.jsx";
 import AddProperty from "./components/AddProperty.jsx";
 import FindProperty from "./components/FindProperty.jsx";
 import FindFlatmate from "./components/FindFlatmateComponents/FindFlatmate.jsx";
-import OTPPage from "./components/OTPPage/OTPPage.jsx";
+import OTPPageTenant from "./components/OTPPage/OTPPageTenant.jsx";
+import OTPPageLandlord from "./components/OTPPage/OTPPageLandlord.jsx";
 import TenantProfilePage from "./components/TenantProfilePage/TenantProfilePage.jsx";
 import TenantEditPage from "./components/TenantProfilePage/TenantEditPage.jsx";
 import BookmarkedFlatmates from "./components/BookmarkedFlatmates.jsx";
@@ -50,16 +51,23 @@ function App() {
     <BaseState>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />  
-      
+        <Route path="/" element={<Navigate to="/login" />} />
+
         <Route path="/messages" element={<MessageStart />} />
         <Route path="/signup-tenant" element={<SignUpTenant setID={setID} />} />
-        <Route path="/signup-landlord" element={<SignupLandlord />} />
+        <Route
+          path="/signup-landlord"
+          element={<SignupLandlord setID={setID} />}
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/add-property" element={<AddProperty />} />
         <Route path="/find-property" element={<FindProperty />} />
         <Route path="/find-flatmate" element={<FindFlatmate />} />
-        <Route path="/otp-page" element={<OTPPage id={id} />} />
+        <Route path="/otp-page-tenant" element={<OTPPageTenant id={id} />} />
+        <Route
+          path="/otp-page-landlord"
+          element={<OTPPageLandlord id={id} />}
+        />
         <Route path="/tenant-profile-page" element={<TenantProfilePage />} />
         <Route path="/tenant-edit-page" element={<TenantEditPage />} />
         <Route path="/tenant-dashboard" element={<BookmarkedFlatmates />} />

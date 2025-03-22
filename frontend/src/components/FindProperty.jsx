@@ -5,6 +5,7 @@ import PropertyCardTenant from "../components/FindPropertyComponents/PropertyCar
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 
 function FindProperty() {
       const [city, setCity] = useState("");
@@ -14,11 +15,12 @@ function FindProperty() {
       const [area, setArea] = useState([500, 10000]); // Initial values [lower, upper]
       const [properties, setProperties] = useState([]);
       const [error, setError] = useState("");
-      const [filtersapllied, setFiltersApplied] = useState(false);
+      const [lastSearchLocality, setLastSearchLocality] = useState("");
+      const [filtersApllied, setFiltersApplied] = useState(false);
       const navigate = useNavigate();
-      const matchingProperties = properties.filter((property) => property.town === locality);
-      const otherProperties = properties.filter((property) => property.town !== locality);
-    
+      const matchingProperties = properties.filter((property) => property.town === lastSearchLocality);
+      const otherProperties = properties.filter((property) => property.town !== lastSearchLocality);
+      const notify = (message) => toast(message);
       const handleSliderChange = (newValues) => {
         setValues(newValues); // `newValues` is an array like [minValue, maxValue]
       };
@@ -43,7 +45,7 @@ function FindProperty() {
                 return navigate("/login");
             }
             if(!locality){
-                alert("Please select a locality");
+                notify("Please select a locality!");
                 return;
             }
             const response = await axios.get("http://localhost:3000/api/Search_Routes/SearchProperties", {
@@ -60,11 +62,11 @@ function FindProperty() {
                     bhk: BHK[0] === 4 ? "more" : BHK, //
                 },
             });
-    
+            setLastSearchLocality(locality);
             setProperties(response.data);
-            setFiltersApplied(true);
             console.log("Properties fetched:", response.data);
             setError("");
+            setFiltersApplied(true);
         } catch (err) {
             console.error("Error fetching properties:", err);
             setError(err.response?.data?.error || "Something went wrong");
@@ -73,11 +75,15 @@ function FindProperty() {
     };
     
       const handleClearChanges = () => {
-        setSearch("");
         setCity("");
         setLocality("");
         setBHK([4]);
         setValues([1000, 100000]);
+        setArea([500, 10000]);
+        setProperties([]);
+        setError("");
+        setLastSearchLocality("");
+        setFiltersApplied(false);
       };
     return (
         <div className="find-property-body">
@@ -101,12 +107,14 @@ function FindProperty() {
         />
         </div>
         <div className="Property-card-div">
+            <ToastContainer />
                 {/* Display Matching Properties First */}
-                {!filtersapllied && <h2>Please select a locality in filters and click apply</h2>}
-                {filtersapllied && matchingProperties.length > 0 && (
+                {!filtersApllied  && <h2>Please select a locality in filters and click apply</h2>}
+                {(filtersApllied && matchingProperties.length === 0) && <h2>Sorry! No propertiey matched with your filters</h2>}
+                {matchingProperties.length > 0 && (
                     <>
 
-                        <h2>Properties in {locality}</h2>
+                        <h2>Properties in {lastSearchLocality}</h2>
   
                         {matchingProperties.map((property) => (
                             <PropertyCardTenant
@@ -124,7 +132,7 @@ function FindProperty() {
                 )}
 
                 {/* Display Other Properties */}
-                {(filtersapllied && otherProperties.length > 0) && (
+                {(otherProperties.length > 0) && (
                     <>
                         <h2>Other Properties You May Be Interested In</h2>
                         {otherProperties.map((property) => (

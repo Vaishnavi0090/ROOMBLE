@@ -6,8 +6,19 @@ import { useParams } from 'react-router-dom';
 
 function Messages() {
   const [currentConvId, setCurrentConvId] = useState(null);
-  const [currentMessages, setCurrentMessages] = useState([]);
-  
+  const [currentMessages, setCurrentMessages] = useState({
+    members: ["loading", "loading"],
+    messages: [
+      {
+        senderID: "loading",
+        message: "loading",
+        timestamp: 123,
+        read1: false,
+        read2: false
+      }
+    ]
+  });
+
   const params = useParams();
   const id = params.id;
 
@@ -25,6 +36,7 @@ function Messages() {
     .then(data=>{
       if(data.success){
         setCurrentMessages(data.conversation);
+        // console.log(data.conversation.messages);
       }
       else{
         console.log("Failed to fetch conversation");
@@ -33,8 +45,6 @@ function Messages() {
   },[id]);
 
   return (
-    //Main container of the BOX which is divided into two parts
-    //MessageBox and ChatBox
     <div className="message-container">
         {/*MessageBox contains the list of all the users*/}
         <MessageBox currentConvId={currentConvId} setCurrentConvId={setCurrentConvId} currentMessages={currentMessages} setCurrentMessages={setCurrentMessages}/> 
