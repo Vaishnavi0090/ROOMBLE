@@ -18,9 +18,11 @@ const checkUser = async (req, res, next) => {
             if (!user) {
                 return res.status(400).json({ message: 'Invalid Token' });
             }
+            req.user = user;
+            return next();
         }
         req.user = user;
-        next();
+        return next();
     } catch (err) {
         console.log(err);
         res.status(400).json({ message: 'Invalid Token' });
