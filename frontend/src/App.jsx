@@ -23,6 +23,7 @@ import SetNewPassword from "./components/OTPPage/SetNewPassword.jsx";
 import OTPDeletePage from "./components/OTPPage/OTPDeletePage.jsx";
 import HomePage from "./components/LandlordDashboard/HomePage.jsx";
 import EditProperty from "./components/EditProperty.jsx";
+import MessageStart from "./components/MessageStart.jsx";
 import LandlordProfile from "./components/LandlordProfile/LandlordProfile.jsx";
 import OtherTenantProfile from "./components/OtherTenantProfile.jsx";
 
@@ -43,7 +44,7 @@ function App() {
     <BaseState>
       <Navbar />
       <Routes>
-        <Route path="/messages" element={<Messages />} />
+        <Route path="/messages" element={<MessageStart />} />
         <Route path="/signup-tenant" element={<SignUpTenant setID={setID} />} />
         <Route path="/signup-landlord" element={<SignupLandlord />} />
         <Route path="/login" element={<Login />} />
