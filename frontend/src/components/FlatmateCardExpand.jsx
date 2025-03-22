@@ -2,13 +2,13 @@ import React from 'react';
 import "../css/FlatmateCardExpand.css";
 import { BsBookmark, BsBookmarkFill, BsChatDots } from 'react-icons/bs';
 import { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate, useParams } from 'react-router-dom'; // Import useNavigate
 import { Basecontext } from '../context/base/Basecontext';
-import logo from "../../public/sampleUser_img.png";
 
 const FlatmateCardExpand = () => {
     const [isBookmarked, setIsBookmarked] = useState(false);
     const navigate = useNavigate(); // Initialize useNavigate
+    const { id } = useParams(); // Get the ID from the URL
 
     const handleBookmarkClick = () => {
         setIsBookmarked(!isBookmarked);
@@ -19,21 +19,30 @@ const FlatmateCardExpand = () => {
     };
 
     const state = useContext(Basecontext);
-    const { user, setUser, fetuser } = state;
-    fetuser();
+    const { fetUserById } = state;
+    const [profileData, setProfileData] = useState(null);
 
-    const profileData = {
-        Name: state.user.name,
-        Email: state.user.email,
-        City: state.user.city,
-        Locality: state.user.locality,
-        Gender: state.user.gender ? "Male" : "Female",
-        "Do you drink or smoke?": state.user.smoke ? "Yes" : "No",
-        "Food Preferences": state.user.veg ? "Vegetarian" : "Non-Vegetarian",
-        "Do you have a pet?": state.user.pets ? "Yes" : "No",
-        Bio: state.user.description,
-        profileImage: state.user.Images,
-    };
+    useEffect(() => {
+        const fetchData = async () => {
+            const data = await fetuserById(id);  // Fetch the user by ID
+            if (data) {
+                setProfileData({
+                    Name: data.name,
+                    Email: data.email,
+                    City: data.city,
+                    Locality: data.locality,
+                    Gender: data.gender ? "Male" : "Female",
+                    "Do you drink or smoke?": data.smoke ? "Yes" : "No",
+                    "Food Preferences": data.veg ? "Vegetarian" : "Non-Vegetarian",
+                    "Do you have a pet?": data.pets ? "Yes" : "No",
+                    Bio: data.description,
+                    profileImage: data.Images,
+                });
+            }
+        };
+
+        fetchData();
+    }, [id]);
 
     return (
         <section className="fce-container">
