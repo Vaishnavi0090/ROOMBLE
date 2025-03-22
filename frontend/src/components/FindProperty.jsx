@@ -38,7 +38,7 @@ function FindProperty() {
       const handleApplyChanges = async () => {
         
         try {
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("authtoken");
             if (!token) {
                 return navigate("/login");
             }
