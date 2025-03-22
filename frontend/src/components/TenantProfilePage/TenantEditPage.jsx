@@ -67,7 +67,7 @@ const TenantEditPage = () => {
             accounttype: "tenant",
           },
         }
-      );
+      ); //67dd4b17afb6c9aafaa20f3c
       const data = await response.json();
       if (data.success) {
         console.log("Form submitted successfully");
@@ -138,7 +138,7 @@ const TenantEditPage = () => {
             // value={formData.gender === "Male" ? true : false}
             onChange={handleInputChange}
           >
-            <option value="gender" selected>
+            <option value={undefined} selected>
               gender
             </option>
             <option value={false}>Female</option>

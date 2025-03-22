@@ -42,8 +42,8 @@ router.put("/updateProfile",authMiddleware,async(req,res)=>{
         }
 
         //The frontend guys had difficulty in sending gender, so I added this line
-        if(gender === undefined){
-            gender = user.gender;
+        if(updatedFields.gender === undefined){
+            updatedFields.gender = user.gender;
         }
 
         if(!user){
@@ -70,10 +70,9 @@ router.put("/updateProfile",authMiddleware,async(req,res)=>{
             else{
                 //Save the image into Pictures/accounttype
                 let UploadPath = path.join(__dirname , `../Pictures` , `${accounttype}` , `${user.id}${path.extname(image.name).toLowerCase()}`);
-                console.log(UploadPath);
                 await SaveImage(image,UploadPath);
                 user.Images = `http://127.0.0.1:3000/Pictures/${accounttype}/${user.id}${path.extname(image.name).toLowerCase()}`;
-                console.log(user.Images);
+                
             }
         }
 
