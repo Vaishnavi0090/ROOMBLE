@@ -3,12 +3,13 @@ const router = express.Router();
 const Landlord = require("../models/Landlord");
 const Property = require("../models/Property");
 const authMiddleware = require("../middlewares/checkuser");
-
+const mongoose = require('mongoose');
 router.delete("/deleteProperty/:propertyId", authMiddleware, async (req, res) => {
     try {
+        
         const landlordId = req.user.id;
         const propertyId = req.params.propertyId;
-
+        console.log(propertyId);
         if (!mongoose.Types.ObjectId.isValid(propertyId)) {
             console.log(`!!!!INVALID ID FOUND!!!!!`);
             console.log(id);
