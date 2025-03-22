@@ -64,7 +64,7 @@ function App() {
         <Route path="/tenant-edit-page" element={<TenantEditPage />} />
         <Route path="/tenant-dashboard" element={<BookmarkedFlatmates />} />
         <Route path="/prop-display" element={<PropertyDisplayCall />} />
-        <Route path="/flatmate-card-expand/:id" element={<FlatmateCardExpand />} />
+        <Route path="/tenant/:id" element={<FlatmateCardExpand />} />
         <Route path="/landlord-dashboard" element={<HomePage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/edit-property" element={<EditProperty />} />
@@ -72,7 +72,6 @@ function App() {
         <Route path="/otp-delete-page" element={<OTPDeletePage />} />
         <Route path="/landlord-profile" element={<LandlordProfile />} />
         <Route path="/chat/:id" element={<Messages />} />
-        <Route path="/tenant/:id" element={<OtherTenantProfile />} />
       </Routes>
     </BaseState>
   );

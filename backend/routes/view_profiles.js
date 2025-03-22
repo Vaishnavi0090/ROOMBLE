@@ -33,7 +33,7 @@ router.post(`/Self_profile`, authMiddleware, async (req,res) => {
                 success : true,
                 id : user._id,
                 name : user.name,
-                email : user.email, 
+                email : user.email,
                 locality : user.locality,
                 gender : user.gender,
                 pets : user.pets,
@@ -108,6 +108,7 @@ router.post(`/other_users` , authMiddleware , async (req, res) => {
                     success : true,
                     id : user._id,
                     name : user.name,
+                    city : user.city,
                     locality : user.locality,
                     gender : user.gender,
                     pets : user.pets,
@@ -115,7 +116,9 @@ router.post(`/other_users` , authMiddleware , async (req, res) => {
                     veg : user.veg,
                     flatmates : user.flatmate, 
                     reviews : user.reviews,
-                    Images : user.Images
+                    Images : user.Images,
+                    description : user.description
+
                 })
             }
         } else if(accounttype === `landlord`){
