@@ -1,11 +1,11 @@
 import React from "react";
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../css/OTPPage/OTPPage.css"; // Import the CSS specific to this component
+import "../../css/OTPPage/OTPPageTenant.css"; // Import the CSS specific to this component
 import logo from "../../../public/logo.png";
-export default function OTPPage({ id }) {
+export default function OTPPageTenant({ id }) {
   const navigate = useNavigate();
-    console.log(`id is ${id}`);
+  console.log(`id is ${id}`);
   const respURL = `http://127.0.0.1:3000/api/Tenant/auth/verifyTenant/${id}`;
   //   console.log(respURL);
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);

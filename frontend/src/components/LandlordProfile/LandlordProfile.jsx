@@ -3,13 +3,18 @@ import "../../css/LandlordProfileStyles/LandlordProfile.css";
 import PropertyCard from "../LandlordDashboard/PropertyCard.jsx";
 import logo from "../../../public/property-img.png";
 import pfp from "../../../public/sampleUser_Img.png";
+import { useNavigate } from "react-router-dom";
 const LandlordProfile = () => {
   const [respData, setRespData] = useState(null);
+  const navigate = useNavigate();
 
+  const handleView = () => {
+    navigate("/prop-display ");
+  };
+  const token = localStorage.getItem("authtoken");
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = localStorage.getItem("token");
         console.log(token);
         const response = await fetch(
           "http://127.0.0.1:3000/api/view_profiles/Self_profile",
@@ -36,13 +41,42 @@ const LandlordProfile = () => {
   if (!respData) {
     return <div className="landlord-profile-loading">Loading...</div>;
   }
+  const handleDelete = async (Sendid) => {
+    try {
+      // console.log(Sendid);
+      const response = await fetch(
+        `http://127.0.0.1:3000/api/deleteproperty/deleteProperty/${Sendid}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            authtoken: token, // Replace with actual data
+          },
+        }
+      );
 
+      const respData = await response.json();
+
+      if (respData.success) {
+        console.log("Delete successful:", respData.message);
+      } else {
+        console.error("Delete failed:", respData.message);
+      }
+    } catch (error) {
+      console.error("Error during delete request:", error);
+    }
+  };
+  console.log(respData.Images);
   return (
     <div className="landlord-profile-container">
       {/* Combined Profile & Properties Section */}
       <div className="landlord-profile-content">
         <div className="landlord-profile-header">
-          <img src={pfp} alt="Profile" className="landlord-profile-image" />
+          <img
+            src={respData.Images}
+            alt="Profile"
+            className="landlord-profile-image"
+          />
           <div className="landlord-profile-details">
             <div className="landlord-profile-item">
               <div className="landlord-profile-name">
@@ -79,11 +113,15 @@ const LandlordProfile = () => {
           {respData.Properties.map(({ _id, town, bhk, price, Images }) => (
             <PropertyCard
               key={_id}
-              image={logo}
+              image={Images[1]}
               price={price}
               title="Prop Card"
               location={town}
               bhk={bhk}
+              onView={handleView}
+              onDelete={() => {
+                handleDelete(_id);
+              }}
             />
           ))}
         </div>
