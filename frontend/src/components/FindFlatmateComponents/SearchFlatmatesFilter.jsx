@@ -22,7 +22,7 @@ function SearchFlatmatesFilter({ setFlatmates }) {
   };
 
   const handleApplyChanges = async () => {
-    const token = localStorage.getItem("authauthtoken");
+    const token = localStorage.getItem("authtoken");
 
     const queryParams = new URLSearchParams();
     if (locality) queryParams.append("locality", locality);
