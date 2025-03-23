@@ -25,7 +25,7 @@ const TenantSchema = new mongoose.Schema({
     city: {
         type : String,
         required : false,
-        default: "Mumbai"
+        default : "Mumbai"
     },
     gender: {// false female,true male
         type: Boolean,

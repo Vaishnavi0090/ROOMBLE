@@ -40,7 +40,26 @@ const io = require('socket.io')(server, {
 });
 
 const onlineUsers = new Map();
+io.on('connection', (socket) => {
+    socket.on('user_connected', (userID) => {
+        onlineUsers.set(userID, socket.id);
+        //send indication to all users to update their online users status
+        // dont send and data, just send the event
+        io.emit('update_online_users');
+    });
 
+    socket.on('disconnect', () => {
+        for (const [key, value] of onlineUsers.entries()) {
+            if (value === socket.id) {
+                onlineUsers.delete(key);
+                break;
+            }
+        }
+        //send indication to all users to update their online users status
+        // dont send and data, just send the event
+        io.emit('update_online_users');
+    });
+});
 
 // Middleware
 app.use(express.json()); // Allows Express to parse JSON request bodies

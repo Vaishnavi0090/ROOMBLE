@@ -7,6 +7,7 @@ const Property = require("../models/Property");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken")
 require(`dotenv`).config(`../.env`);
+const SaveImage = require(`../helper_funcs/Saveimage`);
 const path = require(`path`);
 // const { route } = require("./ForgotPassword")
 
@@ -25,8 +26,7 @@ router.put("/updateProfile",authMiddleware,async(req,res)=>{
     try{
         const userId = req.user.id;
         //if you want to remove profile pic, then pass , remove : "profilepic"
-        const {accounttype, ...updatedFields } = req.body;
-        let user;
+        const { accounttype, remove, ...updatedFields } = req.body;        let user;
 
         if(accounttype === "tenant"){
             user = await Tenant.findById(userId);
@@ -41,6 +41,11 @@ router.put("/updateProfile",authMiddleware,async(req,res)=>{
             });
         }
 
+        //The frontend guys had difficulty in sending gender, so I added this line
+        if(updatedFields.gender === undefined){
+            updatedFields.gender = user.gender;
+        }
+
         if(!user){
             return res.status(404).json({
                 success:false,
@@ -52,7 +57,7 @@ router.put("/updateProfile",authMiddleware,async(req,res)=>{
             // console.log('in here'); //FOR Debugging
             let image = req.files.image;
             if(image.size > maxSize){
-                return res.json(400).json({
+                return res.status(400).json({
                     success : false,
                     message : `Image size is ${image.size} but maximum allowed is only ${maxSize}`
                 })
@@ -65,22 +70,9 @@ router.put("/updateProfile",authMiddleware,async(req,res)=>{
             else{
                 //Save the image into Pictures/accounttype
                 let UploadPath = path.join(__dirname , `../Pictures` , `${accounttype}` , `${user.id}${path.extname(image.name).toLowerCase()}`);
-                image.mv(UploadPath, (err) => {
-                    if (err) {
-                        console.log("Error uploading image while updating");
-                        console.log(err);
-                        return res.status(500).json({
-                            success : false,
-                            message : "Some internal server error, in uploading the picture."
-                        });
-                    }
-                    else{
-                        user.Images = `http://127.0.0.1:${PORT}/Pictures/${accounttype}/${user.id}${path.extname(image.name).toLowerCase()}`;
-                        //Debugging
-                        console.log(`http://127.0.0.1:${PORT}/Pictures/${accounttype}/${user.id}${path.extname(image.name).toLowerCase()}`);
-                        //Debugging
-                    }
-                });
+                await SaveImage(image,UploadPath);
+                user.Images = `http://127.0.0.1:3000/Pictures/${accounttype}/${user.id}${path.extname(image.name).toLowerCase()}`;
+                
             }
         }
 
