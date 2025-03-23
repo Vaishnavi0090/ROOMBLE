@@ -39,6 +39,7 @@ const TenantEditPage = () => {
     accounttype: state.user.type,
     remove: "",
   });
+  // console.log(state);
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -224,7 +225,8 @@ const TenantEditPage = () => {
           <select
             name="locality"
             value={formData.locality}
-            onChange={handleInputChange}>
+            onChange={handleInputChange}
+          >
             <option value="">Select Location</option>
             <option value="Andheri">Andheri</option>
             <option value="Bandra">Bandra</option>

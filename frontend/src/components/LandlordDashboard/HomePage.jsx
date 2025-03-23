@@ -6,9 +6,9 @@ const HomePage = () => {
   const [Properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const state = useContext(Basecontext);
-  const { user, setUser, fetuser } = state;
-  fetuser();
+  // const state = useContext(Basecontext);
+  // const { user, setUser, fetuser } = state;
+  // fetuser();
 
   useEffect(() => {
     const fetchProperties = async () => {
