@@ -12,9 +12,7 @@ function Messages() {
       {
         senderID: "loading",
         message: "loading",
-        timestamp: 123,
-        read1: false,
-        read2: false
+        timestamp: 123
       }
     ]
   });
@@ -37,12 +35,9 @@ function Messages() {
     .then(data=>{
       if(data.success){
         setCurrentMessages(data.conversation);
-        // console.log(data.conversation.messages);
-      }
-      else{
-        console.log("Failed to fetch conversation");
       }
     })
+
 
   },[id]);
 

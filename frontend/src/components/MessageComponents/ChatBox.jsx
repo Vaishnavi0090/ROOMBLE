@@ -21,7 +21,7 @@ function ChatBox({currentConvId,setCurrentConvId,currentMessages,setCurrentMessa
 
     const [emojiopen, setEmojiopen] = React.useState(false);//For Emoji Picker to make it open and close
     const [message, setMessage] = React.useState('');//For the message input
-    const [otherUser, setOtherUser] = React.useState({name: "Loading...", status: "offline"});
+    const [otherUser, setOtherUser] = React.useState({name: "Loading...", status: "offline", profilepic: "/sampleUser_Img.png"});
     const endRef=useRef(null);
 
     useEffect(()=>{
@@ -42,12 +42,10 @@ function ChatBox({currentConvId,setCurrentConvId,currentMessages,setCurrentMessa
     
                     const data = await res.json();
                     if (data.success) {
-                        setOtherUser({ name: data.name, status: data.status });
-                    } else {
-                        console.error("Failed to fetch user name and status");
+                        setOtherUser({ name: data.name, status: data.status, profilepic: data.profilepic });
                     }
                 } catch (err) {
-                    console.error("Error fetching user name and status:", err);
+                    
                 }
             };
         
@@ -81,12 +79,10 @@ function ChatBox({currentConvId,setCurrentConvId,currentMessages,setCurrentMessa
 
                 const data = await res.json();
                 if (data.success) {
-                    setOtherUser({ name: data.name, status: data.status });
-                } else {
-                    console.error("Failed to fetch user name and status");
+                    setOtherUser({ name: data.name, status: data.status, profilepic: data.profilepic });
                 }
             } catch (err) {
-                console.error("Error fetching user name and status:", err);
+                
             }
         };
     
@@ -104,8 +100,6 @@ function ChatBox({currentConvId,setCurrentConvId,currentMessages,setCurrentMessa
 
     function handleSend(){
         if(message){
-            console.log(message);
-            // Send message to the backend
             const sendMsg = async () => {
                 try {
                     const res = await fetch('http://localhost:3000/messages/sendMessage', {
@@ -117,15 +111,13 @@ function ChatBox({currentConvId,setCurrentConvId,currentMessages,setCurrentMessa
                         body: JSON.stringify({ conversation_id: currentConvId, message: message }),
                     });
                     const data = await res.json();
-                    console.log(data);
+                    
                     if (data.success) {
                         console.log("Message sent successfully");
                         setMessage("");
                         // Update the current messages
                         setCurrentMessages(data.messages);
                         endRef.current?.scrollIntoView({ behavior: "smooth" });
-                    } else {
-                        console.error("Failed to send message");
                     }
                 } catch (err) {
                     console.error("Error sending message:", err);
@@ -140,7 +132,7 @@ function ChatBox({currentConvId,setCurrentConvId,currentMessages,setCurrentMessa
         {/*Chat Heading contains details of current messaging user*/}
        <div className="chatHeading">
         <div className="active-sender">
-            <img src="/sampleUser_Img.png" alt="Name" className="active-sender" />
+            <img src={otherUser.profilepic} alt="Name" className="active-sender" />
             <div className="text">
                 <span className="activeSendername">{otherUser.name}</span>
                 <p className="status">{otherUser.status}</p>
@@ -159,24 +151,10 @@ function ChatBox({currentConvId,setCurrentConvId,currentMessages,setCurrentMessa
             {currentMessages.messages.map((msg,id) => {
                 // console.log(msg);
                 if (msg.senderID == user._id){
-                    var blue = false;
-                    // currentMessages.members has two members, one of them is the user. read1 and read2 are the read status of the two members respectively
-                    // one of them is true trivially, so we check if the other is false
-                    //first check if members[0] or members[1] is the user
-                    if (currentMessages.members[0] == user._id){
-                        if (msg.read2 == false){
-                            blue = false;
-                        }
-                    }
-                    else{
-                        if (msg.read1 == false){
-                            blue = false;
-                        }
-                    }
-                    return <OwnMessage key={id} message={msg.message} timestamp={msg.timestamp} blue={blue}/>
+                    return <OwnMessage key={id} message={msg.message} otherUser={otherUser} timestamp={msg.timestamp}/>
                 }
                 else{
-                    return <RecievedMessage key={id} message={msg.message} timestamp={msg.timestamp}/>
+                    return <RecievedMessage key={id} message={msg.message} otherUser={otherUser} timestamp={msg.timestamp}/>
                 }
             })}
             <div ref={endRef}></div>

@@ -8,7 +8,7 @@ function RecievedMessage(props) {
     }
     return (
         <div className="message">
-        <img src="/sampleUser_Img.png" alt="Name" className="active-sender" />
+        <img src={props.otherUser.profilepic} alt="Name" className="active-sender" />
         <div className="msgBox">
             <p className="msgText">{props.message}</p>
             <span className="sentTime">{Date_to_time(props.timestamp)}</span>

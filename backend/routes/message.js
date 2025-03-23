@@ -11,7 +11,7 @@ const checkUser = require('../middlewares/checkuser');
 
 module.exports = (io, onlineUsers) => {
     router.post('/getUserNameStatus', async (req, res) => {
-        console.log(onlineUsers);
+        // console.log(onlineUsers);
         try{
             const { userID } = req.body;
 
@@ -27,7 +27,7 @@ module.exports = (io, onlineUsers) => {
             if (!user) {
                 return res.send({ success: false });
             }
-            return res.send({ name: user.name, status: status, success: true });
+            return res.send({ name: user.name, status: status, success: true, profilepic: user.Images });
         }
         catch(err){
             // console.log(err);
@@ -45,7 +45,6 @@ module.exports = (io, onlineUsers) => {
             // profile picture of other user
             // timestamp of last message
             // conversation_id
-            // number of unread messages
 
             const conversations = [];
             for (let i = 0; i < list.length; i++) {
@@ -67,26 +66,11 @@ module.exports = (io, onlineUsers) => {
                 if (lastMessage){
                     lasttimestamp = lastMessage.timestamp;
                 }
-                var unread = 0;
-                if (conversation.members[0] == req.user._id) {
-                    conversation.messages.forEach(message => {
-                        if (message.senderID != req.user._id && !message.read1) {
-                            unread++;
-                        }
-                    })
-                } else {
-                    conversation.messages.forEach(message => {
-                        if (message.senderID != req.user._id && !message.read2) {
-                            unread++;
-                        }
-                    })
-                }
                 conversations.push({
                     conversation_id: conversation._id,
                     lastMessage: lastMessage,
                     name: otherUser.name,
                     profilePic: otherUser.Images,
-                    unread: unread,
                     timestamp: lasttimestamp
                 })
             }
@@ -129,15 +113,7 @@ module.exports = (io, onlineUsers) => {
         const newMessage = {
             senderID: senderID,
             message: message,
-            timestamp: new Date(),
-            read1: false,
-            read2: false
-        }
-        //update read status
-        if (conversation.members[0].equals(senderID)) {
-            newMessage.read1 = true;
-        } else {
-            newMessage.read2 = true;
+            timestamp: new Date()
         }
 
         //update conversation
@@ -153,30 +129,6 @@ module.exports = (io, onlineUsers) => {
         }
     })
 
-    router.post('/readMessages', checkuser, async (req, res) => {
-        const { conversation_id } = req.body;
-        const userID = req.user._id;
-        const conversation = await Conversation.findById(conversation_id);
-        if (!conversation) {
-            res.send({ success: false });
-            return;
-        }
-        if (conversation.members[0] == userID) {
-            conversation.messages.forEach(message => {
-                if (message.sender != userID) {
-                    message.read1 = true;
-                }
-            })
-        } else {
-            conversation.messages.forEach(message => {
-                if (message.sender != userID) {
-                    message.read2 = true;
-                }
-            })
-        }
-        await conversation.save();
-        return res.send({ success: true });
-    })
 
     router.post('/createConversation', checkuser, async (req, res) => {
         try{

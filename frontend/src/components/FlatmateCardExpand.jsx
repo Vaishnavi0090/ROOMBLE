@@ -65,8 +65,21 @@ const FlatmateCardExpand = () => {
         setIsBookmarked(!isBookmarked);
     };
 
-    const handleMessageClick = () => {
-        navigate('/chat/' + params.id);
+    const handleMessageClick = async () => {
+        const response = await fetch('http://localhost:3000/messages/createConversation', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': localStorage.getItem('authtoken')
+            },
+            body: JSON.stringify({ user2: params.id })
+        });
+        const data = await response.json();
+        if (data.success) {
+            navigate('/chat/' + data.conversation_id);
+        } else {
+            console.log("Failed to create conversation");
+        }
     };
 
     if (!user || Object.keys(user).length === 0) {

@@ -27,7 +27,6 @@ function MessageCard({conversation}) {
         </div>
         <div className='right'>
         <p className="time">{conversation.lastMessage?Date_to_time(conversation.timestamp):""}</p>
-        {conversation.unread !=0 && <div className='newMsg'><p className='newMsgCount'>{conversation.unread}</p></div>}
         </div>
         
     </div>

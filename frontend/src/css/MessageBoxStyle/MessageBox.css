@@ -36,8 +36,8 @@
     .card {
         display: flex;
         flex-direction: row;
-        align-items: flex-start; /* Align items to the start (top) of the card */
-        justify-content: space-between; /* Space between the content (image, text, and time) */
+        align-items: center; /* Align items to the start (top) of the card */
+        justify-content: center; /* Space between the content (image, text, and time) */
         padding: 10px;
         border: none;
         width: 100%;
@@ -76,6 +76,10 @@
     .last-message {
         margin: 0; /* Removes default margin */
         font-size: 14px;
+        text-overflow: ellipsis;
+        white-space: nowrap; /* Prevents text from wrapping to the next line */
+        overflow: hidden; /* Hides the overflowing text */
+        max-width: 150px;
     }
     
     .time {

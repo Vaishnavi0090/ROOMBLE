@@ -12,8 +12,7 @@ function OwnMessage(props) {
     return (
         <div className="message own">
                 <div className="msgBox">
-                    <p className="msgText">{props.message}
-                        <DoneAllIcon style={{ fontSize: 18, color: props.blue?"#00ddff":"#808080" , marginLeft: 5 }} /></p>
+                    <p className="msgText">{props.message}</p>
 
                     <span className="sentTime">{Date_to_time(props.timestamp)}</span>
         

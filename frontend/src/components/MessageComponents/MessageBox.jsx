@@ -3,6 +3,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import MessageCard from './MessageCard.jsx';
 import '../../css/MessageBoxStyle/MessageBox.css';
 import { Basecontext } from '../../context/base/Basecontext';
+import { socket } from '../../socket.js';
 
 function MessageBox() {
 
@@ -16,7 +17,6 @@ function MessageBox() {
         setCurrentUserId(user._id);
         const fetchConversations = async () => {
             try {
-
                 const res = await fetch('http://localhost:3000/messages/getConversations', {
                     method: "POST",
                     headers: {
@@ -25,22 +25,43 @@ function MessageBox() {
                     }
                 })
                 const data = await res.json();
-                console.log(data);
                 if (data.success) {
-                    console.log(data.conversations);
                     setCurrentMessages(data.conversations);
-                }
-                else {
-                    console.log("Error fetching conversations");
                 }
 
             } catch (error) {
-                console.error("Error fetching conversations:", error);
+                
             }
         };
 
         fetchConversations();
     }, [user]);
+
+    useEffect(()=>{
+        socket.on("message", (data) => {
+            const fetchConversations = async () => {
+                try {
+    
+                    const res = await fetch('http://localhost:3000/messages/getConversations', {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "authtoken": localStorage.getItem("authtoken")
+                        }
+                    })
+                    const data = await res.json();
+                    if (data.success) {
+                        setCurrentMessages(data.conversations);
+                    }
+    
+                } catch (error) {
+                    
+                }
+            };
+    
+            fetchConversations();
+        })
+    })
 
 
     return (<div className="message-cards">
