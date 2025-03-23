@@ -56,7 +56,7 @@ const BookmarkedFlatmates = () => {
               city={flatmate.city || "Mumbai"}
               gender={flatmate.gender}
               image={flatmate.Images}
-              compatibilityScore={flatmate.recommendationScore}
+              compatibilityScore={flatmate.score}
               isBookmarked= {true}
             />
           ))}
