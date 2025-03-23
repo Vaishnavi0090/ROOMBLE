@@ -96,6 +96,17 @@ export default function TenantProfilePage() {
               <span>{state.user.gender ? "Male" : "Female"}</span>
             </p>
           </div>
+          <div className="tenant-profile-flatmate">
+            <p>
+              <span>wants Flatmate </span>
+              <span>:</span>{" "}
+              <span>
+                {state.user.flatmate
+                  ? "wants Flatmate"
+                  : "Doesn't want Flatmate"}
+              </span>
+            </p>
+          </div>
           <div className="tenant-profile-smoke">
             <p>
               <span>Alcohol/smoking </span> <span>:</span>{" "}

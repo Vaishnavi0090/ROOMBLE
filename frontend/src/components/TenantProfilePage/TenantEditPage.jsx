@@ -21,6 +21,7 @@ const TenantEditPage = () => {
       smoke: state.user.smoke,
       veg: state.user.veg,
       pets: state.user.pets,
+      flatmate: state.user.flatmate,
       description: state.user.description,
       accounttype: state.user.type,
       remove: "",
@@ -35,6 +36,7 @@ const TenantEditPage = () => {
     smoke: state.user.smoke,
     veg: state.user.veg,
     pets: state.user.pets,
+    flatmate: state.user.flatmate,
     description: state.user.description,
     accounttype: state.user.type,
     remove: "",
@@ -178,6 +180,24 @@ const TenantEditPage = () => {
                   onClick={() => setFormData({ ...formData, veg: false })}
                 >
                   NON VEG
+                </button>
+              </div>
+            </div>
+
+            <div className="tenant-edit-choices-flatmate">
+              <label>Want Flatmate</label>
+              <div className="edit-flatmate-btn">
+                <button
+                  className={formData.flatmate ? "active" : ""}
+                  onClick={() => setFormData({ ...formData, flatmate: true })}
+                >
+                  Want
+                </button>
+                <button
+                  className={!formData.flatmate ? "active" : ""}
+                  onClick={() => setFormData({ ...formData, flatmate: false })}
+                >
+                  Don't Want
                 </button>
               </div>
             </div>

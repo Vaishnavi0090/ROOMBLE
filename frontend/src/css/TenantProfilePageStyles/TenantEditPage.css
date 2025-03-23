@@ -102,6 +102,11 @@
     /* justify-content: space-between; */
     gap: 100px;
   }
+  .tenant-edit-choices-flatmate {
+    display: flex;
+    /* justify-content: space-between; */
+    gap: 145px;
+  }
   
   .tenant-edit-choices button {
     padding: 6px 10px;
