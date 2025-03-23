@@ -1,48 +1,77 @@
 import React from 'react';
 import "../css/FlatmateCardExpand.css";
 import { BsBookmark, BsBookmarkFill, BsChatDots } from 'react-icons/bs';
-import { useState, useContext } from 'react';
-import { useNavigate, useParams } from 'react-router-dom'; // Import useNavigate
-import { Basecontext } from '../context/base/Basecontext';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const FlatmateCardExpand = () => {
     const [isBookmarked, setIsBookmarked] = useState(false);
-    const navigate = useNavigate(); // Initialize useNavigate
-    const { id } = useParams(); // Get the ID from the URL
+    const navigate = useNavigate();
+
+    const params = useParams();
+    const [user, setUser] = useState({
+        name: "Loading...",
+        city: "Loading...",
+        locality: "Loading...",
+        description: "Loading...",
+        gender: null,
+        smoke: null,
+        veg: null, 
+        pets: null,
+        Images: "http://127.0.0.1:3000/Pictures/Default.png", 
+    });
+
+    useEffect(() => {
+        const id = params.id;
+        const token = localStorage.getItem("authtoken");
+        console.log("Token: ", token);
+
+        const fetchUser = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/api/view_profiles/other_users', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'authtoken': token,
+                        'accounttype': "tenant"
+                    },
+                    body: JSON.stringify({ requested_id: id, accounttype: "tenant"})
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error(`Error: ${response.status} - ${response.statusText}`, errorData);
+                    return; 
+                }
+
+                const data = await response.json();
+                console.log("Fetched Data:", data);
+
+                if (data.success) {
+                    setUser(data);
+                    console.log(data);
+                } else {
+                    console.log("Failed to fetch user");
+                }
+            } catch (err) {
+                    console.error("Error fetching user:", err);
+                }
+        };
+    
+        fetchUser();
+    }, [params.id]);
 
     const handleBookmarkClick = () => {
         setIsBookmarked(!isBookmarked);
     };
 
     const handleMessageClick = () => {
-        navigate('/messages'); // Navigate to the desired URL
+        navigate('/chat/' + params.id);
     };
 
-    const state = useContext(Basecontext);
-    const { fetUserById } = state;
-    const [profileData, setProfileData] = useState(null);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const data = await fetuserById(id);  // Fetch the user by ID
-            if (data) {
-                setProfileData({
-                    Name: data.name,
-                    Email: data.email,
-                    City: data.city,
-                    Locality: data.locality,
-                    Gender: data.gender ? "Male" : "Female",
-                    "Do you drink or smoke?": data.smoke ? "Yes" : "No",
-                    "Food Preferences": data.veg ? "Vegetarian" : "Non-Vegetarian",
-                    "Do you have a pet?": data.pets ? "Yes" : "No",
-                    Bio: data.description,
-                    profileImage: data.Images,
-                });
-            }
-        };
-
-        fetchData();
-    }, [id]);
+    if (!user || Object.keys(user).length === 0) {
+        return <p>No user data found.</p>;
+    }
 
     return (
         <section className="fce-container">
@@ -50,13 +79,13 @@ const FlatmateCardExpand = () => {
             <div className="fce-profile-info">
                 <h2>Profile Information</h2>
                 <ul>
-                    {Object.entries(profileData).map(([key, value]) => (
-                        key !== 'Bio' && key !== 'profileImage' && (
-                            <li key={key}>
-                                <strong>{key.replace(/([A-Z])/g, ' $1').trim()}:</strong> {value}
-                            </li>
-                        )
-                    ))}
+                    <li><strong>Name:</strong> {user.name}</li>
+                    <li><strong>City:</strong> {user.city}</li>
+                    <li><strong>Locality:</strong> {user.locality}</li>
+                    <li><strong>Gender:</strong> {user.gender ? "Male" : "Female"}</li>
+                    <li><strong>Do you drink or smoke?</strong> {user.smoke ? "Yes" : "No"}</li>
+                    <li><strong>Food Preferences:</strong> {user.veg ? "Vegetarian" : "Non-Vegetarian"}</li>
+                    <li><strong>Do you have a pet?</strong> {user.pets ? "Yes" : "No"}</li>
                 </ul>
             </div>
 
@@ -65,12 +94,12 @@ const FlatmateCardExpand = () => {
                 <div className="fce-profile-description">
                     <div className="fce-profile-header">
                         <div className="fce-profile-text">
-                            <h3>{profileData.Name}</h3>
-                            <p>{profileData.Gender}</p>
+                            <h3>{user.name}</h3>
+                            <p>{user.gender ? "Male" : "Female"}</p>
                         </div>
-                        <img className="fce-profile-img" src={profileData.profileImage} alt={`${profileData.name} Profile`} />
+                        <img className="fce-profile-img" src={user.Images} alt={`${user.name} Profile`} />
                     </div>
-                    <p>{profileData.Bio}</p>
+                    <p>{user.description}</p>
 
                     <div className="fce-action-buttons">
                         <div className="fce-bookmark-section" onClick={handleBookmarkClick}>

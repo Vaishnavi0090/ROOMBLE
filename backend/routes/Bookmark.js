@@ -24,6 +24,7 @@ const calculateRecommendationScore = (tenant, flatmate, townData) => {
   const booleanSimilarity = booleanMatches / 4; // Normalize to [0,1]
 
   const score = alpha * localitySimilarity + (1 - alpha) * booleanSimilarity;
+
   return score;
 };
 
@@ -53,10 +54,10 @@ router.get(`/get_bookmarks`, authMiddleware, async (req, res) => {
         return res.status(400).json({ error: `${id} is invalid ID` });
       }
       let tenantToBookmark = await Tenant.findById(id).select(
-        `email name locality city Images`
+        `email name locality city Images gender smoke veg pets`
       );
       if (tenantToBookmark) {
-        console.log(`Your town data is ${townData}`);
+        // console.log(`Your town data is ${townData}`);
         if (townData) {
           const score = calculateRecommendationScore(
             user,
@@ -65,8 +66,6 @@ router.get(`/get_bookmarks`, authMiddleware, async (req, res) => {
           );
           tenantToBookmark = tenantToBookmark.toObject(); // Convert to plain object
           tenantToBookmark.score = score; // Add score
-          console.log(tenantToBookmark);
-          console.log(`your score is ${score}`);
         }
         Flatmate_bookmarks.push(tenantToBookmark);
       }
@@ -90,7 +89,7 @@ router.get(`/get_bookmarks`, authMiddleware, async (req, res) => {
       success: true,
       message: `Found ${Flatmate_bookmarks.length} Flatmate Bookmarks and ${Property_bookmarks.length} Property Bookmarks`,
       FlatmateBookMarks: Flatmate_bookmarks,
-      PropertyBookMarks: Property_bookmarks
+      PropertyBookMarks: Property_bookmarks,
     });
   } catch (error) {
     console.log(error);

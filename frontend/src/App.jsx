@@ -27,7 +27,6 @@ import HomePage from "./components/LandlordDashboard/HomePage.jsx";
 import EditProperty from "./components/EditProperty.jsx";
 import MessageStart from "./components/MessageStart.jsx";
 import LandlordProfile from "./components/LandlordProfile/LandlordProfile.jsx";
-import OtherTenantProfile from "./components/OtherTenantProfile.jsx";
 
 function App() {
   const [id, setID] = useState("");
@@ -60,15 +59,15 @@ function App() {
         <Route path="/tenant-edit-page" element={<TenantEditPage />} />
         <Route path="/tenant-dashboard" element={<BookmarkedFlatmates />} />
         <Route path="/prop-display" element={<PropertyDisplayCall />} />
-        <Route path="/flatmate/:id" element={<FlatmateCardExpand />} />
+        <Route path="/tenant/:id" element={<FlatmateCardExpand />} />
         <Route path="/landlord-dashboard" element={<HomePage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/otp-forgot" element={<OTPPageForgot />} />
         <Route path="/edit-property" element={<EditProperty />} />
         <Route path="/set-new-password" element={<SetNewPassword />} />
         <Route path="/otp-delete-page" element={<OTPDeletePage />} />
         <Route path="/landlord-profile-page" element={<LandlordProfile />} />
         <Route path="/chat/:id" element={<Messages />} />
-        <Route path="/tenant/:id" element={<OtherTenantProfile />} />
       </Routes>
     </BaseState>
   );

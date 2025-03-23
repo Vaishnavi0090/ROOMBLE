@@ -70,7 +70,7 @@ export const Navbar = () => {
           </>
         ) : (
           <a href={user.type === 'tenant' ? "/tenant-profile-page" : "/landlord-profile-page"}>
-            <img src="/user.png" alt="account" className='account-img' />
+            <img src={state.user.Images}alt="account" className='account-img' />
           </a>
         )}
       </div>
