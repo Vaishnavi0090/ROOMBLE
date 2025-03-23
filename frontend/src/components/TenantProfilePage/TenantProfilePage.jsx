@@ -21,32 +21,32 @@ export default function TenantProfilePage() {
     navigate("/login");
     window.location.reload();
   };
-  const handleDelete = async () => {
-    try {
-      const response = await fetch(
-        "http://127.0.0.1:3000/api/Deleting_routes/deleteInitiate",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: state.user.email,
-            accounttype: "tenant",
-          }),
-        }
-      );
+  // const handleDelete = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       "http://127.0.0.1:3000/api/Deleting_routes/deleteInitiate",
+  //       {
+  //         method: "POST",
+  //         headers: { "Content-Type": "application/json" },
+  //         body: JSON.stringify({
+  //           email: state.user.email,
+  //           accounttype: "tenant",
+  //         }),
+  //       }
+  //     );
 
-      const data = await response.json();
-      if (data.success) {
-        localStorage.setItem("deleteToken", data.authtoken);
-        navigate("/otp-delete-page", {
-          state: { email: state.user.email, accountType: "tenant" },
-        });
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Could not initiate account deletion.");
-    }
-  };
+  //     const data = await response.json();
+  //     if (data.success) {
+  //       localStorage.setItem("deleteToken", data.authtoken);
+  //       navigate("/otp-delete-page", {
+  //         state: { email: state.user.email, accountType: "tenant" },
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //     alert("Could not initiate account deletion.");
+  //   }
+  // };
   return (
     <div className="tenant-profile-container">
       {/* Left Column */}
@@ -138,12 +138,12 @@ export default function TenantProfilePage() {
           >
             Logout
           </button>
-          <button
+          {/* <button
             className="tenant-profile-delete-button"
             onClick={handleDelete}
           >
             Delete
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
