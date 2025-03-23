@@ -15,7 +15,6 @@ const BaseState = (props) => {
                 },
             });
             const data = await res.json();
-            console.log(data);
             if(data.success){
                 setUser(data.user);
             }

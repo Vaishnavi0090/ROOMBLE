@@ -17,7 +17,7 @@ export default function TenantProfilePage() {
     navigate("/tenant-edit-page");
   };
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    localStorage.clear();
     navigate("/login");
     window.location.reload();
   };

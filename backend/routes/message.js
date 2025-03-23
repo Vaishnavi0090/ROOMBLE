@@ -10,17 +10,27 @@ const mongoose = require('mongoose');
 const checkUser = require('../middlewares/checkuser');
 
 module.exports = (io, onlineUsers) => {
-    router.post('/getUserStatus', async (req, res) => {
+    router.post('/getUserNameStatus', async (req, res) => {
+        console.log(onlineUsers);
         try{
             const { userID } = req.body;
+
+            var status = "offline";
             if (onlineUsers.has(userID)) {
-                res.send({ status: 'online', success: true });
-            } else {
-                res.send({ status: 'offline', success: true });
+                status = "online";
             }
+            
+            var user = await Tenant.findById(userID);
+            if (!user) {
+                user = await Landlord.findById(userID);
+            }
+            if (!user) {
+                return res.send({ success: false });
+            }
+            return res.send({ name: user.name, status: status, success: true });
         }
         catch(err){
-            console.log(err);
+            // console.log(err);
             res.send({ success: false });
         }
     })
@@ -44,7 +54,7 @@ module.exports = (io, onlineUsers) => {
                 if (!conversation) {
                     continue;
                 }
-                const otherID = conversation.members[0] == req.user._id ? conversation.members[1] : conversation.members[0];
+                const otherID = conversation.members[0].equals(req.user._id) ? conversation.members[1] : conversation.members[0];
                 var otherUser = await Tenant.findById(otherID);
                 if (!otherUser) {
                     otherUser = await Landlord.findById(otherID);
@@ -106,6 +116,7 @@ module.exports = (io, onlineUsers) => {
     })
 
     router.post('/sendMessage', checkuser, async (req, res) => {
+        console.log("hello")
         const {conversation_id, message} = req.body;
         const senderID = req.user._id;
         // Find conversation
@@ -116,14 +127,14 @@ module.exports = (io, onlineUsers) => {
         }
         //construct message object
         const newMessage = {
-            sender: senderID,
+            senderID: senderID,
             message: message,
             timestamp: new Date(),
             read1: false,
             read2: false
         }
         //update read status
-        if (conversation.members[0] == senderID) {
+        if (conversation.members[0].equals(senderID)) {
             newMessage.read1 = true;
         } else {
             newMessage.read2 = true;
@@ -132,11 +143,13 @@ module.exports = (io, onlineUsers) => {
         //update conversation
         conversation.messages.push(newMessage);
         await conversation.save();
-        //send message to other user
-        const receiverID = conversation.members[0] == senderID ? conversation.members[1] : conversation.members[0];
-        if (onlineUsers.has(receiverID)) {
-            io.to(onlineUsers.get(receiverID)).emit('message', { conversation_id, message: newMessage });
 
+        res.send({ success: true, messages: conversation });
+        //send message to other user
+        const receiverID = conversation.members[0].equals(senderID) ? conversation.members[1] : conversation.members[0];
+        // console.log("sending message to", onlineUsers.get(receiverID.toString()));
+        if (onlineUsers.has(receiverID.toString())) {
+            io.to(onlineUsers.get(receiverID.toString())).emit('message', { conversation_id, messages: conversation });
         }
     })
 
@@ -207,6 +220,7 @@ module.exports = (io, onlineUsers) => {
         }
 
     })
+
 
     return router;
 }

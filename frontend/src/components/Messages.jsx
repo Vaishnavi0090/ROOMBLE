@@ -18,6 +18,7 @@ function Messages() {
       }
     ]
   });
+  const [currentConversations, setCurrentConversations] = useState([]);
 
   const params = useParams();
   const id = params.id;
@@ -42,13 +43,12 @@ function Messages() {
         console.log("Failed to fetch conversation");
       }
     })
+
   },[id]);
 
   return (
     <div className="message-container">
-        {/*MessageBox contains the list of all the users*/}
-        <MessageBox currentConvId={currentConvId} setCurrentConvId={setCurrentConvId} currentMessages={currentMessages} setCurrentMessages={setCurrentMessages}/> 
-        {/*ChatBox contains the chat of the selected user*/}
+        <MessageBox />
         <ChatBox currentConvId={currentConvId} setCurrentConvId={setCurrentConvId} currentMessages={currentMessages} setCurrentMessages={setCurrentMessages}/>
     </div>
   );

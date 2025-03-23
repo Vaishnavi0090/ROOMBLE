@@ -11,6 +11,8 @@ import OwnMessage from "./OwnMessage";
 import RecievedMessage from "./RecievedMessage";
 import { useContext } from 'react'
 import { Basecontext } from '../../context/base/Basecontext'
+import useDidMountEffect from "../../useDidMountEffect";
+import { socket } from "../../socket";
 
 function ChatBox({currentConvId,setCurrentConvId,currentMessages,setCurrentMessages}) {
 
@@ -19,11 +21,77 @@ function ChatBox({currentConvId,setCurrentConvId,currentMessages,setCurrentMessa
 
     const [emojiopen, setEmojiopen] = React.useState(false);//For Emoji Picker to make it open and close
     const [message, setMessage] = React.useState('');//For the message input
+    const [otherUser, setOtherUser] = React.useState({name: "Loading...", status: "offline"});
     const endRef=useRef(null);
-    
+
     useEffect(()=>{
-        endRef.current?.scrollIntoView({behavior:"smooth"});
-    },[]);
+        socket.on("update_online_users",()=>{
+            const fetchUserNameStatus = async () => {
+                try {
+                    endRef.current?.scrollIntoView({ behavior: "smooth" });
+    
+        
+                    // Fetch other username and status
+                    const res = await fetch('http://localhost:3000/messages/getUserNameStatus', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ userID: currentMessages.members[0] == user._id ? currentMessages.members[1] : currentMessages.members[0] }),
+                    });
+    
+                    const data = await res.json();
+                    if (data.success) {
+                        setOtherUser({ name: data.name, status: data.status });
+                    } else {
+                        console.error("Failed to fetch user name and status");
+                    }
+                } catch (err) {
+                    console.error("Error fetching user name and status:", err);
+                }
+            };
+        
+            fetchUserNameStatus();
+        })
+
+        socket.on("message",(data)=>{
+            // console.log(conversation_id);
+            if(currentConvId==(data.conversation_id)){
+                setCurrentMessages(data.messages);
+                endRef.current?.scrollIntoView({ behavior: "smooth" });
+            }
+        })
+    })
+
+    
+    useDidMountEffect(() => {
+        const fetchUserNameStatus = async () => {
+            try {
+                endRef.current?.scrollIntoView({ behavior: "smooth" });
+
+    
+                // Fetch other username and status
+                const res = await fetch('http://localhost:3000/messages/getUserNameStatus', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ userID: currentMessages.members[0] == user._id ? currentMessages.members[1] : currentMessages.members[0] }),
+                });
+
+                const data = await res.json();
+                if (data.success) {
+                    setOtherUser({ name: data.name, status: data.status });
+                } else {
+                    console.error("Failed to fetch user name and status");
+                }
+            } catch (err) {
+                console.error("Error fetching user name and status:", err);
+            }
+        };
+    
+        fetchUserNameStatus();
+    }, [currentMessages]);
     
     //For Emoji to add on the message
     function handleEmojiClick(event){
@@ -37,6 +105,33 @@ function ChatBox({currentConvId,setCurrentConvId,currentMessages,setCurrentMessa
     function handleSend(){
         if(message){
             console.log(message);
+            // Send message to the backend
+            const sendMsg = async () => {
+                try {
+                    const res = await fetch('http://localhost:3000/messages/sendMessage', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'authtoken': localStorage.getItem('authtoken'),
+                        },
+                        body: JSON.stringify({ conversation_id: currentConvId, message: message }),
+                    });
+                    const data = await res.json();
+                    console.log(data);
+                    if (data.success) {
+                        console.log("Message sent successfully");
+                        setMessage("");
+                        // Update the current messages
+                        setCurrentMessages(data.messages);
+                        endRef.current?.scrollIntoView({ behavior: "smooth" });
+                    } else {
+                        console.error("Failed to send message");
+                    }
+                } catch (err) {
+                    console.error("Error sending message:", err);
+                }
+            }
+            sendMsg();
             setMessage("");
         }
     }
@@ -47,8 +142,8 @@ function ChatBox({currentConvId,setCurrentConvId,currentMessages,setCurrentMessa
         <div className="active-sender">
             <img src="/sampleUser_Img.png" alt="Name" className="active-sender" />
             <div className="text">
-                <span className="activeSendername">Name</span>
-                <p className="status">Online</p>
+                <span className="activeSendername">{otherUser.name}</span>
+                <p className="status">{otherUser.status}</p>
             </div>
 
         </div>
@@ -61,7 +156,7 @@ function ChatBox({currentConvId,setCurrentConvId,currentMessages,setCurrentMessa
             
             {/* <RecievedMessage/>
             <OwnMessage/> */}
-            {currentMessages.messages.map((msg) => {
+            {currentMessages.messages.map((msg,id) => {
                 // console.log(msg);
                 if (msg.senderID == user._id){
                     var blue = false;
@@ -70,18 +165,18 @@ function ChatBox({currentConvId,setCurrentConvId,currentMessages,setCurrentMessa
                     //first check if members[0] or members[1] is the user
                     if (currentMessages.members[0] == user._id){
                         if (msg.read2 == false){
-                            blue = true;
+                            blue = false;
                         }
                     }
                     else{
                         if (msg.read1 == false){
-                            blue = true;
+                            blue = false;
                         }
                     }
-                    return <OwnMessage message={msg.message} timestamp={msg.timestamp} blue={blue}/>
+                    return <OwnMessage key={id} message={msg.message} timestamp={msg.timestamp} blue={blue}/>
                 }
                 else{
-                    return <RecievedMessage message={msg.message} timestamp={msg.timestamp}/>
+                    return <RecievedMessage key={id} message={msg.message} timestamp={msg.timestamp}/>
                 }
             })}
             <div ref={endRef}></div>
@@ -99,7 +194,7 @@ function ChatBox({currentConvId,setCurrentConvId,currentMessages,setCurrentMessa
                     
                 </div>
             </div>
-            <input onChange={handleChange} type="text" placeholder="Type a message..." value={message} className="msginput"/>
+            <input onChange={handleChange} type="text" placeholder="Type a message..." value={message} className="msginput" onKeyDown={(e)=>{if(e.key==="Enter"){handleSend()}}}/>
             <SendIcon className="sendButton" style={{ fontSize: 30 ,color:"#7D141D" }} onClick={handleSend}/>
          </div>
     </div>;
