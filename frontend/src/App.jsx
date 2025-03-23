@@ -63,6 +63,7 @@ function App() {
         <Route path="/tenant/:id" element={<FlatmateCardExpand />} />
         <Route path="/landlord-dashboard" element={<HomePage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/otp-forgot" element={<OTPPageForgot />} />
         <Route path="/edit-property" element={<EditProperty />} />
         <Route path="/set-new-password" element={<SetNewPassword />} />
         <Route path="/otp-delete-page" element={<OTPDeletePage />} />
