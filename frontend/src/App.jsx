@@ -28,12 +28,10 @@ import MessageStart from "./components/MessageStart.jsx";
 import LandlordProfile from "./components/LandlordProfile/LandlordProfile.jsx";
 import PropertyDisplay from "./components/PropertyDisplay.jsx";
 import OtherLandlord from "./components/OtherLandlord.jsx";
+import LandlordEditProfile from "./components/LandlordProfile/LandlordEditProfile.jsx";
 
 function App() {
   const [id, setID] = useState("");
-  
-
-  
 
   return (
     <BaseState>
@@ -42,15 +40,19 @@ function App() {
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/messages" element={<MessageStart />} />
         <Route path="/signup-tenant" element={<SignUpTenant setID={setID} />} />
-        <Route path="/signup-landlord" element={<SignupLandlord setID={setID} />}/>
+        <Route
+          path="/signup-landlord"
+          element={<SignupLandlord setID={setID} />}
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/add-property" element={<AddProperty />} />
         <Route path="/find-property" element={<FindProperty />} />
         <Route path="/find-flatmate" element={<FindFlatmate />} />
         <Route path="/otp-page-tenant" element={<OTPPageTenant id={id} />} />
-        <Route path="/otp-page-land" element={<OTPPageLandlord id={id} />}/>
+        <Route path="/otp-page-land" element={<OTPPageLandlord id={id} />} />
         <Route path="/tenant-profile-page" element={<TenantProfilePage />} />
         <Route path="/tenant-edit-page" element={<TenantEditPage />} />
+        <Route path="/landlord-edit-page" element={<LandlordEditProfile />} />
         <Route path="/tenant-dashboard" element={<BookmarkedFlatmates />} />
         <Route path="/tenant/:id" element={<FlatmateCardExpand />} />
         <Route path="/landlord-dashboard" element={<HomePage />} />

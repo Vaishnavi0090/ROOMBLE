@@ -7,10 +7,40 @@ import { useNavigate } from "react-router-dom";
 const LandlordProfile = () => {
   const [respData, setRespData] = useState(null);
   const navigate = useNavigate();
-
-  const handleView = () => {
-    navigate("/prop-display ");
+  const handleSubmit = () => {
+    navigate("/landlord-edit-page");
   };
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+    window.location.reload();
+  };
+  // const handleDelete = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       "http://127.0.0.1:3000/api/Deleting_routes/deleteInitiate",
+  //       {
+  //         method: "POST",
+  //         headers: { "Content-Type": "application/json" },
+  //         body: JSON.stringify({
+  //           email: state.user.email,
+  //           accounttype: "landlord",
+  //         }),
+  //       }
+  //     );
+
+  //     const data = await response.json();
+  //     if (data.success) {
+  //       localStorage.setItem("deleteToken", data.authtoken);
+  //       navigate("/otp-delete-page", {
+  //         state: { email: state.user.email, accountType: "landlord" },
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //     alert("Could not initiate account deletion.");
+  //   }
+  // };
   const token = localStorage.getItem("authtoken");
   useEffect(() => {
     const fetchData = async () => {
@@ -41,31 +71,31 @@ const LandlordProfile = () => {
   if (!respData) {
     return <div className="landlord-profile-loading">Loading...</div>;
   }
-  const handleDelete = async (Sendid) => {
-    try {
-      // console.log(Sendid);
-      const response = await fetch(
-        `http://127.0.0.1:3000/api/deleteproperty/deleteProperty/${Sendid}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            authtoken: token, // Replace with actual data
-          },
-        }
-      );
+  // const handleDeleteProp = async (Sendid) => {
+  //   try {
+  //     // console.log(Sendid);
+  //     const response = await fetch(
+  //       `http://127.0.0.1:3000/api/deleteproperty/deleteProperty/${Sendid}`,
+  //       {
+  //         method: "DELETE",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           authtoken: token, // Replace with actual data
+  //         },
+  //       }
+  //     );
 
-      const respData = await response.json();
+  //     const respData = await response.json();
 
-      if (respData.success) {
-        console.log("Delete successful:", respData.message);
-      } else {
-        console.error("Delete failed:", respData.message);
-      }
-    } catch (error) {
-      console.error("Error during delete request:", error);
-    }
-  };
+  //     if (respData.success) {
+  //       console.log("Delete successful:", respData.message);
+  //     } else {
+  //       console.error("Delete failed:", respData.message);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error during delete request:", error);
+  //   }
+  // };
   console.log(respData.Images);
   return (
     <div className="landlord-profile-container">
@@ -101,8 +131,25 @@ const LandlordProfile = () => {
                 </p>
               </div>
 
-              <div className="landlord-profile-edit-button">
-                <button className="landlord-profile-edit">Edit</button>
+              <div className="landlord-profile-buttons">
+                <button
+                  className="landlord-profile-edit-button"
+                  onClick={handleSubmit}
+                >
+                  Edit
+                </button>
+                <button
+                  className="landlord-profile-logout-button"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+                {/* <button
+                  className="landlord-profile-delete-button"
+                  onClick={handleDelete}
+                >
+                  Delete
+                </button> */}
               </div>
             </div>
           </div>

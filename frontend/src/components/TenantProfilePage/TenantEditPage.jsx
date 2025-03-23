@@ -21,6 +21,7 @@ const TenantEditPage = () => {
       smoke: state.user.smoke,
       veg: state.user.veg,
       pets: state.user.pets,
+      flatmate: state.user.flatmate,
       description: state.user.description,
       accounttype: state.user.type,
       remove: "",
@@ -35,10 +36,12 @@ const TenantEditPage = () => {
     smoke: state.user.smoke,
     veg: state.user.veg,
     pets: state.user.pets,
+    flatmate: state.user.flatmate,
     description: state.user.description,
     accounttype: state.user.type,
     remove: "",
   });
+  // console.log(state);
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -181,6 +184,24 @@ const TenantEditPage = () => {
               </div>
             </div>
 
+            <div className="tenant-edit-choices-flatmate">
+              <label>Want Flatmate</label>
+              <div className="edit-flatmate-btn">
+                <button
+                  className={formData.flatmate ? "active" : ""}
+                  onClick={() => setFormData({ ...formData, flatmate: true })}
+                >
+                  Want
+                </button>
+                <button
+                  className={!formData.flatmate ? "active" : ""}
+                  onClick={() => setFormData({ ...formData, flatmate: false })}
+                >
+                  Don't Want
+                </button>
+              </div>
+            </div>
+
             <div className="tenant-edit-choices-pets">
               <label>Domesticated Animal</label>
               <div className="edit-pets-btn">
@@ -224,7 +245,8 @@ const TenantEditPage = () => {
           <select
             name="locality"
             value={formData.locality}
-            onChange={handleInputChange}>
+            onChange={handleInputChange}
+          >
             <option value="">Select Location</option>
             <option value="Andheri">Andheri</option>
             <option value="Bandra">Bandra</option>
