@@ -7,7 +7,7 @@ const FlatmateCard = ({ id, name, locality, city, gender, smoke, eatNonVeg, pets
   const { user } = useContext(Basecontext); // Context to get user token
 
   useEffect(() => {
-    setBookmarked(isBookmarked); // Ensure correct initial state from props
+    setBookmarked(isBookmarked);
   }, [isBookmarked]);
   // const id = {id};
   const toggleBookmark = async () => {
@@ -49,8 +49,11 @@ const FlatmateCard = ({ id, name, locality, city, gender, smoke, eatNonVeg, pets
       alert(`Error: ${error.message}`);
     }
   };
-  
 
+  const handleView = () => {
+    window.location.href = `/tenant/${id}`;
+  };
+  
   const score = Math.round(parseFloat(compatibilityScore) * 100) || 0;
 
   return (
@@ -88,7 +91,7 @@ const FlatmateCard = ({ id, name, locality, city, gender, smoke, eatNonVeg, pets
           )}
         </button>
 
-        <button className="view-btn">View</button>
+        <button className="view-btn" onClick={handleView}>View</button>
       </div>
     </div>
   );

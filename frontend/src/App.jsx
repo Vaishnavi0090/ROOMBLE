@@ -27,7 +27,6 @@ import HomePage from "./components/LandlordDashboard/HomePage.jsx";
 import EditProperty from "./components/EditProperty.jsx";
 import MessageStart from "./components/MessageStart.jsx";
 import LandlordProfile from "./components/LandlordProfile/LandlordProfile.jsx";
-import OtherTenantProfile from "./components/OtherTenantProfile.jsx";
 
 function App() {
   const [id, setID] = useState("");
