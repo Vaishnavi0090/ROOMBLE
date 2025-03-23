@@ -29,7 +29,7 @@
         display: flex;
         margin: 10px;
         flex-direction: column;
-        overflow-y: scroll;
+        overflow-y: auto;
         max-height: calc(100vh - 200px);
     }
     

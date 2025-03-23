@@ -156,7 +156,7 @@ function ChatBox({currentConvId,setCurrentConvId,currentMessages,setCurrentMessa
             
             {/* <RecievedMessage/>
             <OwnMessage/> */}
-            {currentMessages.messages.map((msg) => {
+            {currentMessages.messages.map((msg,id) => {
                 // console.log(msg);
                 if (msg.senderID == user._id){
                     var blue = false;
@@ -173,10 +173,10 @@ function ChatBox({currentConvId,setCurrentConvId,currentMessages,setCurrentMessa
                             blue = false;
                         }
                     }
-                    return <OwnMessage message={msg.message} timestamp={msg.timestamp} blue={blue}/>
+                    return <OwnMessage key={id} message={msg.message} timestamp={msg.timestamp} blue={blue}/>
                 }
                 else{
-                    return <RecievedMessage message={msg.message} timestamp={msg.timestamp}/>
+                    return <RecievedMessage key={id} message={msg.message} timestamp={msg.timestamp}/>
                 }
             })}
             <div ref={endRef}></div>
