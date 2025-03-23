@@ -24,7 +24,11 @@
   background-color: #7D141D;
   border-radius: 2px;
 }
-
+.err-msg{
+  font-size: 25px;
+  color: #18191F;
+  margin-bottom: 6px;
+}
 /* Property Cards Grid */
 .property-cards-container {
   display: grid;

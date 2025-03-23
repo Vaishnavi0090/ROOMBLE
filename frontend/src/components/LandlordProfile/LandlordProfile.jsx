@@ -8,8 +8,8 @@ const LandlordProfile = () => {
   const [respData, setRespData] = useState(null);
   const navigate = useNavigate();
 
-  const handleView = () => {
-    navigate("/prop-display ");
+  const handleView = (sendID) => {
+    navigate(`/property/${sendID}`);
   };
   const token = localStorage.getItem("authtoken");
   useEffect(() => {
@@ -118,7 +118,9 @@ const LandlordProfile = () => {
               title="Prop Card"
               location={town}
               bhk={bhk}
-              onView={handleView}
+              onView={() => {
+                handleView(_id);
+              }}
               onDelete={() => {
                 handleDelete(_id);
               }}
