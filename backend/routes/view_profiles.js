@@ -61,7 +61,6 @@ router.post(`/Self_profile`, authMiddleware, async (req,res) => {
                     properyData.push(prop);
                 }
             }
-            console.log(properyData);
             return res.status(200).json({
                 success : true,
                 name : user.name,
