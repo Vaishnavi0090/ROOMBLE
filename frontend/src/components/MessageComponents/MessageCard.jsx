@@ -1,12 +1,18 @@
 
 import React from 'react';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
+import {useNavigate} from 'react-router-dom';
 
 function MessageCard({conversation}) {
+    const navigate = useNavigate();
+
+    const handleClick = (conversation) => {
+        navigate(`/chat/${conversation.conversation_id}`);
+    }
 
     return (
         //This is the card which contains the user details
-        <div className="card" onClick={()=>{console.log("Clicked")}}>
+        <div className="card" onClick={()=>{handleClick(conversation)}}>
         <img src={conversation.profilePic} alt="Name" className="sender-img" />
         <div className="sender-info">
             <span className="senderName">{conversation.name}</span>
