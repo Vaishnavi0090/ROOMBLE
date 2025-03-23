@@ -40,19 +40,12 @@ function FindProperty() {
       const handleApplyChanges = async () => {
         
         try {
-            const token = localStorage.getItem("authtoken");
-            if (!token) {
-                return navigate("/login");
-            }
             if(!locality){
                 notify("Please select a locality!");
                 return;
             }
             const response = await axios.get("http://localhost:3000/api/Search_Routes/SearchProperties", {
-                headers: {
-                    authtoken: token,
-                    accounttype: "tenant",  
-                },
+
                 params: {  
                     town: locality,
                     min_price: values[0],
@@ -126,6 +119,7 @@ function FindProperty() {
                                 bhk={property.bhk}
                                 onView={() => console.log("Viewing:", property.name)}
                                 onDelete={() => console.log("Deleting:", property._id)}
+                                id={property._id}
                             />
                         ))}
                     </>
@@ -145,6 +139,7 @@ function FindProperty() {
                                 bhk={property.bhk}
                                 onView={() => console.log("Viewing:", property.name)}
                                 onDelete={() => console.log("Deleting:", property._id)}
+                                id={property._id}
                             />
                         ))}
                     </>

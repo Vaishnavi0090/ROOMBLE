@@ -136,6 +136,11 @@ module.exports = (io, onlineUsers) => {
             const user1 = req.user._id;
             // console.log(req.body)
             const user2_id = new mongoose.Types.ObjectId(user2);
+
+            if(user1.equals(user2_id)){
+                return res.send({ success: false, message: "Something went wrong" });
+            }
+
             // Check if conversation already exists
             const conversation = await Conversation.findOne({ members: { $all: [user1, user2_id] } });
             if (conversation) {

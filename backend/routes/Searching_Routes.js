@@ -169,7 +169,7 @@ router.get("/SearchFlatmates", authMiddleware, async (req, res) => {
 
 // Searching Properties
 
-router.get('/SearchProperties', authMiddleware, async (req, res) => {  
+router.get('/SearchProperties', async (req, res) => {  
     const { town, min_price, max_price, min_area, max_area, bhk, ...filters } = req.query; // Extract filters from request body
 
     if (!town) {

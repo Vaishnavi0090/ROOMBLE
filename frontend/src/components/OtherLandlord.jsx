@@ -36,6 +36,23 @@ const OtherLandlord = () => {
     fetchData();
   }, []);
 
+  const messageclick = async () => {
+    const response = await fetch('http://localhost:3000/messages/createConversation', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authtoken': localStorage.getItem('authtoken')
+        },
+        body: JSON.stringify({ user2: params.id })
+    });
+    const data = await response.json();
+    if (data.success) {
+        navigate('/chat/' + data.conversation_id);
+    } else {
+        console.log("Failed to create conversation");
+    }
+};
+
   if (!respData) {
     return <div className="landlord-profile-loading">Loading...</div>;
   }
@@ -75,8 +92,19 @@ const OtherLandlord = () => {
                 </p>
               </div>
 
-              <div className="landlord-profile-edit-button">
-                <button className="landlord-profile-edit">Message</button>
+              <div className="landlord-profile-buttons">
+                <button
+                  className="landlord-profile-edit-button"
+                  onClick={messageclick}
+                >
+                  Message
+                </button>
+                {/* <button
+                  className="landlord-profile-delete-button"
+                  onClick={handleDelete}
+                >
+                  Delete
+                </button> */}
               </div>
             </div>
           </div>

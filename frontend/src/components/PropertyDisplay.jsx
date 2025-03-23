@@ -68,9 +68,9 @@ const PropertyDisplay = () => {
       {/* Left Section - Image Slider */}
       <div className="property-display-left">
         <div className="property-display-image-carousel">
-          <button className="property-display-arrow left" onClick={handlePrev}>‹</button>
+          <button className="property-display-arrow left" onClick={handlePrev}><i class="fa-solid fa-chevron-left small-icon"></i></button>
           <img src={property.Images[currentIndex]} alt="Property" />
-          <button className="property-display-arrow right" onClick={handleNext}>›</button>
+          <button className="property-display-arrow right" onClick={handleNext}><i class="fa-solid fa-chevron-right small-icon"></i></button>
         </div>
         <div className="property-display-price">₹{property.price}/Month</div>
         <div className="property-display-location">{property.address}</div>
