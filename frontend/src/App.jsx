@@ -17,7 +17,6 @@ import TenantProfilePage from "./components/TenantProfilePage/TenantProfilePage.
 import TenantEditPage from "./components/TenantProfilePage/TenantEditPage.jsx";
 import BookmarkedFlatmates from "./components/BookmarkedFlatmates.jsx";
 import SignupLandlord from "./components/SignupLandlord.jsx";
-import PropertyDisplayCall from "./components/PropertyDisplayCall.jsx";
 import FlatmateCardExpand from "./components/FlatmateCardExpand.jsx";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword.jsx";
 import SetNewPassword from "./components/ForgotPassword/SetNewPassword.jsx";
@@ -27,6 +26,7 @@ import HomePage from "./components/LandlordDashboard/HomePage.jsx";
 import EditProperty from "./components/EditProperty.jsx";
 import MessageStart from "./components/MessageStart.jsx";
 import LandlordProfile from "./components/LandlordProfile/LandlordProfile.jsx";
+import PropertyDisplay from "./components/PropertyDisplay.jsx";
 
 function App() {
   const [id, setID] = useState("");
@@ -58,7 +58,6 @@ function App() {
         <Route path="/tenant-profile-page" element={<TenantProfilePage />} />
         <Route path="/tenant-edit-page" element={<TenantEditPage />} />
         <Route path="/tenant-dashboard" element={<BookmarkedFlatmates />} />
-        <Route path="/prop-display" element={<PropertyDisplayCall />} />
         <Route path="/tenant/:id" element={<FlatmateCardExpand />} />
         <Route path="/landlord-dashboard" element={<HomePage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -68,6 +67,7 @@ function App() {
         <Route path="/otp-delete-page" element={<OTPDeletePage />} />
         <Route path="/landlord-profile-page" element={<LandlordProfile />} />
         <Route path="/chat/:id" element={<Messages />} />
+        <Route path="/property/:id" element={<PropertyDisplay />} />
       </Routes>
     </BaseState>
   );
