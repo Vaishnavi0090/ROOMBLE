@@ -113,7 +113,7 @@ const LandlordProfile = () => {
           {respData.Properties.map(({ _id, town, bhk, price, Images }) => (
             <PropertyCard
               key={_id}
-              image={Images[1]}
+              image={Images[0]}
               price={price}
               title="Prop Card"
               location={town}
