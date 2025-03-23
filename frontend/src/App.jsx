@@ -27,6 +27,7 @@ import EditProperty from "./components/EditProperty.jsx";
 import MessageStart from "./components/MessageStart.jsx";
 import LandlordProfile from "./components/LandlordProfile/LandlordProfile.jsx";
 import PropertyDisplay from "./components/PropertyDisplay.jsx";
+import OtherLandlord from "./components/OtherLandlord.jsx";
 
 function App() {
   const [id, setID] = useState("");
@@ -61,6 +62,7 @@ function App() {
         <Route path="/landlord-profile-page" element={<LandlordProfile />} />
         <Route path="/chat/:id" element={<Messages />} />
         <Route path="/property/:id" element={<PropertyDisplay />} />
+        <Route path="/landlord/:id" element={<OtherLandlord />} />
       </Routes>
     </BaseState>
   );

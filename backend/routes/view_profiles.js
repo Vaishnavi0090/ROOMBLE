@@ -86,7 +86,7 @@ router.post(`/Self_profile`, authMiddleware, async (req,res) => {
     }
 })
 
-router.post(`/other_users` , authMiddleware , async (req, res) => {
+router.post(`/other_users`  , async (req, res) => {
     try {
         let { requested_id, accounttype } = req.body;
         let user;

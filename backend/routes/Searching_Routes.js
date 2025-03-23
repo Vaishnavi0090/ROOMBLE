@@ -228,6 +228,7 @@ router.get('/SearchProperties', authMiddleware, async (req, res) => {
         });
 
         res.json(sortedProperties);
+        // console.log(sortedProperties)
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Internal server error" });
