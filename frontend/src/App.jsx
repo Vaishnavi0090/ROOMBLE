@@ -39,22 +39,15 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
-
         <Route path="/messages" element={<MessageStart />} />
         <Route path="/signup-tenant" element={<SignUpTenant setID={setID} />} />
-        <Route
-          path="/signup-landlord"
-          element={<SignupLandlord setID={setID} />}
-        />
+        <Route path="/signup-landlord" element={<SignupLandlord setID={setID} />}/>
         <Route path="/login" element={<Login />} />
         <Route path="/add-property" element={<AddProperty />} />
         <Route path="/find-property" element={<FindProperty />} />
         <Route path="/find-flatmate" element={<FindFlatmate />} />
         <Route path="/otp-page-tenant" element={<OTPPageTenant id={id} />} />
-        <Route
-          path="/otp-page-landlord"
-          element={<OTPPageLandlord id={id} />}
-        />
+        <Route path="/otp-page-land" element={<OTPPageLandlord id={id} />}/>
         <Route path="/tenant-profile-page" element={<TenantProfilePage />} />
         <Route path="/tenant-edit-page" element={<TenantEditPage />} />
         <Route path="/tenant-dashboard" element={<BookmarkedFlatmates />} />
@@ -62,7 +55,7 @@ function App() {
         <Route path="/landlord-dashboard" element={<HomePage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/otp-forgot" element={<OTPPageForgot />} />
-        <Route path="/edit-property" element={<EditProperty />} />
+        <Route path="/edit-property/:id" element={<EditProperty />} />
         <Route path="/set-new-password" element={<SetNewPassword />} />
         <Route path="/otp-delete-page" element={<OTPDeletePage />} />
         <Route path="/landlord-profile-page" element={<LandlordProfile />} />

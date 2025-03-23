@@ -8,26 +8,27 @@ const PropertyDisplay = () => {
   const state = useContext(Basecontext);
   const { user, setUser, fetuser } = state;
   const [property, setProperty] = useState({
-    name: 'Loading...', 
-    city: 'Loading...', 
-    town: 'Loading...', 
+    name: 'Loading...',
+    city: 'Loading...',
+    town: 'Loading...',
     address: 'Loading...',
     amenities: ['Loading...'],
-    Images:['Loading...'],
+    Images: ['Loading...'],
     area: "Loading...",
     available: "Loading...",
     bhk: "Loading...",
     description: 'Loading...',
     price: "Loading...",
-    reviews:["Loading..."],
+    reviews: ["Loading..."],
   });
 
   const params = useParams();
   const id = params.id;
-
   useEffect(() => {
     fetuser();
-
+  }, [user])
+  
+  useEffect(() => {
     const fetchProperty = async () => {
       try {
         const response = await fetch(`http://localhost:3000/api/property/get_property`, {
@@ -40,7 +41,6 @@ const PropertyDisplay = () => {
         const data = await response.json();
         if (data.success) {
           setProperty(data.property);
-          console.log(data.property);
           console.log(user);
           console.log(data.property.landlord);
         }
@@ -52,6 +52,8 @@ const PropertyDisplay = () => {
 
   }, []);
 
+
+
   const handlePrev = () => {
     setCurrentIndex((prevIndex) => (prevIndex === 0 ? property.Images.length - 1 : prevIndex - 1));
   };
@@ -59,7 +61,7 @@ const PropertyDisplay = () => {
   const handleNext = () => {
     setCurrentIndex((prevIndex) => (prevIndex === property.Images.length - 1 ? 0 : prevIndex + 1));
   };
-  
+
 
   return (
     <div className="property-display-container">
@@ -97,26 +99,13 @@ const PropertyDisplay = () => {
           <Link to={`/landlord/${property.landlord}`}>View Profile</Link>
         </div>
 
-        {/* user.type === "landlord" ? (
-          <div className="property-display-buttons">
-            {/* <button className="property-display-delist" onClick={onDelist}>Delist</button>
-            <button className="property-display-delete" onClick={onDelete}>Delete</button> 
-          </div>
-        ) : (
-          <div className="property-display-section">
-            <h3>Landlord</h3>
-            <p>{property.landlord}</p>
-          </div>
-        ) */}
 
-        
-
-        {user._id === property.landlord ?(
+        {user._id === property.landlord ? (
           <div className="property-display-buttons">
             <Link to={`/edit-property/${property._id}`}>Edit</Link>
             <Link to={`/delete-property/${property._id}`}>Delete</Link>
           </div>
-        ) :null}
+        ) : null}
       </div>
     </div>
   );

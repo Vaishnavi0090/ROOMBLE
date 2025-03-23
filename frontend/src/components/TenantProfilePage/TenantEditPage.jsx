@@ -210,19 +210,33 @@ const TenantEditPage = () => {
             value={formData.city}
             onChange={handleInputChange}
           >
-            <option value="Bangalore">Bangalore</option>
             <option value="Mumbai">Mumbai</option>
-            <option value="Delhi">Delhi</option>
           </select>
 
           <label>Locality</label>
 
-          <input
+          {/* <input
             type="text"
             name="locality"
             value={formData.locality}
             onChange={handleInputChange}
-          />
+          /> */}
+          <select
+            name="locality"
+            value={formData.locality}
+            onChange={handleInputChange}>
+            <option value="">Select Location</option>
+            <option value="Andheri">Andheri</option>
+            <option value="Bandra">Bandra</option>
+            <option value="Juhu">Juhu</option>
+            <option value="Malad">Malad</option>
+            <option value="Kandivali">Kandivali</option>
+            <option value="Borivali">Borivali</option>
+            <option value="Dahisar">Dahisar</option>
+            <option value="Mira Road">Mira Road</option>
+            <option value="Thane">Thane</option>
+            <option value="Goregaon">Goregaon</option>
+          </select>
 
           {/* <span>Religion</span>
 

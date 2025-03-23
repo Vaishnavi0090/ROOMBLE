@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import PropertyCard from "./PropertyCard";
 import "../../css/LandlordDashboard.css";
-import samplePropertyImg from "../../../public/1111111.jpg"; // Sample image
-import { Basecontext } from "../../context/base/Basecontext";
 
 const HomePage = () => {
   const [Properties, setProperties] = useState([]);
@@ -53,6 +51,7 @@ const HomePage = () => {
     newth.price = item.price;
     newth.bhk = item.bhk;
     newth.location = item.town;
+    newth.id = item._id;
     properties.push(newth);
   }
   return (

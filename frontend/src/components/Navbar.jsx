@@ -19,7 +19,6 @@ export const Navbar = () => {
     function handleConnection() {
       if (user && user._id) { // Ensure user and user._id are defined
         socket.emit("user_connected", user._id);
-        console.log("User connected:", user._id);
       }
     }
 
