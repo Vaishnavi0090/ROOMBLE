@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router();
 const Landlord = require("../models/Landlord");
 const Property = require("../models/Property");
+const Tenant = require("../models/Tenant");
 const path = require(`path`);
 const fs = require(`fs`);
 const moveImage = require(`../helper_funcs/Saveimage`);//async fucntion which helps upload images
