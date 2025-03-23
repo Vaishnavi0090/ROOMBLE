@@ -66,15 +66,14 @@
   /* Buttons Section */
   .buttons {
     display: flex;
-    justify-content: space-between; /* Space between buttons horizontally */
+    justify-content: flex-end; /* Space between buttons horizontally */
     padding: -8px; /*15 tha*/
     box-sizing: content-box; /* Include padding in element's total width and height */
     margin-bottom: 10px; /*ye nikal de*/
     margin-right: 10px;
   }
   
-  .view-button,
-.delete-button {
+  .view-button{
   padding: 10px 22px;
   font-size: 16px;
   font-family: 'Open Sans Condensed', sans-serif;
@@ -86,12 +85,8 @@
   transition: background-color 0.3s ease; /* Smooth transition for hover effect */
   box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2); /* Drop shadow effect */
 }
-.view-button {
-  margin-left: 188px; /* Adjust this value to move the button further right */
-}
 
 /* Hover Effects for Buttons */
-.view-button:hover,
-.delete-button:hover {
+.view-button:hover{
   background-color: #a51b27; /* Darker shade on hover */
 }

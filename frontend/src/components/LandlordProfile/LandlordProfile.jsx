@@ -118,10 +118,7 @@ const LandlordProfile = () => {
               title="Prop Card"
               location={town}
               bhk={bhk}
-              onView={handleView}
-              onDelete={() => {
-                handleDelete(_id);
-              }}
+              id={_id}
             />
           ))}
         </div>

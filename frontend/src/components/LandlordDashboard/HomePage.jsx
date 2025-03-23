@@ -1,14 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
 import PropertyCard from "./PropertyCard";
 import "../../css/LandlordDashboard.css";
-import samplePropertyImg from "../../../public/1111111.jpg"; // Sample image
-import { Basecontext } from "../../context/base/Basecontext";
 
 const HomePage = () => {
   const [Properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { user } = useContext(Basecontext); 
 
   useEffect(() => {
     const fetchProperties = async () => {
@@ -29,6 +26,7 @@ const HomePage = () => {
         }
 
         setProperties(data.Properties);
+        console.log(data.Properties);
 
       } catch (error) {
         setError(error);
@@ -50,6 +48,7 @@ const HomePage = () => {
     newth.price = item.price;
     newth.bhk = item.bhk;
     newth.location = item.town;
+    newth.id = item._id;
     properties.push(newth);
   }
 
@@ -63,9 +62,7 @@ const HomePage = () => {
           {properties.map((property, index) => (
             <PropertyCard 
               key={index} 
-              {...property} 
-              onView={() => console.log(`Viewing ${property.title}`)} 
-              onDelete={() => console.log(`Deleting ${property.title}`)}
+              {...property}
             />
           ))}
         </div>
