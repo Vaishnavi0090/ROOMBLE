@@ -1,0 +1,145 @@
+
+.landlord-edit-container {
+    /* max-width: 800px; */
+    /* height: 600px; */
+    max-width: 1100px;
+    /* height: 600px; */
+    height: auto;
+    margin: 20px auto;
+    padding: 20px;
+    padding-left: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    /* padding-right: 60px; */
+    /* background-color: #f9f9f9; */
+    background-color: #ffe5e5;
+    border-radius: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Header Section */
+  .landlord-edit-header {
+    display: flex; 
+    flex-direction: column;
+    
+    align-items: flex-start;
+     gap: 60px;
+  }
+  
+  .landlord-edit-profile {
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+    gap: 60px; 
+  }
+  
+  .landlord-edit-profile-img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+  }
+  
+  #landlord-edit-image-upload {
+    display: none;
+  }
+  
+  .landlord-edit-btn {
+    background: #ae3c42;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    
+  }
+  
+  
+  /* Form Section */
+  .landlord-edit-form {
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    font-size: 20px;
+    margin-top: 20px;
+    gap: 120px;
+  }
+  
+  /* .tenant-edit-left {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+    color: #7d141d
+  }
+  
+  .tenant-edit-right {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+    color: #7d141d;
+  }
+  
+  
+  .tenant-edit-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .tenant-edit-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  .tenant-edit-choices-smoke {
+    display: flex;
+    
+    gap: 132px;
+  }
+  .tenant-edit-choices-veg {
+    display: flex;
+    
+    gap: 145px;
+  }
+  .tenant-edit-choices-pets {
+    display: flex;
+    
+    gap: 100px;
+  }
+  
+  .tenant-edit-choices button {
+    padding: 6px 10px;
+    border: none;
+    background: #FFC5CB;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 12px;
+    width: 108px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .tenant-edit-choices .active {
+    background: #ae3c42;
+  }
+  
+  .tenant-edit-left select {
+    width: auto;
+    height: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ae3c42;
+    padding: 5px;
+  }
+  
+  .tenant-edit-left input {
+    width: auto;
+    height: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ae3c42;
+    padding: 5px;
+  } */
