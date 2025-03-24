@@ -77,6 +77,8 @@ const PropertyDisplay = () => {
 
     fetchReviews();
 
+    console.log(property.landlord)
+
   }, []);
 
 
@@ -178,7 +180,6 @@ const PropertyDisplay = () => {
   const handleClose = () => {
     setOpen(false);
   }
-
 
 
 
