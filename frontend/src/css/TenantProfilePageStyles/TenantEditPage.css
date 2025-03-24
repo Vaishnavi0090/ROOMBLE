@@ -10,7 +10,7 @@
     padding-left: 60px;
     /* padding-right: 60px; */
     /* background-color: #f9f9f9; */
-    background-color: #ffe5e5;
+    background-color: #FDE6E8;
     border-radius: 25px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
@@ -111,7 +111,7 @@
   .tenant-edit-choices button {
     padding: 6px 10px;
     border: none;
-    background: #FFC5CB;
+    background:#FDE6E8; /*#FFC5CB;*/
     color: white;
     cursor: pointer;
     border-radius: 5px;

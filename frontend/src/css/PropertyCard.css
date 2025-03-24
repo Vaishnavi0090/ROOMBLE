@@ -4,7 +4,7 @@
     height: 100%;
     max-height: 370px;
     border-radius: 20px; /* Rounded corners */
-    background-color: #fde6e8;/* Frame color */
+    background-color: #FDE6E8;;/* Frame color */
     box-shadow: 0px 8px 12px rgba(0,0,0,0.2); /* Drop shadow effect */
     overflow: hidden; /* Hides any content that overflows the card */
     display: flex;
