@@ -85,7 +85,7 @@ const createReview = async (req, res) => {
 const getReviewsForUser = async (req, res) => {
     try{
         const revieweeid = req.body.reviewee;
-        const reviewee = await Tenant.findById(revieweeid);
+        let reviewee = await Tenant.findById(revieweeid);
         let revieweetype = 'Tenant';
         if(!reviewee){
             reviewee = await Landlord.findById(revieweeid);

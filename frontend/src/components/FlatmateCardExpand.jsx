@@ -176,7 +176,7 @@ const FlatmateCardExpand = () => {
         if(type === 'tenant'){
             return () => navigate(`/tenant/${id}`);
         }
-        else if(type === 'tandlord'){
+        else if(type === 'landlord'){
             return () => navigate(`/landlord/${id}`);
         }
     }

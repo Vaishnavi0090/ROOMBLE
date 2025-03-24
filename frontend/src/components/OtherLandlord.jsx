@@ -2,11 +2,18 @@ import React, { useEffect, useState } from "react";
 import "../css/LandlordProfileStyles/LandlordProfile.css";
 import PropertyCard from "./LandlordDashboard/PropertyCard.jsx";
 import { useNavigate, useParams } from "react-router-dom";
+import { Rating } from "@mui/material";
 
 const OtherLandlord = () => {
   const [respData, setRespData] = useState(null);
   const navigate = useNavigate();
   const params = useParams();
+  const [reviews, setReviews] = useState([{
+    reviewername: '',
+    reviewerimage: '',
+    rating: 0,
+    comment: ''
+  }]);
 
   const handleView = () => {
     navigate("/prop-display ");
@@ -34,6 +41,22 @@ const OtherLandlord = () => {
     };
 
     fetchData();
+
+    const fetchReviews = async () => {
+      const response = await fetch("http://localhost:3000/api/reviews/reviewee", {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ reviewee: params.id })
+      });
+      const data = await response.json();
+      if (data.success) {
+          setReviews(data.reviews);
+      }
+  }
+  fetchReviews();
+
   }, []);
 
   const messageclick = async () => {
@@ -52,6 +75,18 @@ const OtherLandlord = () => {
         console.log("Failed to create conversation");
     }
 };
+
+const reviewclick = () => {
+    navigate('/review/' + params.id);
+};
+
+const redirectto = (type, id) => {
+    if (type === 'tenant') {
+        return () => navigate('/tenant/' + id);
+    } else {
+        return () => navigate('/landlord/' + id);
+    }
+  };
 
   if (!respData) {
     return <div className="landlord-profile-loading">Loading...</div>;
@@ -99,6 +134,12 @@ const OtherLandlord = () => {
                 >
                   Message
                 </button>
+                <button
+                  className="landlord-profile-edit-button"
+                  onClick={reviewclick}
+                >
+                  Review
+                </button>
                 {/* <button
                   className="landlord-profile-delete-button"
                   onClick={handleDelete}
@@ -125,6 +166,31 @@ const OtherLandlord = () => {
           ))}
         </div>
       </div>
+
+      <section className='reviews'>
+                  <h2>Reviews</h2>
+                  <div className='reviews-container'>
+                      {reviews.map((review, index) => (
+                          <div className="reviews1" key={index}>
+                              <div className="reviews-user-details" onClick={redirectto(review.reviewertype, review.reviewer)}>
+                                  <div className="reviews-user-image">
+                                      <img src={review.reviewerimage} alt="" />
+                                  </div>
+                                  <div className="reviews-user-name">
+                                      <b>{review.reviewername}</b>
+                                      <div className="reviews-rating">
+                                          <Rating name="half-rating" value={review.rating} precision={1} size="small" readOnly />
+                                      </div>
+                                  </div>
+                              </div>
+                              <div className="reviews-comment">
+                                  {review.comment}
+                              </div>
+                          </div>
+                      ))}
+                      {reviews.length === 0 && <p>No reviews posted.</p>}
+                  </div>
+              </section>
     </div>
   );
 };

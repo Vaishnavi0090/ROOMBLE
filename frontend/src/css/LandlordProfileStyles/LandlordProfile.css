@@ -135,3 +135,12 @@ p {
   justify-content: center;
   margin-top: 20px;
 }
+
+.reviews{
+  display: flex;
+  flex-direction: column;
+  background-color: #fde6e8;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 10px;
+}
