@@ -33,7 +33,7 @@ function SearchFlatmatesFilter({ setFlatmates }) {
     if (filters.smokeDrink !== null)
       queryParams.append("smoke", filters.smokeDrink ? "true" : "false");
     if (filters.eatNonVeg !== null)
-      queryParams.append("veg", filters.eatNonVeg ? "true" : "false");
+      queryParams.append("veg", filters.eatNonVeg ? "false" : "true");
     if (filters.pets !== null)
       queryParams.append("pets", filters.pets ? "true" : "false");
 
