@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "../css/Login.css";
-import logo from "../../public/logo.png"; // Vite uses '/' for public assets
+import logo from "/logo.png";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLandlord, setIsLandlord] = useState(false);
+  const [userType, setUserType] = useState("tenant"); // 'tenant' or 'landlord'
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Load saved email & password from localStorage when the component mounts
+
   useEffect(() => {
     const savedEmail = localStorage.getItem("rememberedEmail");
     const savedPassword = localStorage.getItem("rememberedPassword");
@@ -22,12 +22,12 @@ const Login = () => {
       setEmail(savedEmail);
       setPassword(savedPassword);
       setRememberMe(true);
-      setIsLandlord(savedUserType === "landlord");
+      setUserType(savedUserType || "tenant");
     }
   }, []);
 
-  const handleToggle = () => {
-    setIsLandlord(!isLandlord);
+  const handleUserTypeChange = (type) => {
+    setUserType(type);
   };
 
   const handleLogin = async (e) => {
@@ -35,15 +35,9 @@ const Login = () => {
     setError("");
     setLoading(true);
 
-    const userType = isLandlord ? "landlord" : "tenant";
-
     try {
       const response = await fetch(
-        "http://127.0.0.1:3000/api/" +
-          userType +
-          "/auth/" +
-          userType +
-          "_login",
+        `http://127.0.0.1:3000/api/${userType}/auth/${userType}_login`,
         {
           method: "POST",
           headers: {
@@ -69,9 +63,7 @@ const Login = () => {
           localStorage.removeItem("rememberedUserType");
         }
 
-        isLandlord
-          ? navigate("/landlord-dashboard")
-          : navigate("/tenant-dashboard");
+        navigate(`/${userType}-dashboard`);
         window.location.reload();
       } else {
         setError(data.message || "Invalid login credentials");
@@ -83,22 +75,40 @@ const Login = () => {
   };
 
   return (
-    <div className="main-container">
+    <div className="login-main-container">
       {/* Left Section: Logo */}
-      <div className="logo-container">
+      <div className="login-logo-container">
         <img src={logo} alt="Roomble Logo" />
       </div>
 
       {/* Right Section: Login Form */}
-      <div className="login-box">
-        <h2 className="login-title">Login to your Account</h2>
-        <p className="subtext">See what is going on with your business</p>
+      <div className="login-login-box">
+        <h2 className="login-login-title">Login to your Account</h2>
+        <p className="login-subtext">See what is going on with your business</p>
 
-        <form className="login-form" onSubmit={handleLogin}>
+        {/* Tenant / Landlord buttons */}
+        <div className="login-user-type-buttons">
+          <button
+            className={`login-user-btn ${userType === "tenant" ? "selected" : ""}`}
+            onClick={() => handleUserTypeChange("tenant")}
+          >
+            <img src="/key.png" style={{ width: "50px", height: "50px" }} />
+            Tenant
+          </button>
+          <button
+            className={`login-user-btn ${userType === "landlord" ? "selected" : ""}`}
+            onClick={() => handleUserTypeChange("landlord")}
+          >
+            <img src="/house.jpg" style={{ width: "50px", height: "50px" }} />
+            Landlord
+          </button>
+        </div>
+
+        <form className="login-login-form" onSubmit={handleLogin}>
           <label htmlFor="email">Email</label>
           <input
             type="email"
-            id="email"
+            id="login-email"
             placeholder="mail@abc.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -108,56 +118,44 @@ const Login = () => {
           <label htmlFor="password">Password</label>
           <input
             type="password"
-            id="password"
+            id="login-password"
             placeholder="*****************"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
 
-          <div className="remember-forgot">
-            <span className="remember-container">
+          <div className="login-remember-forgot">
+            <span className="login-remember-container">
               <input
                 type="checkbox"
-                id="rememberMe"
+                id="login-rememberMe"
                 checked={rememberMe}
                 onChange={() => setRememberMe(!rememberMe)}
               />
-              <label htmlFor="rememberMe" className="remember-label">
+              <label htmlFor="rememberMe" className="login-remember-label">
                 Remember Me
               </label>
             </span>
-            <Link to="/forgot-password" className="forgot-password">
+            <Link to="/forgot-password" className="login-forgot-password">
               Forgot Password?
             </Link>
           </div>
 
-          {error && <p className="error-text">{error}</p>}
+          {error && <p className="login-error-text">{error}</p>}
 
-          <button type="submit" className="login-button" disabled={loading}>
+          <button type="submit" className="login-login-button" disabled={loading}>
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
-        {/* Toggle Switch */}
-        <div className="toggle-container">
-          <div
-            className={`toggle-switch ${isLandlord ? "landlord-selected" : ""}`}
-            onClick={handleToggle}
-          >
-            <span className="toggle-text tenant">Tenant</span>
-            <span className="toggle-slider"></span>
-            <span className="toggle-text landlord">Landlord</span>
-          </div>
-        </div>
-
-        <p className="register-text">
+        <p className="login-register-text">
           Not Registered Yet?{" "}
-          <Link to={isLandlord ? "/signup-landlord" : "/signup-tenant"}>
+          <Link to={userType === "landlord" ? "/signup-landlord" : "/signup-tenant"}>
             Create an account
           </Link>
         </p>
-        <p className="footer-text">
+        <p className="login-footer-text">
           With Roomble, you'll stumble on the perfect place to rumble!
         </p>
       </div>
