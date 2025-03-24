@@ -38,7 +38,7 @@ export const Navbar = () => {
     <div className="navbar">
       
       <div className="logo">
-        <img src="/logo.png" alt="logo" className='logo-img' />
+        <img src="/logo_nav.png" alt="logo" className='logo-img' />
       </div>
       <div className="menu">
         {user.type === 'none' ? (

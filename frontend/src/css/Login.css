@@ -2,144 +2,122 @@
 @import url('https://fonts.googleapis.com/css?family=DM+Sans:400,700');
 
 
+
 body{
     font-family: 'Open Sans Condensed', sans-serif;
 }
 
-.main-container {
-    
+
+.login-page-main-container {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 100vh;
 }
-.logo-container {
-width: 25%;
-height: auto;
+
+.login-page-logo-container {
+    justify-content: left;
+    width: 40;
+    height: auto;
 }
-.subtext {
+
+.login-page-subtext {
     font-size: 20px;
     color: #7a4949;
     margin-bottom: 25px;
-    
 }
-.logo-container img {
-    max-width: 80%;
-    max-height: 80%;
+
+.login-page-logo-container img {
+    max-width: 100% !important;
+    max-height: 100% !important;
 }
-.login-box {
+
+.login-page-login-box {
     width: 600px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* justify-content: space-around; */
     background-color: #FDE6E8;
     gap: 15px;
-    /* padding: 10px; */
     border-radius: 25px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    /* margin-right: 0px; */
     margin-top: 10px;
     min-height: 90vh;
 }
-.login-title {
+
+.login-page-login-title {
     margin-top: 30px;
-    /* margin-bottom: 10px; */
-    /* text-align: center; */
-    color:black;
+    color: black;
     font-size: 32px;
     font-weight: 500;
 }
-.login-form {
-     /* margin-top: 30px; */
-    /* margin-bottom: 20px; */
-  display: flex;
-  flex-direction: column;
-  
-  gap: 15px;
+
+.login-page-login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
-.login-form label {
+
+.login-page-login-form label {
     display: block;
     color: black;
-    /* margin-top: 10px; */
-    /* margin-left: 85px; */
     font-weight: 500;
     font-size: 18px;
 }
-#email {
+
+#login-page-email, #login-page-password {
     width: 420px;
     height: 50px;
-    padding : 9px;
+    padding: 9px;
     border: 2px solid #a84d4d;
     border-radius: 5px;
-    background-color:#FDE6E8;
-    /* margin-top: 5px; */
-    /* margin-left: 85px; */
-    font-size: 18px;
-}
-#password {
-    width: 420px;
-    height: 50px;
-    padding : 9px;
-    border: 2px solid #a84d4d;
-    border-radius: 5px;
-    background-color:#FDE6E8;
-    /* margin-top: 5px; */
-    /* margin-left: 85px; */
+    background-color: #FDE6E8;
     font-size: 18px;
 }
 
-.remember-forgot {
+.login-page-remember-forgot {
     display: flex;
-    align-items: center; /* Aligns everything vertically */
+    align-items: center;
     justify-content: space-between;
     font-size: 12px;
     margin-top: 10px;
     width: 100%;
 }
 
-/* Wraps "Remember Me" and checkbox together */
-.remember-container {
+.login-page-remember-container {
     display: flex;
     align-items: center;
-    gap: 5px; /* Adds space between label and checkbox */
-    white-space: nowrap; /* Prevents text from wrapping */
+    gap: 5px;
+    white-space: nowrap;
 }
 
-/* "Remember Me" text styling */
-.remember-label {
+.login-page-remember-label {
     font-size: 12px;
     font-weight: bold;
     transform: translateY(-60%);
     padding-left: 5px;
 }
 
-/* Properly aligns the checkbox */
-.remember-container input[type="checkbox"] {
+.login-page-remember-container input[type="checkbox"] {
     accent-color: #ae3c42;
     width: 18px;
     height: 18px;
     cursor: pointer;
     transform: translateY(-15px);
-    margin: 0; /* Removes any unwanted spacing */
+    margin: 0;
 }
-.remember-container input[type="checkbox"] :unchecked{
-    color : white;
-    background-color: white;
-    accent-color: white;
-}
-/* Ensures "Forgot Password?" is aligned properly */
-.forgot-password {
+
+.login-page-forgot-password {
     color: #a52a2a;
     text-decoration: none;
     font-size: 14px;
     transform: translateY(-15px);
     font-weight: normal;
-    margin-left: auto; /* Pushes it to the right */
+    margin-left: auto;
 }
-/* Login Button */
-.login-button {
+
+.login-page-login-button {
     background-color: #a52a2a;
     color: white;
     border: none;
@@ -151,121 +129,176 @@ height: auto;
     width: 100%;
 }
 
-.login-button:hover {
+.login-page-login-button:hover {
     background-color: #d53737;
 }
-.toggle-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 15px;
-}
 
-.toggle-switch {
+.mini-toggle-switch {
     position: relative;
-    width: 140px; /* Keep the same size */
-    height: 25px;
-    background-color: #a52a2a;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    padding: 2px;
+    width: 100px;          /* Slightly wider to fit text comfortably */
+    height: 40px;          /* Small height */
+    border-radius: 20px;
     cursor: pointer;
-    transition: 0.3s ease-in-out;
-}
-
-.toggle-text {
-    font-size: 15px;
-    flex : 1;
-    text-align: center;
-    z-index : 2;
-    position: relative;    
-}
-
-.toggle-text.tenant {
-    text-align: left; 
-    padding-left: 5px;
-}
-.toggle-text.landlord {
-    text-align: right; 
-    padding-right: 5px;
-}
-
-.toggle-switch input {
-    display: none;
-}
-
-.toggle-label {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 8px;
-    font-weight: bold;
-    font-size: 12px;  /* Adjust text size */
-    position: absolute; /* Ensure text stays above */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2; /* Ensure text is above slider */
-    width: 100%;
-    color: #7B1212; /* Keep the text color */
-}
-
-.toggle-slider {
+    overflow: hidden;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.6s ease-in-out;  /* Slower, smoother transition */
+  }
+  
+  /* Hover: subtle scale-up */
+  .mini-toggle-switch:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Tenant: Rosy Pink to Soft Magenta */
+/* Tenant: Deep Orange to Fiery Red */
+.mini-toggle-switch.tenant {
+    background: linear-gradient(135deg, #ff8c00, #ff1a1a); /* Deep orange to fiery red */
+    box-shadow: 0 0 15px rgba(255, 76, 76, 0.6);
+    transition: background 0.6s ease-in-out, box-shadow 0.6s ease-in-out;
+  }
+  
+  /* Landlord: Dark Maroon to Blood Red */
+  .mini-toggle-switch.landlord {
+    background: linear-gradient(135deg, #8b0000, #ff0000); /* Dark maroon to blood red */
+    box-shadow: 0 0 15px rgba(200, 0, 0, 0.6);
+    transition: background 0.6s ease-in-out, box-shadow 0.6s ease-in-out;
+  }
+  
+  /* Circle (slider knob) */
+  .mini-toggle-circle {
     position: absolute;
-    width: 53px;
-    height: 16px;
-    background-color: white;
-    border-radius: 12px;
-    transition: 0.3s ease-in-out;
     top: 50%;
-    left: 4px;
+    width: 28px;          /* Small circle */
+    height: 28px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
     transform: translateY(-50%);
-    z-index: 1; /* Slider stays below text */
-}
-/* Default 'Tenant' selected */
-.toggle-text {
-    z-index: 3; /* Ensures text is on top */
-    position: relative;
-}
+    transition: transform 0.6s ease-in-out;
+  }
+  
+  /* Tenant: circle on far LEFT */
+  .mini-toggle-switch.tenant .mini-toggle-circle {
+    left: 4px;
+  }
+  
+  /* Landlord: circle on far RIGHT */
+  .mini-toggle-switch.landlord .mini-toggle-circle {
+    right: 4px;
+  }
+  
+  /* Text on the opposite side of the circle */
+  .mini-toggle-text {
+    position: absolute;
+    top: 50%;
+    font-size: 12px;       /* Smaller text */
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    transform: translateY(-50%);
+    pointer-events: none;  /* Clicks pass through text */
+    transition: color 0.3s ease;
+  }
+  
+  /* Tenant: text pinned to the RIGHT, close to circle */
+  .mini-toggle-switch.tenant .mini-toggle-text {
+    right: 8px; /* Minimizes gap between circle & text */
+  }
+  
+  /* Landlord: text pinned to the LEFT, close to circle */
+  .mini-toggle-switch.landlord .mini-toggle-text {
+    left: 8px; /* Minimizes gap between circle & text */
+  }
+   
+  
 
-/* When 'Landlord' is selected, slider moves and grows */
-.toggle-switch.landlord-selected .toggle-slider {
-    width: 68px;
-    left: calc(100% - 72px);
-}
-
-.toggle-switch.landlord-selected .landlord {
-    color: #7B1212;
-
-}
-
-.toggle-switch:not(.landlord-selected) .tenant {
-    color: #7B1212;
-}
-
-
-/* Register Text */
-.register-text {
+.login-page-register-text {
     color: black;
     margin-top: 15px;
     font-size: 18px;
 }
 
-.register-text a {
+.login-page-register-text a {
     color: #a52a2a;
     font-weight: bold;
     text-decoration: none;
     text-shadow: #d61515;
 }
 
-/* Footer Text */
-.footer-text {
+.login-page-footer-text {
     margin-top: 5px;
     padding-bottom: 5px;
     font-size: 20px;
     color: #a52a2a;
     font-weight: bold;
 }
+
+.login-page-box {
+    background: #ffe6e6; /* Soft pink */
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.login-page-box:hover {
+    transform: translateY(-5px);
+}
+
+/* Input Fields */
+.login-page-input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #d9534f;
+    border-radius: 8px;
+    background: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.login-page-input:focus {
+    border-color: #c9302c;
+    box-shadow: 0 0 8px rgba(217, 83, 79, 0.5);
+}
+
+/* Login Button */
+.login-page-button {
+    background: linear-gradient(135deg, #c9302c, #d9534f);
+    border: none;
+    padding: 12px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.login-page-button:hover {
+    background: linear-gradient(135deg, #b52b27, #c9302c);
+    transform: scale(1.05);
+}
+
+/* Toggle Switch */
+.login-page-toggle-switch {
+    background: #d9534f;
+    border-radius: 20px;
+    padding: 6px 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s;
+}
+
+.login-page-toggle-switch:hover {
+    background: #c9302c;
+}
+
+/* Footer Text */
+.login-page-footer-text {
+    color: #c9302c;
+    font-weight: bold;
+    font-size: 14px;
+}
+
