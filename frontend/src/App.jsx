@@ -29,6 +29,7 @@ import LandlordProfile from "./components/LandlordProfile/LandlordProfile.jsx";
 import PropertyDisplay from "./components/PropertyDisplay.jsx";
 import OtherLandlord from "./components/OtherLandlord.jsx";
 import LandlordEditProfile from "./components/LandlordProfile/LandlordEditProfile.jsx";
+import { Review } from "./components/Review.jsx";
 
 function App() {
   const [id, setID] = useState("");
@@ -65,6 +66,7 @@ function App() {
         <Route path="/chat/:id" element={<Messages />} />
         <Route path="/property/:id" element={<PropertyDisplay />} />
         <Route path="/landlord/:id" element={<OtherLandlord />} />
+        <Route path="/review/:id" element={<Review/>} />
       </Routes>
     </BaseState>
   );

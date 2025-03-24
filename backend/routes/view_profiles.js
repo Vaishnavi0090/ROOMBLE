@@ -163,5 +163,52 @@ router.post(`/other_users`  , async (req, res) => {
     }
 })
 
+router.post('/user', async(req,res)=>{
+    //get user details with id only
+    try{
+        let {id} = req.body;
+
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            console.log(`!!!!INVALID ID FOUND!!!!!`);
+            console.log(id);
+            return res.status(400).json({ error: `${id} is invalid ID` });
+        }
+
+        let user = await Tenant.findById(id);
+        if(user){
+            return res.status(200).json({
+                success : true,
+                id : user._id,
+                name : user.name,
+                email : user.email,
+                locality : user.locality,
+                profilepic : user.Images,
+                type: 'tenant'
+            })
+        }
+        user = await Landlord.findById(id);
+        if(user){
+            return res.status(200).json({
+                success : true,
+                name : user.name,
+                email : user.email,
+                profilepic : user.Images,
+                type: 'landlord'
+            })
+        }
+        return res.status(404).json({
+            success : false,
+            message : "User not found"
+        })
+    }
+    catch(e){
+        console.log(e);
+        return res.status(500).json({
+            success : false,
+            message : "Some error in server, please try again."
+        })
+    }
+})
+
 
 module.exports = router;
