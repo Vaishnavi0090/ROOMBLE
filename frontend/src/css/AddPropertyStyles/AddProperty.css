@@ -1,7 +1,7 @@
 .add-prop-container{
     display: flex;
     height: calc(100vh - 80px);
-    overflow: hidden; 
+    overflow: auto; 
     width: 100%;
     flex-direction: column;
     gap: 10px;
