@@ -61,7 +61,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/signup-landlord" element={<SignupLandlord setID={setID} />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/otp-page-land" element={<OTPPageLandlord id={id} />} />
+        <Route path="/otp-page-landlord" element={<OTPPageLandlord id={id} />} />
         <Route path="/otp-forgot" element={<OTPPageForgot />} />
         <Route path="/otp-page-tenant" element={<OTPPageTenant id={id} />} />
         <Route path="/messages" element={<MessageStart />} />
