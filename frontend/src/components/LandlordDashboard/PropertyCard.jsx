@@ -18,6 +18,7 @@ const PropertyCard = ({
     console.log("navigate to:", id);
     navigate(`/property/${id}`);
   };
+  console.log("available:", available);
 
 
   return (

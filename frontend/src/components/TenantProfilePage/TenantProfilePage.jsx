@@ -18,8 +18,7 @@ export default function TenantProfilePage() {
   };
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/login");
-    window.location.reload();
+    window.location.href = "/";
   };
   // const handleDelete = async () => {
   //   try {

@@ -69,15 +69,19 @@ const PropertyDisplay = () => {
         if (data.success) {
           setProperty(data.property);
         }
+        else{
+          toast.error("Something went wrong. Please try again later.");
+          navigate("/");
+        }
       } catch (error) {
-        // console.log(error);
+        toast.error("Something went wrong. Please try again later.");
+        navigate("/");
       }
     };
     fetchProperty();
 
     fetchReviews();
 
-    console.log(property.landlord)
 
   }, []);
 

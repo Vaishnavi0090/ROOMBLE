@@ -1,0 +1,137 @@
+.home-first {
+    height: calc(100vh - 76px);
+    background: 
+        linear-gradient(
+            rgba(0, 0, 0, 0.5), 
+            rgba(0, 0, 0, 0.5)
+        ),
+        url('/home.jpg') no-repeat center center/cover;
+    display: flex; /* Enable Flexbox for alignment */
+    justify-content: flex-end; /* Align content to the right */
+    align-items: center; /* Center content vertically */
+    padding-right: 50px; /* Add some spacing from the right edge */
+    overflow-x: hidden;
+}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%); /* Start off-screen to the right */
+        opacity: 0; /* Start with no visibility */
+    }
+    to {
+        transform: translateX(0); /* End at the original position */
+        opacity: 1; /* Fully visible */
+    }
+}
+
+.home-first-intro {
+    background-color: rgb(51 51 51 / 79%); /* Semi-transparent white background */
+    padding: 20px 30px; /* Add padding inside the rectangle */
+    border-radius: 10px; /* Optional: Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+    max-width: 550px; /* Limit the width of the rectangle */
+    text-align: left; /* Align text to the left */
+    color: #ffffff; /* Dark text color for contrast */
+    text-align: center;
+    font-family: cursive;
+
+    /* Animation properties */
+    animation: slideInFromRight 0.7s ease-out; /* Apply the animation */
+}
+.home-first-intro h1 {
+    font-size: 2.5rem; /* Large font size */
+    margin-bottom: 10px; /* Add some spacing below the heading */
+    color: #c2545e;
+}
+
+.home-second {
+    padding: 50px 20px; /* Add spacing around the section */
+    background-color: #f9f9f9; /* Light background color for contrast */
+    text-align: center; /* Center-align the content */
+}
+
+.home-second h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #7d141d;
+}
+
+.home-second-features-list {
+    display: flex; /* Use Flexbox for layout */
+    justify-content: center; /* Center the feature items */
+    gap: 30px; /* Add spacing between feature items */
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+}
+
+.home-second-features-item {
+    background-color: white; /* White background for feature cards */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    padding: 20px; /* Add padding inside the cards */
+    min-width: 400px; /* Set a fixed width for the cards */
+    text-align: center; /* Center-align the content */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add hover effect */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 150px;
+}
+.home-second-features-item p{
+    text-align: center;
+}
+
+.home-second-features-item:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
+}
+
+.home-second-features-item i {
+    font-size: 4rem; /* Larger icon size */
+    color: #7d141d; /* Use the primary color for icons */
+    margin-bottom: 10px; /* Add spacing below the icon */
+}
+
+.home-second-features-item p {
+    font-size: 1rem; /* Standard font size for text */
+    color: #333; /* Dark text color for readability */
+    margin: 0; /* Remove default margin */
+    font-family: cursive;
+}
+
+.home-third {
+    padding: 50px 20px; /* Add spacing around the section */
+    background-color: #7d141d; /* Primary color for the background */
+    color: white; /* White text for contrast */
+    text-align: center; /* Center-align the content */
+}
+
+.home-third h2 {
+    font-size: 2rem; /* Larger font size for the heading */
+    margin-bottom: 20px; /* Add spacing below the heading */
+    font-weight: bold;
+}
+
+.home-third-buttons {
+    display: flex; /* Use Flexbox for layout */
+    justify-content: center; /* Center the buttons */
+    gap: 20px; /* Add spacing between buttons */
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+}
+
+.home-third-button {
+    display: inline-block;
+    padding: 15px 30px; /* Add padding inside the buttons */
+    background-color: white; /* White background for buttons */
+    color: #7d141d; /* Primary color for button text */
+    text-decoration: none; /* Remove underline from links */
+    border-radius: 5px; /* Rounded corners for buttons */
+    font-weight: bold;
+    font-size: 1rem; /* Standard font size for buttons */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Add hover effect */
+}
+
+.home-third-button:hover {
+    background-color: #a4161a; /* Darker shade of the primary color on hover */
+    color: white; /* Change text color to white on hover */
+}

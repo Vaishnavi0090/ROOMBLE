@@ -31,11 +31,12 @@ import OtherLandlord from "./components/OtherLandlord.jsx";
 import LandlordEditProfile from "./components/LandlordProfile/LandlordEditProfile.jsx";
 import { Review } from "./components/Review.jsx";
 import { Bounce, ToastContainer } from "react-toastify";
+import { Home } from "./components/Home.jsx";
 
 function App() {
   const [id, setID] = useState("");
 
-  const hideNavbarRoutes = ["/", "/login", "/signup-landlord", "/signup-tenant", "/otp-page-tenant", "/otp-page-land", "/forgot-password", "/otp-forgot", "/set-new-password", "/otp-delete-page"];
+  const hideNavbarRoutes = ["/login", "/signup-landlord", "/signup-tenant", "/otp-page-tenant", "/otp-page-land", "/forgot-password", "/otp-forgot", "/set-new-password", "/otp-delete-page"];
 
 
   return (
@@ -56,7 +57,7 @@ function App() {
               transition={Bounce}
             />
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/" element={<Home/>} />
         <Route path="/signup-tenant" element={<SignUpTenant setID={setID} />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/signup-landlord" element={<SignupLandlord setID={setID} />} />

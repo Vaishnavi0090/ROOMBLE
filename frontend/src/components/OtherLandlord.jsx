@@ -154,7 +154,7 @@ const OtherLandlord = () => {
 
           {/* Properties Section (Still Inside the Same Container) */}
           <div className="landlord-profile-properties">
-            {respData.Properties.map(({ _id, town, bhk, price, Images }) => (
+            {respData.Properties.map(({ _id, town, bhk, price, Images, available }) => (
               <PropertyCard
                 key={_id}
                 image={Images[0]}
@@ -163,6 +163,7 @@ const OtherLandlord = () => {
                 location={town}
                 bhk={bhk}
                 id={_id}
+                available={available}
               />
             ))}
           </div>

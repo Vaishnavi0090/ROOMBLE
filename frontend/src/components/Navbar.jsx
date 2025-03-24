@@ -44,21 +44,21 @@ export const Navbar = () => {
         {user.type === 'none' ? (
           <ul>
             <li><Link to="/">Home</Link></li>
-            <li><Link to="/add-property">Add Property</Link></li>
-            <li><Link to="/messages">Messages</Link></li>
-            <li><Link to="/find-property">Find Property</Link></li>
-            <li><Link to="/find-flatmate">Find Flatmate</Link></li>
+            <li><Link to="/signup-tenant">Sign Up tenant</Link></li>
+            <li><Link to="/signup-landlord">Sign Up landlord</Link></li>
           </ul>
         ) : user.type === 'tenant' ? (
           <ul>
-            <li><Link to="/tenant-dashboard">Home</Link></li>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/tenant-dashboard">Dashboard</Link></li>
             <li><Link to="/messages">Messages</Link></li>
             <li><Link to="/find-property">Find Property</Link></li>
             <li><Link to="/find-flatmate">Find Flatmate</Link></li>
           </ul>
         ) : (
           <ul>
-            <li><Link to="/landlord-dashboard">Home</Link></li>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/landlord-dashboard">Dashboard</Link></li>
             <li><Link to="/add-property">Add Property</Link></li>
             <li><Link to="/messages">Messages</Link></li>
           </ul>
