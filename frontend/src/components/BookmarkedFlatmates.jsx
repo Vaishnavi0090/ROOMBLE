@@ -69,7 +69,7 @@ const BookmarkedFlatmates = () => {
         )}
       </div>
       <div className="bookmarked-page">
-        <h1 className="page-title">Your Bookmarked Flatmates</h1>
+        <h1 className="page-title">Your Bookmarked Properties</h1>
         {properties.length === 0 ? (
           <p>No properties bookmarked yet.</p>
         ) : (
