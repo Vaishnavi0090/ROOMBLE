@@ -19,10 +19,9 @@ const BaseState = (props) => {
                 },
             });
             const data = await res.json();
-            console.log(data.user)
+            // console.log(data.user)
             if(data.success){
                 setUser(data.user);
-                toast.success("Welcome back, "+data.user.name);
             }
             else{
                 toast.error("Please Login again.");

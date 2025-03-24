@@ -31,6 +31,7 @@ import OtherLandlord from "./components/OtherLandlord.jsx";
 import LandlordEditProfile from "./components/LandlordProfile/LandlordEditProfile.jsx";
 import { Review } from "./components/Review.jsx";
 import { Bounce, ToastContainer } from "react-toastify";
+import { Home } from "./components/Home.jsx";
 
 function App() {
   const [id, setID] = useState("");
@@ -56,12 +57,12 @@ function App() {
               transition={Bounce}
             />
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/" element={<Home/>} />
         <Route path="/signup-tenant" element={<SignUpTenant setID={setID} />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/signup-landlord" element={<SignupLandlord setID={setID} />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/otp-page-land" element={<OTPPageLandlord id={id} />} />
+        <Route path="/otp-page-landlord" element={<OTPPageLandlord id={id} />} />
         <Route path="/otp-forgot" element={<OTPPageForgot />} />
         <Route path="/otp-page-tenant" element={<OTPPageTenant id={id} />} />
         <Route path="/messages" element={<MessageStart />} />

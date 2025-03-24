@@ -52,7 +52,6 @@ const Login = () => {
 
       if (data.success) {
         localStorage.setItem("authtoken", data.authtoken);
-        console.log(data.authtoken);
         if (rememberMe) {
           localStorage.setItem("rememberedEmail", email);
           localStorage.setItem("rememberedPassword", password);
@@ -63,7 +62,7 @@ const Login = () => {
           localStorage.removeItem("rememberedUserType");
         }
 
-        navigate(`/${userType}-dashboard`);
+        navigate(isLandlord ? "/landlord-dashboard" : "/tenant-dashboard");
         window.location.reload();
       } else {
         setError(data.message || "Invalid login credentials");
@@ -115,7 +114,7 @@ const Login = () => {
             required
           />
 
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password" className="login-page-label">Password</label>
           <input
             type="password"
             id="login-password"

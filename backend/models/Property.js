@@ -41,6 +41,16 @@ const PropertySchema = new mongoose.Schema({
         type : [String],
         default : []
     },
+    Latitude : {
+        type : Number,
+        required : false,
+        default : 19.0824822
+    },
+    Longitude : {
+        type : Number,
+        required : false,
+        default : 72.7141282
+    },
     reviews: [{
         reviewer: {
             type: mongoose.Schema.Types.ObjectId,

@@ -77,7 +77,7 @@ function SearchFlatmatesFilter({ setFlatmates }) {
 
   return (
     <div className="search-prop-container">
-      <h1>Filters</h1>
+      <h1 style={{ paddingLeft: '20px' ,paddingTop: '20px'}}>  Filters</h1>
 
       <div className="city-search-container">
         <label>City</label>

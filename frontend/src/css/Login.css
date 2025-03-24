@@ -149,6 +149,7 @@ body{
     width: 420px;
     height: 50px;
     padding: 9px;
+    padding: 9px;
     border: 2px solid #a84d4d;
     border-radius: 5px;
     background-color: #FDE6E8;
@@ -175,6 +176,7 @@ body{
 .login-remember-forgot {
     display: flex;
     align-items: center;
+    align-items: center;
     justify-content: space-between;
     font-size: 8px;
     margin-top: 10px;
@@ -184,6 +186,8 @@ body{
 .login-remember-container {
     display: flex;
     align-items: center;
+    gap: 5px;
+    white-space: nowrap;
     gap: 5px;
     white-space: nowrap;
 }
@@ -217,6 +221,7 @@ body{
     transform: translateY(-15px);
     font-weight: normal;
     margin-left: auto;
+    margin-left: auto;
 }
 
 .login-register-text {
@@ -239,3 +244,73 @@ body{
     color: #a52a2a;
     font-weight: bold;
 }
+
+.login-page-box {
+    background: #ffe6e6; /* Soft pink */
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.login-page-box:hover {
+    transform: translateY(-5px);
+}
+
+/* Input Fields */
+.login-page-input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #d9534f;
+    border-radius: 8px;
+    background: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+.login-page-input:focus {
+    border-color: #c9302c;
+    box-shadow: 0 0 8px rgba(217, 83, 79, 0.5);
+}
+
+/* Login Button */
+.login-page-button {
+    background: linear-gradient(135deg, #c9302c, #d9534f);
+    border: none;
+    padding: 12px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.login-page-button:hover {
+    background: linear-gradient(135deg, #b52b27, #c9302c);
+    transform: scale(1.05);
+}
+
+/* Toggle Switch */
+.login-page-toggle-switch {
+    background: #d9534f;
+    border-radius: 20px;
+    padding: 6px 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s;
+}
+
+.login-page-toggle-switch:hover {
+    background: #c9302c;
+}
+
+/* Footer Text */
+.login-page-footer-text {
+    color: #c9302c;
+    font-weight: bold;
+    font-size: 14px;
+}
+

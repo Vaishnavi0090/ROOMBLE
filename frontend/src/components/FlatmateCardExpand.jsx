@@ -174,7 +174,7 @@ const FlatmateCardExpand = () => {
 
     const redirectto = (type, id) => {
         if(type === 'tenant'){
-            return () => navigate(`/tenant/${id}`);
+            return () => {navigate(`/tenant/${id}`);console.log(`redirecting to tenant ${id}`)};
         }
         else if(type === 'landlord'){
             return () => navigate(`/landlord/${id}`);
@@ -208,7 +208,7 @@ const FlatmateCardExpand = () => {
                         </div>
                         <img className="fce-profile-img" src={user.Images} alt={`${user.name} Profile`} />
                     </div>
-                    <p>{user.description}</p>
+                    <p>{user.description === ""? "This user hasn't setup a description yet" : user.description}</p>
 
                     <div className="fce-action-buttons">
                         <div className="fce-bookmark-section" onClick={handleBookmarkClick}>
@@ -234,7 +234,7 @@ const FlatmateCardExpand = () => {
             <div className='reviews-container'>
                 {reviews.map((review, index) => (
                     <div className="reviews1" key={index}>
-                        <div className="reviews-user-details" onClick={redirectto(review.reviewertype, review.reviewer)}>
+                        <div className="reviews-user-details">
                             <div className="reviews-user-image">
                                 <img src={review.reviewerimage} alt="" />
                             </div>

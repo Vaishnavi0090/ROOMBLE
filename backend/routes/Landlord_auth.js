@@ -38,9 +38,19 @@ router.post(`/Landlord_Register`, async (req, res) => {
         if (checkExistingUser_withOTP) {
             let new_OTP = (Math.floor(100000 + Math.random() * 900000)).toString();
             await Sendmail(email, `Welcome once again to Roomble`, new_OTP);
-            await checkExistingUser_withOTP.updateOne({ OTP: new_OTP });
+            //delete existing entry and create new one
+            await Landlord_OTP.deleteOne({email});
+            let hashedPassword = await Hashpassword(password);
+            const newlyCreatedUser = new Landlord_OTP({
+                name,
+                email,
+                password : hashedPassword,
+                OTP : new_OTP
+            })
 
-            return res.json({ message: "New OTP sent" });
+            await newlyCreatedUser.save();
+
+            return res.json({ message: `${newlyCreatedUser._id}`, success: true });
         }
 
         let hashedPassword = await Hashpassword(password);

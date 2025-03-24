@@ -18,8 +18,7 @@ export default function TenantProfilePage() {
   };
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/login");
-    window.location.reload();
+    window.location.href = "/";
   };
   // const handleDelete = async () => {
   //   try {
@@ -57,7 +56,12 @@ export default function TenantProfilePage() {
           className="tenant-profile-photo"
         />
         <div className="tenant-bio-class">
-          <p className="tenant-profile-bio">{state.user.description}</p>
+          <p className="tenant-profile-bio">
+            {(state.user.description === "This user hasn't setup a description yet") || 
+              (state.user.description === "")
+              ? "You have not set up a description yet"
+              : state.user.description}
+              </p>
         </div>
       </div>
 
@@ -98,12 +102,12 @@ export default function TenantProfilePage() {
           </div>
           <div className="tenant-profile-flatmate">
             <p>
-              <span>wants Flatmate </span>
+              <span>Seeking Flatmate </span>
               <span>:</span>{" "}
               <span>
                 {state.user.flatmate
-                  ? "wants Flatmate"
-                  : "Doesn't want Flatmate"}
+                  ? "Yes"
+                  : "No"}
               </span>
             </p>
           </div>

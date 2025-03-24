@@ -15,9 +15,7 @@ const MAX_ALLOWED_PICS = 10;
 const maxSize = 2*1024*1024; // Maximum allowed size : 2mb
 const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
 
-
-
-
+//Send latitude and longitude
 router.post("/listProperty",authMiddleware, async(req,res)=>{
     try{
         const landlordId = req.user.id;
@@ -103,6 +101,11 @@ router.post("/listProperty",authMiddleware, async(req,res)=>{
                 newProperty.Images.push(`http://127.0.0.1:${PORT}/Pictures/property/${newProperty.id}/${Image_count}${path.extname(image.name).toLowerCase()}`);
                 Image_count++;
             }
+        }
+
+        if(req.body.latitude !== undefined && req.body.longitude !== undefined){
+            newProperty.Latitude = req.body.latitude;
+            newProperty.Longitude = req.body.longitude;
         }
 
         try{

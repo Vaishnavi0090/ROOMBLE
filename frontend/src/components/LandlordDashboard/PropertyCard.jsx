@@ -18,20 +18,21 @@ const PropertyCard = ({
     console.log("navigate to:", id);
     navigate(`/property/${id}`);
   };
+  console.log("available:", available);
 
 
   return (
     <div className={`property-card ${available ? "" : "delisted"}`}>
       {/* Image Section */}
       <div className="image-container">
-        <img src={image} alt={title} />
+        <img src={image} />
       </div>
 
       {/* Details Section */}
       <div className="details">
         <p className="price">Price : {price}</p>
         <p className="description">
-          Title : {title}, Location : {location}
+          {location}
         </p>
         <p className="bhk">BHK : {bhk}</p>
       </div>
