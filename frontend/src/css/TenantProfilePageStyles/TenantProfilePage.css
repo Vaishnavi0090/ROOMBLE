@@ -1,119 +1,149 @@
-
-
 .tenant-profile-container {
-    display: flex;
-    max-width: 1200px;
-    /* height: 600px; */
-    /* height: auto; */
-    margin: 20px auto;
-    padding: 20px;
-    /* background-color: #f9f9f9; */
-    background-color: #FDE6E8;
-    border-radius: 25px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .tenant-profile-left-column {
-    width: 40%;
-    padding: 20px;
-    display: flex;
+  display: flex;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 30px;
+  background-color: #fde6e8;
+  border-radius: 25px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  gap: 20px;
+}
+
+/* Left Column: Profile Photo and Bio */
+.tenant-profile-left-column {
+  width: 40%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+}
+
+/* Profile Photo Styling */
+.tenant-profile-photo {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+.tenant-profile-photo:hover {
+  transform: scale(1.05);
+}
+
+/* Bio Section */
+.tenant-profile-bio {
+  font-size: 20px;
+  font-weight: 500;
+  color: #7d141d;
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* Right Column: Profile Details */
+.tenant-profile-right-column {
+  width: 60%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Profile Details Section */
+.tenant-profile-details {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Profile Details Row */
+.tenant-profile-details p {
+  font-size: 17px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Profile Label */
+.tenant-profile-details span {
+  font-weight: bold;
+  color: #7d141d;
+  min-width: 180px;
+}
+
+/* Buttons Section */
+.tenant-profile-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Common Button Styles */
+.tenant-profile-edit-button,
+.tenant-profile-logout-button,
+.tenant-profile-delete-button {
+  width: 120px;
+  padding: 12px 18px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Edit Button */
+.tenant-profile-edit-button {
+  background-color: #ae3c42;
+}
+.tenant-profile-edit-button:hover {
+  background-color: #d74747;
+  transform: scale(1.05);
+}
+
+/* Logout Button */
+.tenant-profile-logout-button {
+  background-color: #ae3c42;
+}
+.tenant-profile-logout-button:hover {
+  background-color: #d74747;
+  transform: scale(1.05);
+}
+
+/* Delete Button */
+.tenant-profile-delete-button {
+  background-color: #ae3c42;
+}
+.tenant-profile-delete-button:hover {
+  background-color: #d74747;
+  transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .tenant-profile-container {
     flex-direction: column;
-    gap: 40px;
+    align-items: center;
+    padding: 20px;
   }
-  
-  .tenant-profile-photo {
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 45px;
-  }
-  
-  .tenant-profile-bio {
-    font-size: 20px;
-    font-weight: 400;
-    color: #7D141D;
-    line-height: 1.2;
-  }
-  
+
+  .tenant-profile-left-column,
   .tenant-profile-right-column {
-    width: 60%;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-  }
-  .tenant-profile-details {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-  }
-  .tenant-profile-details  p {
-    font-size: 17px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
     width: 100%;
+    padding: 15px;
   }
-  
-  .tenant-profile-details span {
-    font-weight: bold;
-    color: #7D141D;
-    flex-shrink: 0;
-    min-width: 170px;
+
+  .tenant-profile-photo {
+    width: 180px;
+    height: 180px;
   }
-  
+
   .tenant-profile-buttons {
-    display: flex;
-    justify-content: flex-end; /* Align buttons to the right */
-    gap: 20px; /* Space between buttons */
-    margin-top: 20px;
+    justify-content: center;
   }
-  
-  .tenant-profile-edit-button,
-  .tenant-profile-logout-button
-   {
-    width: 80px; /* Adjust width to be consistent */
-    padding: 10px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    color: white;
-  }
-
-  .tenant-profile-delete-button{
-    width: 80px; /* Adjust width to be consistent */
-    padding: 10px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    color: white;
-    
-  }
-  
-  .tenant-profile-edit-button {
-    background-color: #ae3c42;
-  }
-  
-  .tenant-profile-edit-button:hover {
-    background-color: #d74747;
-  }
-  
-  .tenant-profile-logout-button {
-    background-color: #ae3c42; 
-  }
-  
-  .tenant-profile-logout-button:hover {
-    background-color: #d74747 
-  }
-
-  .tenant-profile-delete-button {
-    background-color: #ae3c42; 
-  }
-  
-  .tenant-profile-delete-button:hover {
-    background-color: #d74747 
-  }
-  
+}

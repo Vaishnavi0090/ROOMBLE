@@ -2,58 +2,64 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* background-color: #FDE6E8; */
-  padding: 10px;
+  padding: 20px;
+  background-color: #fde6e8;
 }
 
+/* Profile Content Box */
 .landlord-profile-content {
   width: 90%;
   background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
+  gap: 20px;
 }
 
-/* Profile Section */
+/* Profile Header */
 .landlord-profile-header {
   display: flex;
   align-items: center;
-  /* justify-content: space-around; */
-  /* width: 100%; */
-  gap: 10%;
-  height: 400px;
+  justify-content: flex-start;
+  gap: 5%;
+  height: auto;
   padding-bottom: 20px;
   border-bottom: 2px solid #ddd;
 }
 
+/* Profile Image Styling */
 .landlord-profile-image {
   width: 250px;
   height: 250px;
   border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+}
+.landlord-profile-image:hover {
+  transform: scale(1.05);
 }
 
+/* Profile Details */
 .landlord-profile-details {
   display: flex;
-  /* flex-direction: column; */
-  gap: 30px;
-
-  margin-left: 20px;
+  flex-direction: column;
+  gap: 20px;
+  color: #7d141d;
+  font-size: 18px;
 }
 
-/* Each profile item inside its own div */
+/* Profile Item Layout */
 .landlord-profile-item {
   display: flex;
   flex-direction: column;
-  gap: 50px;
-  color: #7D141D;
-  /* margin: 0px 0; */
+  gap: 8px;
   font-size: 16px;
 }
 
+/* Label and Value Styling */
 p {
   display: flex;
   align-items: center;
@@ -72,62 +78,55 @@ p {
   flex-grow: 1;
 }
 
+/* Buttons Section */
 .landlord-profile-buttons {
   display: flex;
-  justify-content: flex-end; /* Align buttons to the right */
-  gap: 20px; /* Space between buttons */
+  justify-content: flex-end;
+  gap: 20px;
   margin-top: 20px;
 }
 
+/* Button Styling */
 .landlord-profile-edit-button,
-.landlord-profile-logout-button
- {
-  min-width: 80px; /* Adjust width to be consistent */
-  padding: 10px;
+.landlord-profile-logout-button,
+.landlord-profile-delete-button {
+  min-width: 100px;
+  padding: 12px 18px;
   font-size: 16px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   color: white;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.landlord-profile-delete-button{
-  width: 80px; /* Adjust width to be consistent */
-  padding: 10px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  color: white;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  
-}
-
+/* Edit Button */
 .landlord-profile-edit-button {
   background-color: #ae3c42;
 }
-
 .landlord-profile-edit-button:hover {
   background-color: #d74747;
+  transform: scale(1.05);
 }
 
+/* Logout Button */
 .landlord-profile-logout-button {
-  background-color: #ae3c42; 
+  background-color: #ae3c42;
 }
-
 .landlord-profile-logout-button:hover {
-  background-color: #d74747 
+  background-color: #d74747;
+  transform: scale(1.05);
 }
 
+/* Delete Button */
 .landlord-profile-delete-button {
-  background-color: #ae3c42; 
+  background-color: #ae3c42;
 }
-
 .landlord-profile-delete-button:hover {
-  background-color: #d74747 
+  background-color: #d74747;
+  transform: scale(1.05);
 }
-
 
 /* Property Cards Section */
 .landlord-profile-properties {
@@ -136,17 +135,53 @@ p {
   flex-wrap: wrap;
   gap: 20px;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
-.reviews{
+/* Property Card Hover Effect */
+.landlord-profile-properties .property-card {
+  width: 280px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+.landlord-profile-properties .property-card:hover {
+  transform: translateY(-8px);
+}
+
+/* Reviews Section */
+.reviews {
   display: flex;
   flex-direction: column;
   background-color: #fde6e8;
   padding: 20px;
   margin: 20px;
   border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-.reviews-user-name{
-  margin: 0px 20px;
+
+.reviews-user-name {
+  margin: 0 20px;
+  font-weight: bold;
+  color: #7d141d;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .landlord-profile-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .landlord-profile-image {
+    width: 180px;
+    height: 180px;
+  }
+
+  .landlord-profile-buttons {
+    justify-content: center;
+    margin-top: 10px;
+  }
 }

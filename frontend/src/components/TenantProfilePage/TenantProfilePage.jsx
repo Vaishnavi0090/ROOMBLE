@@ -98,12 +98,12 @@ export default function TenantProfilePage() {
           </div>
           <div className="tenant-profile-flatmate">
             <p>
-              <span>wants Flatmate </span>
+              <span>Seeking Flatmate </span>
               <span>:</span>{" "}
               <span>
                 {state.user.flatmate
-                  ? "wants Flatmate"
-                  : "Doesn't want Flatmate"}
+                  ? "Yes"
+                  : "No"}
               </span>
             </p>
           </div>
