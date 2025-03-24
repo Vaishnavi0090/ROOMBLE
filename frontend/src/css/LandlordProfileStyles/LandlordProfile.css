@@ -71,17 +71,60 @@ p {
   flex-grow: 1;
 }
 
-.landlord-profile-edit {
-  background-color: maroon;
-  color: white;
-  padding: 8px 12px;
+.landlord-profile-buttons {
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+  gap: 20px; /* Space between buttons */
+  margin-top: 20px;
+}
+
+.landlord-profile-edit-button,
+.landlord-profile-logout-button
+ {
+  width: 80px; /* Adjust width to be consistent */
+  padding: 10px;
+  font-size: 16px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  color: white;
 }
-.landlord-profile-edit:hover {
-  background-color: darkred;
+
+.landlord-profile-delete-button{
+  width: 80px; /* Adjust width to be consistent */
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  
 }
+
+.landlord-profile-edit-button {
+  background-color: #ae3c42;
+}
+
+.landlord-profile-edit-button:hover {
+  background-color: #d74747;
+}
+
+.landlord-profile-logout-button {
+  background-color: #ae3c42; 
+}
+
+.landlord-profile-logout-button:hover {
+  background-color: #d74747 
+}
+
+.landlord-profile-delete-button {
+  background-color: #ae3c42; 
+}
+
+.landlord-profile-delete-button:hover {
+  background-color: #d74747 
+}
+
 
 /* Property Cards Section */
 .landlord-profile-properties {

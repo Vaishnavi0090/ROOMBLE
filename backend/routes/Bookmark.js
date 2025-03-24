@@ -106,6 +106,7 @@ router.post(`/edit_bookmarks`, authMiddleware, async (req, res) => {
     const userid = req.user.id;
 
     const { action, thing, id } = req.body;
+    // console.log(`Action: ${action}, Thing: ${thing}, ID: ${id}`);
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       console.log(`!!!!INVALID ID FOUND!!!!!`);
@@ -202,5 +203,48 @@ router.post(`/edit_bookmarks`, authMiddleware, async (req, res) => {
     });
   }
 });
+
+router.post('/check_bookmark', authMiddleware, async (req, res) => {
+  try{
+    const {thing, id} = req.body;
+    const userid = req.user.id;
+    let user = await Tenant.findById(userid);
+    if(!user){
+      return res.status(404).json({
+        success: false,
+        bookmarked: false,
+      });
+    }
+    if(thing === `flatmate`){
+      if(user.bookmarks_tenants.includes(id)){
+        return res.status(200).json({
+          success: true,
+          bookmarked: true,
+        });
+      }
+      return res.status(200).json({
+        success: true,
+        bookmarked: false,
+      });
+    } else if(thing === `property`){
+      if(user.bookmarks_property.includes(id)){
+        return res.status(200).json({
+          success: true,
+          bookmarked: true,
+        });
+      }
+      return res.status(200).json({
+        success: true,
+        bookmarked: false,
+      });
+    }
+  } catch(e){
+    console.log(e);
+    return res.status(500).json({
+      success: false,
+      message: "Some internal Server error :( Please try again.",
+    });
+  }
+})
 
 module.exports = router;

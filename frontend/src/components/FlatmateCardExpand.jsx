@@ -3,6 +3,7 @@ import "../css/FlatmateCardExpand.css";
 import { BsBookmark, BsBookmarkFill, BsChatDots } from 'react-icons/bs';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import useDidMountEffect from '../useDidMountEffect';
 
 const FlatmateCardExpand = () => {
     const [isBookmarked, setIsBookmarked] = useState(false);
@@ -21,10 +22,28 @@ const FlatmateCardExpand = () => {
         Images: "http://127.0.0.1:3000/Pictures/Default.png", 
     });
 
+    useEffect(()=>{
+        const fetchbookmarkstatus = async()=>{
+            const response = await fetch('http://localhost:3000/api/BookMarking_Routes/check_bookmark',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authtoken': localStorage.getItem('authtoken')
+                },
+                body: JSON.stringify({ id: params.id, thing: "flatmate" })
+            });
+            const data = await response.json();
+            if(data.success){
+                setIsBookmarked(data.bookmarked);
+            }
+        }
+        fetchbookmarkstatus();
+    },[])
+
     useEffect(() => {
         const id = params.id;
         const token = localStorage.getItem("authtoken");
-        console.log("Token: ", token);
+        // console.log("Token: ", token);
 
         const fetchUser = async () => {
             try {
@@ -45,11 +64,10 @@ const FlatmateCardExpand = () => {
                 }
 
                 const data = await response.json();
-                console.log("Fetched Data:", data);
 
                 if (data.success) {
                     setUser(data);
-                    console.log(data);
+                    // console.log(data);
                 } else {
                     console.log("Failed to fetch user");
                 }
@@ -60,6 +78,34 @@ const FlatmateCardExpand = () => {
     
         fetchUser();
     }, [params.id]);
+
+    useDidMountEffect(()=>{
+
+        //update the bookmarks in the backend
+        if(isBookmarked){
+            console.log("Bookmarking");
+            fetch('http://localhost:3000/api/BookMarking_Routes/edit_bookmarks',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authtoken': localStorage.getItem('authtoken')
+                },
+                body: JSON.stringify({ action: "bookmark", thing: "flatmate", id: params.id })
+            })
+        }
+        else{
+            console.log("Unbookmarking");
+            fetch('http://localhost:3000/api/BookMarking_Routes/edit_bookmarks',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authtoken': localStorage.getItem('authtoken')
+                },
+                body: JSON.stringify({ action: "unmark", thing: "flatmate", id: params.id })
+            })
+        }
+
+    },[isBookmarked]);
 
     const handleBookmarkClick = () => {
         setIsBookmarked(!isBookmarked);

@@ -161,13 +161,18 @@
     background: rgba(0, 0, 0, 0.5);
     color: white;
     border: none;
-    padding: 10px 15px;
+    width: 30px; /* Set width to make it square */
+    height: 30px; /* Set height to make it square */
     font-size: 1.5rem;
     cursor: pointer;
     top: 50%;
     transform: translateY(-50%);
-    border-radius: 50%;
+    border-radius: 50%; /* Makes it circular */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centers the icon */
     transition: background 0.3s ease;
+    padding: 0; /* Remove padding to avoid elliptical shape */
 }
 
 .property-display-arrow.left {
@@ -201,4 +206,10 @@
 
 .property-display-dot.active {
     background: #7D141D; /* Active dot color */
+}
+
+.small-icon{
+    /* width: 5px;
+    height: 5px; */
+    font-size: 15px;
 }

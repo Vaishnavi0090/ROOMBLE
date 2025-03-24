@@ -34,7 +34,7 @@ function FindFlatmate() {
                         pets={flatmate.pets}
                         compatibilityScore={flatmate.recommendationScore}
                         image={flatmate.Images}
-                        isBookmarked={false}
+                        isBookmarked={flatmate.bookmarked}
                         />
                     ))
                     ) : (

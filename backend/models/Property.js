@@ -58,7 +58,12 @@ const PropertySchema = new mongoose.Schema({
             type: Date,
             default: Date.now
         }
-    }]
+    }],
+    landlord: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Landlord',
+        required: true
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Property', PropertySchema);

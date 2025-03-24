@@ -106,6 +106,8 @@ router.post("/listProperty",authMiddleware, async(req,res)=>{
         }
 
         try{
+            // add landlord id to the property
+            newProperty.landlord = landlordId;
             await newProperty.save();
         }
         catch(saveError){

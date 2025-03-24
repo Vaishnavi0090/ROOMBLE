@@ -1,61 +1,29 @@
 import React, { useEffect, useState } from "react";
-import "../../css/LandlordProfileStyles/LandlordProfile.css";
-import PropertyCard from "../LandlordDashboard/PropertyCard.jsx";
-import logo from "../../../public/property-img.png";
-import pfp from "../../../public/sampleUser_Img.png";
-import { useNavigate } from "react-router-dom";
-const LandlordProfile = () => {
+import "../css/LandlordProfileStyles/LandlordProfile.css";
+import PropertyCard from "./LandlordDashboard/PropertyCard.jsx";
+import { useNavigate, useParams } from "react-router-dom";
+
+const OtherLandlord = () => {
   const [respData, setRespData] = useState(null);
   const navigate = useNavigate();
-  const handleSubmit = () => {
-    navigate("/landlord-edit-page");
-  };
-  const handleLogout = () => {
-    localStorage.clear();
-    navigate("/login");
-    window.location.reload();
-  };
-  // const handleDelete = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       "http://127.0.0.1:3000/api/Deleting_routes/deleteInitiate",
-  //       {
-  //         method: "POST",
-  //         headers: { "Content-Type": "application/json" },
-  //         body: JSON.stringify({
-  //           email: state.user.email,
-  //           accounttype: "landlord",
-  //         }),
-  //       }
-  //     );
+  const params = useParams();
 
-  //     const data = await response.json();
-  //     if (data.success) {
-  //       localStorage.setItem("deleteToken", data.authtoken);
-  //       navigate("/otp-delete-page", {
-  //         state: { email: state.user.email, accountType: "landlord" },
-  //       });
-  //     }
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //     alert("Could not initiate account deletion.");
-  //   }
-  // };
+  const handleView = () => {
+    navigate("/prop-display ");
+  };
   const token = localStorage.getItem("authtoken");
   useEffect(() => {
     const fetchData = async () => {
       try {
         console.log(token);
         const response = await fetch(
-          "http://127.0.0.1:3000/api/view_profiles/Self_profile",
+          "http://127.0.0.1:3000/api/view_profiles/other_users",
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              authtoken: token, // ✅ Change from "Authorization" to "authtoken"
-              accounttype: "landlord", // ✅ Also send account type separately
             },
-            body: JSON.stringify({ ngj: "bkjmhkn" }),
+            body: JSON.stringify({ requested_id: params.id, accounttype: "landlord" }),
           }
         );
         const data = await response.json();
@@ -68,34 +36,27 @@ const LandlordProfile = () => {
     fetchData();
   }, []);
 
+  const messageclick = async () => {
+    const response = await fetch('http://localhost:3000/messages/createConversation', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authtoken': localStorage.getItem('authtoken')
+        },
+        body: JSON.stringify({ user2: params.id })
+    });
+    const data = await response.json();
+    if (data.success) {
+        navigate('/chat/' + data.conversation_id);
+    } else {
+        console.log("Failed to create conversation");
+    }
+};
+
   if (!respData) {
     return <div className="landlord-profile-loading">Loading...</div>;
   }
-  // const handleDeleteProp = async (Sendid) => {
-  //   try {
-  //     // console.log(Sendid);
-  //     const response = await fetch(
-  //       `http://127.0.0.1:3000/api/deleteproperty/deleteProperty/${Sendid}`,
-  //       {
-  //         method: "DELETE",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           authtoken: token, // Replace with actual data
-  //         },
-  //       }
-  //     );
 
-  //     const respData = await response.json();
-
-  //     if (respData.success) {
-  //       console.log("Delete successful:", respData.message);
-  //     } else {
-  //       console.error("Delete failed:", respData.message);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error during delete request:", error);
-  //   }
-  // };
   console.log(respData.Images);
   return (
     <div className="landlord-profile-container">
@@ -134,15 +95,9 @@ const LandlordProfile = () => {
               <div className="landlord-profile-buttons">
                 <button
                   className="landlord-profile-edit-button"
-                  onClick={handleSubmit}
+                  onClick={messageclick}
                 >
-                  Edit
-                </button>
-                <button
-                  className="landlord-profile-logout-button"
-                  onClick={handleLogout}
-                >
-                  Logout
+                  Message
                 </button>
                 {/* <button
                   className="landlord-profile-delete-button"
@@ -174,4 +129,4 @@ const LandlordProfile = () => {
   );
 };
 
-export default LandlordProfile;
+export default OtherLandlord;

@@ -21,6 +21,7 @@ const TenantEditPage = () => {
       smoke: state.user.smoke,
       veg: state.user.veg,
       pets: state.user.pets,
+      flatmate: state.user.flatmate,
       description: state.user.description,
       accounttype: state.user.type,
       remove: "",
@@ -35,10 +36,12 @@ const TenantEditPage = () => {
     smoke: state.user.smoke,
     veg: state.user.veg,
     pets: state.user.pets,
+    flatmate: state.user.flatmate,
     description: state.user.description,
     accounttype: state.user.type,
     remove: "",
   });
+  // console.log(state);
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -181,6 +184,24 @@ const TenantEditPage = () => {
               </div>
             </div>
 
+            <div className="tenant-edit-choices-flatmate">
+              <label>Want Flatmate</label>
+              <div className="edit-flatmate-btn">
+                <button
+                  className={formData.flatmate ? "active" : ""}
+                  onClick={() => setFormData({ ...formData, flatmate: true })}
+                >
+                  Want
+                </button>
+                <button
+                  className={!formData.flatmate ? "active" : ""}
+                  onClick={() => setFormData({ ...formData, flatmate: false })}
+                >
+                  Don't Want
+                </button>
+              </div>
+            </div>
+
             <div className="tenant-edit-choices-pets">
               <label>Domesticated Animal</label>
               <div className="edit-pets-btn">
@@ -210,19 +231,34 @@ const TenantEditPage = () => {
             value={formData.city}
             onChange={handleInputChange}
           >
-            <option value="Bangalore">Bangalore</option>
             <option value="Mumbai">Mumbai</option>
-            <option value="Delhi">Delhi</option>
           </select>
 
           <label>Locality</label>
 
-          <input
+          {/* <input
             type="text"
             name="locality"
             value={formData.locality}
             onChange={handleInputChange}
-          />
+          /> */}
+          <select
+            name="locality"
+            value={formData.locality}
+            onChange={handleInputChange}
+          >
+            <option value="">Select Location</option>
+            <option value="Andheri">Andheri</option>
+            <option value="Bandra">Bandra</option>
+            <option value="Juhu">Juhu</option>
+            <option value="Malad">Malad</option>
+            <option value="Kandivali">Kandivali</option>
+            <option value="Borivali">Borivali</option>
+            <option value="Dahisar">Dahisar</option>
+            <option value="Mira Road">Mira Road</option>
+            <option value="Thane">Thane</option>
+            <option value="Goregaon">Goregaon</option>
+          </select>
 
           {/* <span>Religion</span>
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../../css/PropertyCard.css";
+import { useNavigate } from "react-router-dom";
 
 const PropertyCard = ({
   image,
@@ -7,28 +8,19 @@ const PropertyCard = ({
   title,
   location,
   bhk,
-  onView,
-  onDelete,
+  id
 }) => {
-  const [isPopping, setIsPopping] = useState(false);
 
-  const triggerPop = () => {
-    setIsPopping(true);
-    setTimeout(() => setIsPopping(false), 300); // Duration should match CSS animation
-  };
+  const navigate = useNavigate();
 
   const handleView = () => {
-    triggerPop();
-    onView();
+    console.log("navigate to:", id);
+    navigate(`/property/${id}`);
   };
 
-  const handleDelete = () => {
-    triggerPop();
-    onDelete();
-  };
 
   return (
-    <div className={`property-card ${isPopping ? "pop-animate" : ""}`}>
+    <div className={`property-card`}>
       {/* Image Section */}
       <div className="image-container">
         <img src={image} alt={title} />
@@ -48,11 +40,6 @@ const PropertyCard = ({
         <button className="view-button" onClick={handleView}>
           View
         </button>
-        <div className="delete-btn">
-          <button className="delete-button" onClick={handleDelete}>
-            Delete
-          </button>
-        </div>
       </div>
     </div>
   );
