@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "../css/Login.css";
-import logo from "../../public/logo.png"; // Vite uses '/' for public assets
+import logo from "/logo.png"; // Vite uses '/' for public assets
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -12,7 +12,6 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Load saved email & password from localStorage when the component mounts
   useEffect(() => {
     const savedEmail = localStorage.getItem("rememberedEmail");
     const savedPassword = localStorage.getItem("rememberedPassword");
@@ -39,11 +38,7 @@ const Login = () => {
 
     try {
       const response = await fetch(
-        "http://127.0.0.1:3000/api/" +
-          userType +
-          "/auth/" +
-          userType +
-          "_login",
+        `http://127.0.0.1:3000/api/${userType}/auth/${userType}_login`,
         {
           method: "POST",
           headers: {
@@ -58,7 +53,6 @@ const Login = () => {
 
       if (data.success) {
         localStorage.setItem("authtoken", data.authtoken);
-        console.log(data.authtoken);
         if (rememberMe) {
           localStorage.setItem("rememberedEmail", email);
           localStorage.setItem("rememberedPassword", password);
@@ -69,9 +63,7 @@ const Login = () => {
           localStorage.removeItem("rememberedUserType");
         }
 
-        isLandlord
-          ? navigate("/landlord-dashboard")
-          : navigate("/tenant-dashboard");
+        navigate(isLandlord ? "/landlord-dashboard" : "/tenant-dashboard");
         window.location.reload();
       } else {
         setError(data.message || "Invalid login credentials");
@@ -83,81 +75,78 @@ const Login = () => {
   };
 
   return (
-    <div className="main-container">
-      {/* Left Section: Logo */}
-      <div className="logo-container">
+    <div className="login-page-main-container">
+      <div className="login-page-logo-container">
         <img src={logo} alt="Roomble Logo" />
       </div>
+      <div className="login-page-login-box">
+        <h2 className="login-page-login-title">Login to your Account</h2>
+        <p className="login-page-subtext">See what is going on with your business</p>
 
-      {/* Right Section: Login Form */}
-      <div className="login-box">
-        <h2 className="login-title">Login to your Account</h2>
-        <p className="subtext">See what is going on with your business</p>
-
-        <form className="login-form" onSubmit={handleLogin}>
-          <label htmlFor="email">Email</label>
+        <form className="login-page-login-form" onSubmit={handleLogin}>
+          <label htmlFor="email" className="login-page-label">Email</label>
           <input
             type="email"
             id="email"
+            className="login-page-input"
             placeholder="mail@abc.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
 
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password" className="login-page-label">Password</label>
           <input
             type="password"
             id="password"
+            className="login-page-input"
             placeholder="*****************"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
 
-          <div className="remember-forgot">
-            <span className="remember-container">
+          <div className="login-page-remember-forgot">
+            <span className="login-page-remember-container">
               <input
                 type="checkbox"
                 id="rememberMe"
                 checked={rememberMe}
                 onChange={() => setRememberMe(!rememberMe)}
               />
-              <label htmlFor="rememberMe" className="remember-label">
+              <label htmlFor="rememberMe" className="login-page-remember-label">
                 Remember Me
               </label>
             </span>
-            <Link to="/forgot-password" className="forgot-password">
+            <Link to="/forgot-password" className="login-page-forgot-password">
               Forgot Password?
             </Link>
           </div>
 
-          {error && <p className="error-text">{error}</p>}
+          {error && <p className="login-page-error-text">{error}</p>}
 
-          <button type="submit" className="login-button" disabled={loading}>
+          <button type="submit" className="login-page-login-button" disabled={loading}>
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
-        {/* Toggle Switch */}
-        <div className="toggle-container">
-          <div
-            className={`toggle-switch ${isLandlord ? "landlord-selected" : ""}`}
-            onClick={handleToggle}
-          >
-            <span className="toggle-text tenant">Tenant</span>
-            <span className="toggle-slider"></span>
-            <span className="toggle-text landlord">Landlord</span>
-          </div>
+        <div 
+          className={`mini-toggle-switch ${isLandlord ? 'landlord' : 'tenant'}`} 
+          onClick={handleToggle}
+        >
+          <div className="mini-toggle-circle" />
+          <span className="mini-toggle-text">
+            {isLandlord ? 'Landlord' : 'Tenant'}
+          </span>
         </div>
 
-        <p className="register-text">
+        <p className="login-page-register-text">
           Not Registered Yet?{" "}
           <Link to={isLandlord ? "/signup-landlord" : "/signup-tenant"}>
             Create an account
           </Link>
         </p>
-        <p className="footer-text">
+        <p className="login-page-footer-text">
           With Roomble, you'll stumble on the perfect place to rumble!
         </p>
       </div>
