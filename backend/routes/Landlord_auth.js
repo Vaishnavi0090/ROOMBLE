@@ -26,7 +26,7 @@ router.post(`/Landlord_Register`, async (req, res) => {
         let checkExistingUser = await  Landlord.findOne({  email });
 
         if (checkExistingUser) {
-            console.log(checkExistingUser.email);
+            // console.log(checkExistingUser.email);
             return res.status(400).json({
                 success: false,
                 message: "A user already exists with the given credentials",
@@ -164,7 +164,7 @@ router.post(`/Landlord_login`, async (req, res) => {
 
 
     } catch (e) {
-        console.log(e);
+        // console.log(e);
         return res.status(500).json({
             success : false,
             message : "Internal Server error, really sorry"

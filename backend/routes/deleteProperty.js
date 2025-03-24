@@ -9,10 +9,10 @@ router.delete("/deleteProperty/:propertyId", authMiddleware, async (req, res) =>
         
         const landlordId = req.user.id;
         const propertyId = req.params.propertyId;
-        console.log(propertyId);
+        // console.log(propertyId);
         if (!mongoose.Types.ObjectId.isValid(propertyId)) {
-            console.log(`!!!!INVALID ID FOUND!!!!!`);
-            console.log(id);
+            // console.log(`!!!!INVALID ID FOUND!!!!!`);
+            // console.log(id);
             return res.status(400).json({ error: `${id} is invalid ID` });
         }
 

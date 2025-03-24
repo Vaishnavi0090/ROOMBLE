@@ -31,7 +31,7 @@ router.post(`/List_Delist_Prop`, authMiddleware, async (req, res) => {
         if(user_landlord.propertyList.includes(list_id)){
             let prop = await Property.findById(list_id);
             if(!prop){
-                console.log(`${user_id} has ${list_id} but it doesnt exist in database`);
+                // console.log(`${user_id} has ${list_id} but it doesnt exist in database`);
                 return res.status(500).json({
                     success : false,
                     message : "Some internal error in server"
@@ -50,7 +50,7 @@ router.post(`/List_Delist_Prop`, authMiddleware, async (req, res) => {
             })
         }
     } catch (e){
-        console.log(`Error while listing/Delisting property`);
+        // console.log(`Error while listing/Delisting property`);
         console.log(e);
         return res.status(500).json({
             success : false,

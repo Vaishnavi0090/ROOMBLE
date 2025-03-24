@@ -21,7 +21,7 @@ router.post('/get_property', async (req, res) => {
             property: property
         });
     } catch (e) {
-        console.log(e);
+        // console.log(e);
         return res.status(500).json({
             success: false,
             message: "Some internal Server error :( Please try again.",

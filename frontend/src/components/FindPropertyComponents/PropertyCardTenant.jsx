@@ -3,10 +3,13 @@ import "../../css/PropertyCard.css";
 import "../../css/PropertyCardTenant.css";
 import { Link, useNavigate } from "react-router-dom";
 import useDidMountEffect from "../../useDidMountEffect";
+import { toast } from "react-toastify";
+
 
 const PropertyCardTenant = ({ image, price, title, location, bhk, onView, onBookMark, id, available }) => {
   const [bookmarked, setBookmarked] = useState(false);
   const navigate = useNavigate();
+
 
 
   const toggleBookmark = () => {
@@ -45,6 +48,7 @@ const PropertyCardTenant = ({ image, price, title, location, bhk, onView, onBook
         },
         body: JSON.stringify({ id: id, thing: "property", action: "bookmark" }),
       })
+
     } else {
       fetch("http://localhost:3000/api/BookMarking_Routes/edit_bookmarks", {
         method: "POST",

@@ -36,7 +36,7 @@ router.put("/updateProfile", authMiddleware, async (req, res) => {
             user = await Landlord.findById(userId);
         }
         else {
-            console.log(`Accountype : ${accounttype}`);
+            // console.log(`Accountype : ${accounttype}`);
             return res.status(400).json({
                 success: false,
                 message: "Invalid Account Type"
@@ -164,7 +164,7 @@ router.post("/updateProperty/", authMiddleware, async (req, res) => {
         property.price = req.body.price;
         property.amenities = req.body.amenities;
 
-        console.log(req.files);
+        // console.log(req.files);
         if (!req.files || !req.files.image) {
             return res.status(400).json({
                 success: false,

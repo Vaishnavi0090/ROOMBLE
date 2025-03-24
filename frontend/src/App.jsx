@@ -30,6 +30,7 @@ import PropertyDisplay from "./components/PropertyDisplay.jsx";
 import OtherLandlord from "./components/OtherLandlord.jsx";
 import LandlordEditProfile from "./components/LandlordProfile/LandlordEditProfile.jsx";
 import { Review } from "./components/Review.jsx";
+import { Bounce, ToastContainer } from "react-toastify";
 
 function App() {
   const [id, setID] = useState("");
@@ -41,6 +42,19 @@ function App() {
     <BaseState>
       {/* Conditionally rendering the navbar */}
       {!hideNavbarRoutes.includes(location.pathname) && <Navbar />}
+      <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick={false}
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="dark"
+              transition={Bounce}
+            />
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/signup-tenant" element={<SignUpTenant setID={setID} />} />

@@ -63,7 +63,7 @@ router.post(`/Tenant_register`, async (req, res) => {
             flatmate,
         });
 
-        console.log(`${city} ${locality}`);
+        // console.log(`${city} ${locality}`);
 
         await newlyCreatedUser.save();
 
@@ -167,7 +167,7 @@ router.post(`/Tenant_login`, async (req, res) => {
         if (result) {
             // Generate JWT token
             const token = jwt.sign({ id: findTenant._id, email: findTenant.email }, SECRET_KEY, { expiresIn: "5h" });
-            console.log(token)
+            // console.log(token)
             res.status(200).json({
                 success: true,
                 name: findTenant.name,
@@ -208,7 +208,7 @@ router.post('/getuser', async (req, res) => {
         res.send({tenant, success: true});
     }
     catch(err){
-        console.log(err);
+        // console.log(err);
         res.send({success: false});
     }
 })

@@ -25,8 +25,7 @@ const checkUser = async (req, res, next) => {
         req.user = user;
         return next();
     } catch (err) {
-        console.log(err);
-        res.status(400).json({ message: 'Invalid Token' });
+        return res.status(400).json({ message: 'Invalid Token', success: false });
     }
 };
 

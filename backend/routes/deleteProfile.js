@@ -125,7 +125,7 @@ router.post(`/deleteInitiate`, async (req, res) => {
       }
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(500).json({
       success: false,
       message: "internal server error",
@@ -146,7 +146,7 @@ router.post(`/enterOTPtoDelete`, authMiddleware, async (req, res) => {
     } else if (accounttype === `landlord`) {
       userOTP = await Landlord_OTP.findOne({ email: userEmail });
     } else {
-      console.log(accounttype);
+      // console.log(accounttype);
       return res.status(401).json({
         success: false,
         message: "Invalid Account Type",
@@ -190,7 +190,7 @@ router.post(`/enterOTPtoDelete`, authMiddleware, async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     return res.status(500).json({
       success: false,
       message: "Internal Server error",

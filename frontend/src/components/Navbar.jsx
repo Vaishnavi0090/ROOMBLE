@@ -4,6 +4,8 @@ import { Basecontext } from '../context/base/Basecontext';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import { socket } from '../socket';
+import { Bounce, ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import the CSS for styling
 
 export const Navbar = () => {
   const state = useContext(Basecontext);
@@ -34,13 +36,14 @@ export const Navbar = () => {
 
   return (
     <div className="navbar">
+      
       <div className="logo">
         <img src="/logo.png" alt="logo" className='logo-img' />
       </div>
       <div className="menu">
         {user.type === 'none' ? (
           <ul>
-            <li><Link to="/prop-display">Home</Link></li>
+            <li><Link to="/">Home</Link></li>
             <li><Link to="/add-property">Add Property</Link></li>
             <li><Link to="/messages">Messages</Link></li>
             <li><Link to="/find-property">Find Property</Link></li>

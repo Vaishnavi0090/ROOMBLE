@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { Basecontext } from "./Basecontext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import the CSS for styling
+import { useNavigate } from "react-router-dom";
 
 
 const BaseState = (props) => {
     const [user, setUser] = useState({"type":"none"});
+    const navigate = useNavigate();
     
     const fetuser = async () => {
         if(localStorage.getItem("authtoken") && user.type === "none"){
@@ -15,12 +19,16 @@ const BaseState = (props) => {
                 },
             });
             const data = await res.json();
+            console.log(data.user)
             if(data.success){
                 setUser(data.user);
+                toast.success("Welcome back, "+data.user.name);
             }
             else{
-                // localStorage.clear();
-                // window.location.reload();
+                toast.error("Please Login again.");
+                localStorage.removeItem("authtoken");
+                setUser({"type":"none"});
+                navigate("/login");
             }
         }
             

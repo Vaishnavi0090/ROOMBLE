@@ -123,7 +123,7 @@ router.post(`/enteremail`, async(req, res) => {
         }
         
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         return res.status(500).json({
             success : false,
             message : "internal server error"
@@ -148,7 +148,7 @@ router.post(`/enterOTP`, authMiddleware , async (req,res) => {
             user = await Landlord_OTP.findOne({email : useremail});
         }
         else{
-            console.log(accounttype);
+            // console.log(accounttype);
             return res.status(401).json({
                 success : false,
                 message : "No accounttype"
@@ -179,7 +179,7 @@ router.post(`/enterOTP`, authMiddleware , async (req,res) => {
         }
         
     } catch (err){
-        console.log(err);
+        // console.log(err);
         return res.status(500).json({
             success : false,
             message : "Internal Server error"
@@ -244,7 +244,7 @@ router.post(`/ForgotPassword`, authMiddleware, async (req,res) => {
         }
 
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         return res.status(500).json({
             success : false,
             message : "Internal Server Error"

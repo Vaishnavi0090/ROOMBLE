@@ -172,7 +172,7 @@ module.exports = (io, onlineUsers) => {
             return res.send({ conversation_id: newConversation._id, success: true });
         }
         catch(err){
-            console.log(err);
+            // console.log(err);
             res.send({ success: false });
         }
 

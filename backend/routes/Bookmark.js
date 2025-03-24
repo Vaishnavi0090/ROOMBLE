@@ -109,8 +109,8 @@ router.post(`/edit_bookmarks`, authMiddleware, async (req, res) => {
     // console.log(`Action: ${action}, Thing: ${thing}, ID: ${id}`);
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      console.log(`!!!!INVALID ID FOUND!!!!!`);
-      console.log(id);
+      // console.log(`!!!!INVALID ID FOUND!!!!!`);
+      // console.log(id);
       return res.status(400).json({ error: `${id} is invalid ID` });
     }
 
@@ -196,7 +196,7 @@ router.post(`/edit_bookmarks`, authMiddleware, async (req, res) => {
       });
     }
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     return res.status(500).json({
       success: false,
       message: "Some internal Server error :( Please try again.",
@@ -239,7 +239,7 @@ router.post('/check_bookmark', authMiddleware, async (req, res) => {
       });
     }
   } catch(e){
-    console.log(e);
+    // console.log(e);
     return res.status(500).json({
       success: false,
       message: "Some internal Server error :( Please try again.",

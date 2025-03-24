@@ -58,7 +58,7 @@ const createReview = async (req, res) => {
 
         //pushing the review to the reviewee
         reviewee.reviews.push(newReview);
-        console.log(newReview);
+        // console.log(newReview);
         await reviewee.save();
         return res.status(200).json({
             success : true,
@@ -68,7 +68,7 @@ const createReview = async (req, res) => {
         
     }
     catch(e){
-        console.log(e);
+        // console.log(e);
         return res.status(500).json({
             success : false,
             message : "Server Error",
@@ -114,7 +114,7 @@ const getReviewsForUser = async (req, res) => {
         })
     }
     catch(e){
-        console.log(e);
+        // console.log(e);
         return res.status(500).json({
             success : false,
             message : "Server Error",

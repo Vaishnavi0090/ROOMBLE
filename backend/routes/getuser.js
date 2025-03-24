@@ -15,7 +15,7 @@ router.post('/user', checkUser, async (req, res) => {
         const user = req.user;
         res.json({ user, success: true });
     } catch (err) {
-        console.log(err);
+        // console.log(err);
         res.json({ success: false });
     }
 })

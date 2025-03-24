@@ -160,7 +160,7 @@ router.get("/SearchFlatmates", authMiddleware, async (req, res) => {
         });
 
     } catch (err) {
-        console.log(`Error in Searching Flatamates`);
+        // console.log(`Error in Searching Flatamates`);
         console.error(err);
         return res.status(500).json({ success: false, message: "Server error" });
     }

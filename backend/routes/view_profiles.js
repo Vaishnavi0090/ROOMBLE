@@ -169,8 +169,8 @@ router.post('/user', async(req,res)=>{
         let {id} = req.body;
 
         if (!mongoose.Types.ObjectId.isValid(id)) {
-            console.log(`!!!!INVALID ID FOUND!!!!!`);
-            console.log(id);
+            // console.log(`!!!!INVALID ID FOUND!!!!!`);
+            // console.log(id);
             return res.status(400).json({ error: `${id} is invalid ID` });
         }
 
@@ -202,7 +202,7 @@ router.post('/user', async(req,res)=>{
         })
     }
     catch(e){
-        console.log(e);
+        // console.log(e);
         return res.status(500).json({
             success : false,
             message : "Some error in server, please try again."
