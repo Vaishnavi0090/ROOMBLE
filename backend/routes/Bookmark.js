@@ -49,8 +49,8 @@ router.get(`/get_bookmarks`, authMiddleware, async (req, res) => {
     //Code to delete the user id that has deleted it's account is left to add
     for (let id of user.bookmarks_tenants) {
       if (!mongoose.Types.ObjectId.isValid(id)) {
-        console.log(`!!!!INVALID ID FOUND!!!!!`);
-        console.log(id);
+        // console.log(`!!!!INVALID ID FOUND!!!!!`);
+        // console.log(id);
         return res.status(400).json({ error: `${id} is invalid ID` });
       }
       let tenantToBookmark = await Tenant.findById(id).select(
@@ -70,15 +70,15 @@ router.get(`/get_bookmarks`, authMiddleware, async (req, res) => {
         Flatmate_bookmarks.push(tenantToBookmark);
       }
     }
-    console.log(Flatmate_bookmarks);
+    // console.log(Flatmate_bookmarks);
     for (let id of user.bookmarks_property) {
       if (!mongoose.Types.ObjectId.isValid(id)) {
-        console.log(`!!!!INVALID ID FOUND!!!!!`);
-        console.log(id);
+        // console.log(`!!!!INVALID ID FOUND!!!!!`);
+        // console.log(id);
         return res.status(400).json({ error: `${id} is invalid ID` });
       }
       let propertyToBookmark = await Property.findById(id).select(
-        `name town address area bhk price Images`
+        `name town address area bhk price Images available`
       );
       if (propertyToBookmark) {
         Property_bookmarks.push(propertyToBookmark);
@@ -92,7 +92,7 @@ router.get(`/get_bookmarks`, authMiddleware, async (req, res) => {
       PropertyBookMarks: Property_bookmarks,
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(500).json({
       success: false,
       message: "Internal Error in server :( really sorry.",

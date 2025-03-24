@@ -192,7 +192,6 @@
   .reviews-user-details{
     display: flex;
     align-items: center;
-    cursor: pointer;
   }
   .reviews-user-image{
     display: flex;

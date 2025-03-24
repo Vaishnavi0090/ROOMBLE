@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import '../css/Review.css'
 import { Rating } from '@mui/material'
 import { Basecontext } from "../context/base/Basecontext";
+import { toast } from 'react-toastify';
 
 
 export const Review = () => {
@@ -12,6 +13,7 @@ export const Review = () => {
     const [rating, setRating] = useState(0)
     const [revieweetype, setRevieweeType] = useState("tenant")
     const { user } = useContext(Basecontext);
+    const navigate = useNavigate();
 
     useEffect(()=>{
         // Fetch user details from backend
@@ -51,7 +53,13 @@ export const Review = () => {
             })
         });
         const data = await response.json();
-        console.log(data)
+        if(data.success){
+            toast.success('Review submitted successfully')
+            navigate(-1)
+        }
+        else{
+            toast.error(data.message)
+        }
     }
     
   return (

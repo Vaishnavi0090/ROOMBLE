@@ -16,6 +16,7 @@ const messageRoutes = require('./routes/message');
 const enlist_delist = require(`./routes/lisst_delist_prop`);
 const fileUpload = require('express-fileupload');
 const updates = require(`./routes/update.js`);
+const propertyReview = require(`./routes/reviewProperty`);
 const cors = require(`cors`);
 const path = require(`path`);
 const mongoconnect = require('./mongodb'); // Ensures MongoDB connects
@@ -86,6 +87,7 @@ app.use(`/api/deleteproperty`, deleteProperty);
 app.use('/messages', messageRoutes(io, onlineUsers));
 app.use('/api/auth', require('./routes/getuser'));
 app.use('/api/property', require('./routes/viewProperty'));
+app.use('/api/reviewProperty', propertyReview);
 
 // Default Route
 app.get('/', (req, res) => {

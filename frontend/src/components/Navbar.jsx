@@ -71,9 +71,9 @@ export const Navbar = () => {
             <button className='signup-btn'><Link to="/signup-tenant">Sign Up</Link></button>
           </>
         ) : (
-          <a href={user.type === 'tenant' ? "/tenant-profile-page" : "/landlord-profile-page"}>
+          <Link to={user.type === 'tenant' ? "/tenant-profile-page" : "/landlord-profile-page"}>
             <img src={state.user.Images}alt="account" className='account-img' />
-          </a>
+          </Link>
         )}
       </div>
     </div>

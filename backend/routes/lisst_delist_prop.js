@@ -41,7 +41,7 @@ router.post(`/List_Delist_Prop`, authMiddleware, async (req, res) => {
             await prop.save()
             return res.status(200).json({
                 success : true,
-                message : `Successfulle ${action}ed property`
+                message : `Successfully ${action}ed property`
             })
         } else {
             return res.status(401).json({
