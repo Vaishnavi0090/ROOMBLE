@@ -83,6 +83,13 @@ const Login = () => {
         <h2 className="login-page-login-title">Login to your Account</h2>
         <p className="login-page-subtext">See what is going on with your business</p>
 
+        <div className="toggle-wrapper">
+            <div className={`mini-toggle-switch ${isLandlord ? 'landlord' : 'tenant'}`} onClick={handleToggle}>
+              <div className="mini-toggle-circle" />
+              <span className="mini-toggle-text">{isLandlord ? 'Landlord' : 'Tenant'}</span>
+            </div>
+          </div>
+
         <form className="login-page-login-form" onSubmit={handleLogin}>
           <label htmlFor="email" className="login-page-label">Email</label>
           <input
@@ -125,20 +132,14 @@ const Login = () => {
 
           {error && <p className="login-page-error-text">{error}</p>}
 
+          
+
           <button type="submit" className="login-page-login-button" disabled={loading}>
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
-        <div 
-          className={`mini-toggle-switch ${isLandlord ? 'landlord' : 'tenant'}`} 
-          onClick={handleToggle}
-        >
-          <div className="mini-toggle-circle" />
-          <span className="mini-toggle-text">
-            {isLandlord ? 'Landlord' : 'Tenant'}
-          </span>
-        </div>
+        
 
         <p className="login-page-register-text">
           Not Registered Yet?{" "}

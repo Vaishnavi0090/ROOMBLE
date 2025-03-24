@@ -208,7 +208,7 @@ const FlatmateCardExpand = () => {
                         </div>
                         <img className="fce-profile-img" src={user.Images} alt={`${user.name} Profile`} />
                     </div>
-                    <p>{user.description}</p>
+                    <p>{user.description === ""? "This user hasn't setup a description yet" : user.description}</p>
 
                     <div className="fce-action-buttons">
                         <div className="fce-bookmark-section" onClick={handleBookmarkClick}>

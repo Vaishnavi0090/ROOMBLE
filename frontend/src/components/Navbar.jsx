@@ -46,6 +46,7 @@ export const Navbar = () => {
             <li><Link to="/">Home</Link></li>
             <li><Link to="/signup-tenant">Sign Up tenant</Link></li>
             <li><Link to="/signup-landlord">Sign Up landlord</Link></li>
+            <li><Link to="/login">Login</Link></li>
           </ul>
         ) : user.type === 'tenant' ? (
           <ul>
@@ -67,8 +68,8 @@ export const Navbar = () => {
       <div className="account-logo">
         {user.type === 'none' ? (
           <>
-            <button className='login-btn'><Link to="/login">Login</Link></button>
-            <button className='signup-btn'><Link to="/signup-tenant">Sign Up</Link></button>
+            {/* <button className='login-btn'><Link to="/login">Login</Link></button>
+            <button className='signup-btn'><Link to="/signup-tenant">Sign Up</Link></button> */}
           </>
         ) : (
           <Link to={user.type === 'tenant' ? "/tenant-profile-page" : "/landlord-profile-page"}>

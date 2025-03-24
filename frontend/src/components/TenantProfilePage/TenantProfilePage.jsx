@@ -56,7 +56,12 @@ export default function TenantProfilePage() {
           className="tenant-profile-photo"
         />
         <div className="tenant-bio-class">
-          <p className="tenant-profile-bio">{state.user.description}</p>
+          <p className="tenant-profile-bio">
+            {(state.user.description === "This user hasn't setup a description yet") || 
+              (state.user.description === "")
+              ? "You have not set up a description yet"
+              : state.user.description}
+              </p>
         </div>
       </div>
 

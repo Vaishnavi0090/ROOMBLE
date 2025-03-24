@@ -123,7 +123,7 @@ body{
     border: none;
     padding: 12px;
     font-size: 20px;
-    border-radius: 5px;
+    border-radius: 50px;
     cursor: pointer;
     margin-top: 10px;
     width: 100%;
@@ -133,7 +133,14 @@ body{
     background-color: #d53737;
 }
 
-.mini-toggle-switch {
+.toggle-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0; /* Add spacing above/below if needed */
+  }
+  
+  .mini-toggle-switch {
+    justify-content: center;
     position: relative;
     width: 100px;          /* Slightly wider to fit text comfortably */
     height: 40px;          /* Small height */
@@ -150,17 +157,16 @@ body{
   }
   
   /* Tenant: Rosy Pink to Soft Magenta */
-/* Tenant: Deep Orange to Fiery Red */
-.mini-toggle-switch.tenant {
-    background: linear-gradient(135deg, #ff8c00, #ff1a1a); /* Deep orange to fiery red */
-    box-shadow: 0 0 15px rgba(255, 76, 76, 0.6);
+  .mini-toggle-switch.tenant {
+    background: linear-gradient(135deg, #d93030, #be1f2a);
+    box-shadow: 0 0 15px rgba(252, 165, 165, 0.6);
     transition: background 0.6s ease-in-out, box-shadow 0.6s ease-in-out;
   }
   
-  /* Landlord: Dark Maroon to Blood Red */
+  /* Landlord: Light Rose → Deeper Pink */
   .mini-toggle-switch.landlord {
-    background: linear-gradient(135deg, #8b0000, #ff0000); /* Dark maroon to blood red */
-    box-shadow: 0 0 15px rgba(200, 0, 0, 0.6);
+    background: linear-gradient(135deg, #d93030, #be1f2a);
+    box-shadow: 0 0 15px rgba(252, 165, 165, 0.6);
     transition: background 0.6s ease-in-out, box-shadow 0.6s ease-in-out;
   }
   
@@ -173,18 +179,18 @@ body{
     background: #fff;
     border-radius: 50%;
     box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
-    transform: translateY(-50%);
-    transition: transform 0.6s ease-in-out;
+    /* Remove left/right properties and control movement with transform */
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);  /* Bouncy, slow animation */
   }
   
-  /* Tenant: circle on far LEFT */
+  /* For Tenant, circle on far LEFT (translateX: 4px) */
   .mini-toggle-switch.tenant .mini-toggle-circle {
-    left: 4px;
+    transform: translate(4px, -50%);
   }
   
-  /* Landlord: circle on far RIGHT */
+  /* For Landlord, circle on far RIGHT (calculate: 100px (toggle width) - 28px (circle width) - 4px = 68px) */
   .mini-toggle-switch.landlord .mini-toggle-circle {
-    right: 4px;
+    transform: translate(68px, -50%);
   }
   
   /* Text on the opposite side of the circle */
@@ -209,7 +215,9 @@ body{
   .mini-toggle-switch.landlord .mini-toggle-text {
     left: 8px; /* Minimizes gap between circle & text */
   }
+  
    
+
   
 
 .login-page-register-text {
