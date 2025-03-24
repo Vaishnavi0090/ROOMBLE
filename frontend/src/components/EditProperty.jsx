@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import { Basecontext } from '../context/base/Basecontext';
 import { useNavigate } from 'react-router-dom';
 
-function EditProperty() {
+function EditProperty(property) {
 
     const state = useContext(Basecontext);
     const { user, setUser, fetuser } = state;

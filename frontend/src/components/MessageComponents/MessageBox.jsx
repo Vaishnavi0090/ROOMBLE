@@ -11,6 +11,7 @@ function MessageBox() {
     const { user, setUser, fetuser } = state;
     const [currentMessages, setCurrentMessages] = useState([]);
     const [currentUserId, setCurrentUserId] = useState("");
+    const [searchQuery, setSearchQuery] = useState("");
 
 
     useEffect(() => {
@@ -63,6 +64,10 @@ function MessageBox() {
         })
     })
 
+    const filteredMessages = currentMessages
+        .filter(conversation =>
+            conversation.name.toLowerCase().includes(searchQuery.toLowerCase())
+        );
 
     return (<div className="message-cards">
         {/*Top contains the heading and search bar*/}
@@ -70,13 +75,13 @@ function MessageBox() {
             <h2 className="people-text">People</h2>
             <div className='search-bar'>
                 <SearchIcon style={{ fontSize: 30 }} />
-                <input type="text" placeholder="Search" className="chat-search-input" />
+                <input type="text" placeholder="Search" className="chat-search-input" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}/>
             </div>
         </div>
         {/*Bottom contains the list of all the users*/}
         {/*All message are temporary now. Map function will be used afterwards*/}
         <div className="bottom">
-            {currentMessages.map((conversation, index) => {
+            {filteredMessages.map((conversation, index) => {
                 return <MessageCard key={index} conversation={conversation} />
             })}
 
