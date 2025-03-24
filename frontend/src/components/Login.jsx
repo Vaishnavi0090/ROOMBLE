@@ -36,6 +36,7 @@ const Login = () => {
     setLoading(true);
 
     try {
+
       const response = await fetch(
         `http://127.0.0.1:3000/api/${userType}/auth/${userType}_login`,
         {
@@ -62,7 +63,7 @@ const Login = () => {
           localStorage.removeItem("rememberedUserType");
         }
 
-        navigate(isLandlord ? "/landlord-dashboard" : "/tenant-dashboard");
+        navigate(userType === "landlord" ? "/landlord-dashboard" : "/tenant-dashboard");
         window.location.reload();
       } else {
         setError(data.message || "Invalid login credentials");
@@ -108,7 +109,7 @@ const Login = () => {
           <input
             type="email"
             id="login-email"
-            placeholder="mail@abc.com"
+            placeholder="Enter your email address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -118,7 +119,7 @@ const Login = () => {
           <input
             type="password"
             id="login-password"
-            placeholder="*****************"
+            placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required

@@ -118,11 +118,11 @@ function SignUpForm({ setID }) {
       <form className="signup-tenant-form" onSubmit={validateFormInput}>
         <div className="signup-tenant-scroll-div">
           <div>
-            <label>Your good name</label>
+            <label>Full Name</label>
             <input
               type="text"
               className="signup-tenant-input-box"
-              placeholder="name"
+              placeholder="Enter your full name"
               required
               name="name"
               onChange={({ target }) =>
@@ -132,11 +132,11 @@ function SignUpForm({ setID }) {
           </div>
 
           <div>
-            <label>Your Email (please check regularly)</label>
+            <label>Email Address</label>
             <input
               type="email"
               className="signup-tenant-input-box"
-              placeholder="mail@abc.com"
+              placeholder="Enter your email address"
               name="email"
               onChange={({ target }) =>
                 handleUserInput(target.name, target.value)
@@ -150,7 +150,7 @@ function SignUpForm({ setID }) {
             <input
               type="password"
               className="signup-tenant-input-box"
-              placeholder="*************"
+              placeholder="Enter your password"
               name="password"
               value={formInput.password}
               onChange={({ target }) => {
@@ -166,7 +166,7 @@ function SignUpForm({ setID }) {
             <input
               type="password"
               className="signup-tenant-input-box"
-              placeholder="*************"
+              placeholder="Re-enter the same password"
               name="confirmPassword"
               value={formInput.confirmPassword}
               onChange={({ target }) => {
