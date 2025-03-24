@@ -171,3 +171,42 @@
     align-items: center;
     margin-top: auto;
   }
+
+  .reviews{
+    display: flex;
+    flex-direction: column;
+    background-color: #fde6e8;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+  }
+
+  .reviews1{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 5px;
+    border-radius: 10px;
+    margin: 5px 0px;
+  }
+  .reviews-user-details{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  .reviews-user-image{
+    display: flex;
+    align-items: center;
+    width: fit-content;
+  }
+  .reviews-user-image img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  .reviews-user-name{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }

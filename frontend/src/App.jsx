@@ -29,35 +29,37 @@ import LandlordProfile from "./components/LandlordProfile/LandlordProfile.jsx";
 import PropertyDisplay from "./components/PropertyDisplay.jsx";
 import OtherLandlord from "./components/OtherLandlord.jsx";
 import LandlordEditProfile from "./components/LandlordProfile/LandlordEditProfile.jsx";
+import { Review } from "./components/Review.jsx";
 
 function App() {
   const [id, setID] = useState("");
 
+  const hideNavbarRoutes = ["/login", "/signup-landlord", "/signup-tenant", "/otp-page-tenant", "/otp-page-land", "/forgot-password", "/otp-forgot", "/set-new-password", "/otp-delete-page"];
+
+
   return (
     <BaseState>
-      <Navbar />
+      {/* Conditionally rendering the navbar */}
+      {!hideNavbarRoutes.includes(location.pathname) && <Navbar />}
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
-        <Route path="/messages" element={<MessageStart />} />
         <Route path="/signup-tenant" element={<SignUpTenant setID={setID} />} />
-        <Route
-          path="/signup-landlord"
-          element={<SignupLandlord setID={setID} />}
-        />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/signup-landlord" element={<SignupLandlord setID={setID} />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/otp-page-land" element={<OTPPageLandlord id={id} />} />
+        <Route path="/otp-forgot" element={<OTPPageForgot />} />
+        <Route path="/otp-page-tenant" element={<OTPPageTenant id={id} />} />
+        <Route path="/messages" element={<MessageStart />} />
         <Route path="/add-property" element={<AddProperty />} />
         <Route path="/find-property" element={<FindProperty />} />
         <Route path="/find-flatmate" element={<FindFlatmate />} />
-        <Route path="/otp-page-tenant" element={<OTPPageTenant id={id} />} />
-        <Route path="/otp-page-land" element={<OTPPageLandlord id={id} />} />
         <Route path="/tenant-profile-page" element={<TenantProfilePage />} />
         <Route path="/tenant-edit-page" element={<TenantEditPage />} />
         <Route path="/landlord-edit-page" element={<LandlordEditProfile />} />
         <Route path="/tenant-dashboard" element={<BookmarkedFlatmates />} />
         <Route path="/tenant/:id" element={<FlatmateCardExpand />} />
         <Route path="/landlord-dashboard" element={<HomePage />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/otp-forgot" element={<OTPPageForgot />} />
         <Route path="/edit-property/:id" element={<EditProperty />} />
         <Route path="/set-new-password" element={<SetNewPassword />} />
         <Route path="/otp-delete-page" element={<OTPDeletePage />} />
@@ -65,6 +67,7 @@ function App() {
         <Route path="/chat/:id" element={<Messages />} />
         <Route path="/property/:id" element={<PropertyDisplay />} />
         <Route path="/landlord/:id" element={<OtherLandlord />} />
+        <Route path="/review/:id" element={<Review/>} />
       </Routes>
     </BaseState>
   );

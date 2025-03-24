@@ -1,13 +1,20 @@
 import React from 'react';
 import "../css/FlatmateCardExpand.css";
-import { BsBookmark, BsBookmarkFill, BsChatDots } from 'react-icons/bs';
+import { BsBookmark, BsBookmarkFill, BsChatDots, BsStar, BsStarFill } from 'react-icons/bs';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useDidMountEffect from '../useDidMountEffect';
+import { Rating } from '@mui/material';
 
 const FlatmateCardExpand = () => {
     const [isBookmarked, setIsBookmarked] = useState(false);
     const navigate = useNavigate();
+    const [reviews, setReviews] = useState([{
+        name: "Loading...",
+        rating: 0,
+        comment: "Loading...",
+        image: "/sampleUser_Img.png"
+    }]);
 
     const params = useParams();
     const [user, setUser] = useState({
@@ -67,16 +74,45 @@ const FlatmateCardExpand = () => {
 
                 if (data.success) {
                     setUser(data);
-                    // console.log(data);
+                    console.log(data);
                 } else {
                     console.log("Failed to fetch user");
                 }
             } catch (err) {
                     console.error("Error fetching user:", err);
-                }
+            }
         };
-    
         fetchUser();
+
+        const fetchReviews = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/api/reviews/reviewee', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ reviewee: id })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error(`Error: ${response.status} - ${response.statusText}`, errorData);
+                    return; 
+                }
+
+                const data = await response.json();
+
+                if (data.success) {
+                    setReviews(data.reviews);
+                } else {
+                    console.log("Failed to fetch reviews");
+                }
+            } catch (err) {
+                    console.error("Error fetching reviews:", err);
+            }
+        }
+        fetchReviews();
+
     }, [params.id]);
 
     useDidMountEffect(()=>{
@@ -128,11 +164,25 @@ const FlatmateCardExpand = () => {
         }
     };
 
+    const handleReviewClick = () => {
+        navigate(`/review/${params.id}`);
+    };
+
     if (!user || Object.keys(user).length === 0) {
         return <p>No user data found.</p>;
     }
 
+    const redirectto = (type, id) => {
+        if(type === 'tenant'){
+            return () => navigate(`/tenant/${id}`);
+        }
+        else if(type === 'tandlord'){
+            return () => navigate(`/landlord/${id}`);
+        }
+    }
+
     return (
+        <>
         <section className="fce-container">
             {/* Left Side: Profile Information */}
             <div className="fce-profile-info">
@@ -169,6 +219,9 @@ const FlatmateCardExpand = () => {
                             )}
                         </div>
 
+                        <button className="fce-message-btn" onClick={handleReviewClick}>
+                            <BsStar className="fce-star-icon" /> Review
+                        </button>
                         <button className="fce-message-btn" onClick={handleMessageClick}>
                             <BsChatDots className="fce-message-icon" /> Message
                         </button>
@@ -176,6 +229,31 @@ const FlatmateCardExpand = () => {
                 </div>
             </div>
         </section>
+        <section className='reviews'>
+            <h2>Reviews</h2>
+            <div className='reviews-container'>
+                {reviews.map((review, index) => (
+                    <div className="reviews1" key={index}>
+                        <div className="reviews-user-details" onClick={redirectto(review.reviewertype, review.reviewer)}>
+                            <div className="reviews-user-image">
+                                <img src={review.reviewerimage} alt="" />
+                            </div>
+                            <div className="reviews-user-name">
+                                <b>{review.reviewername}</b>
+                                <div className="reviews-rating">
+                                    <Rating name="half-rating" value={review.rating} precision={1} size="small" readOnly />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="reviews-comment">
+                            {review.comment}
+                        </div>
+                    </div>
+                ))}
+                {reviews.length === 0 && <p>No reviews posted.</p>}
+            </div>
+        </section>
+        </>
     );
 };
 
