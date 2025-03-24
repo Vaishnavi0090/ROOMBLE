@@ -35,7 +35,7 @@ import { Bounce, ToastContainer } from "react-toastify";
 function App() {
   const [id, setID] = useState("");
 
-  const hideNavbarRoutes = ["/login", "/signup-landlord", "/signup-tenant", "/otp-page-tenant", "/otp-page-land", "/forgot-password", "/otp-forgot", "/set-new-password", "/otp-delete-page"];
+  const hideNavbarRoutes = ["/", "/login", "/signup-landlord", "/signup-tenant", "/otp-page-tenant", "/otp-page-land", "/forgot-password", "/otp-forgot", "/set-new-password", "/otp-delete-page"];
 
 
   return (

@@ -165,54 +165,49 @@ router.post("/updateProperty/", authMiddleware, async (req, res) => {
         property.amenities = req.body.amenities;
 
         // console.log(req.files);
-        if (!req.files || !req.files.image) {
-            return res.status(400).json({
-                success: false,
-                message: "Kindly upload photos as well"
-            })
-        }
-
-
-        //convert the images into an array
-        if (!Array.isArray(req.files.image)) {
-            req.files.image = [req.files.image];
-        }
-
-        //empty current images from the property directory
-        // clear /Pictures/property/propertyId
-        const propertyDir = path.join(__dirname, `../Pictures`, `property`, `${propertyId}`);
-        fs.rmdirSync(propertyDir, { recursive: true });
-        property.Images = [];
-
-        //make a new directory for each property
-        let imageData = req.files.image;
-        fs.mkdirSync(propertyDir);
-
-        if (imageData.length > MAX_ALLOWED_PICS) {
-            return res.status(400).json({
-                success: false,
-                message: `Maximum allowed images are ${MAX_ALLOWED_PICS}`
-            })
-        }
-
-        let Image_count = 0;
-        for (let image of imageData) {
-            if (image.size > maxSize) {
-                return res.json(400).json({
-                    success: false,
-                    message: `Image size is ${image.size} but maximum allowed is only ${maxSize}`
-                })
-            } else if (!allowedExtensions.test(image.name)) {
+        if (req.files && req.files.image) {
+            
+            //convert the images into an array
+            if (!Array.isArray(req.files.image)) {
+                req.files.image = [req.files.image];
+            }
+            
+            //empty current images from the property directory
+            // clear /Pictures/property/propertyId
+            const propertyDir = path.join(__dirname, `../Pictures`, `property`, `${propertyId}`);
+            fs.rmdirSync(propertyDir, { recursive: true });
+            property.Images = [];
+            
+            //make a new directory for each property
+            let imageData = req.files.image;
+            fs.mkdirSync(propertyDir);
+            
+            if (imageData.length > MAX_ALLOWED_PICS) {
                 return res.status(400).json({
                     success: false,
-                    message: `Only png, jpg and jpeg allowed in image.`
+                    message: `Maximum allowed images are ${MAX_ALLOWED_PICS}`
                 })
-            } else {
-                //Save the image into Pictures/accounttype
-                let UploadPath = path.join(__dirname, `../Pictures`, `property`, `${property.id}`, `${Image_count}${path.extname(image.name).toLowerCase()}`);
-                await moveImage(image, UploadPath);
-                property.Images.push(`http://127.0.0.1:${PORT}/Pictures/property/${property.id}/${Image_count}${path.extname(image.name).toLowerCase()}`);
-                Image_count++;
+            }
+            
+            let Image_count = 0;
+            for (let image of imageData) {
+                if (image.size > maxSize) {
+                    return res.json(400).json({
+                        success: false,
+                        message: `Image size is ${image.size} but maximum allowed is only ${maxSize}`
+                    })
+                } else if (!allowedExtensions.test(image.name)) {
+                    return res.status(400).json({
+                        success: false,
+                        message: `Only png, jpg and jpeg allowed in image.`
+                    })
+                } else {
+                    //Save the image into Pictures/accounttype
+                    let UploadPath = path.join(__dirname, `../Pictures`, `property`, `${property.id}`, `${Image_count}${path.extname(image.name).toLowerCase()}`);
+                    await moveImage(image, UploadPath);
+                    property.Images.push(`http://127.0.0.1:${PORT}/Pictures/property/${property.id}/${Image_count}${path.extname(image.name).toLowerCase()}`);
+                    Image_count++;
+                }
             }
         }
 
