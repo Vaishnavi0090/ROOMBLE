@@ -115,11 +115,12 @@ function FindProperty() {
                                 image={property.Images[0]}
                                 price={property.price}
                                 title={property.name}
-                                location={`${property.address}, ${property.town}, ${property.city}`}
+                                location={`${property.address}`}
                                 bhk={property.bhk}
                                 onView={() => console.log("Viewing:", property.name)}
                                 onDelete={() => console.log("Deleting:", property._id)}
                                 id={property._id}
+                                available={property.available}
                             />
                         ))}
                     </>
@@ -135,11 +136,12 @@ function FindProperty() {
                                 image={property.Images[0]}
                                 price={property.price}
                                 title={property.name}
-                                location={`${property.address}, ${property.town}, ${property.city}`}
+                                location={`${property.address}`}
                                 bhk={property.bhk}
                                 onView={() => console.log("Viewing:", property.name)}
                                 onDelete={() => console.log("Deleting:", property._id)}
                                 id={property._id}
+                                available={property.available}
                             />
                         ))}
                     </>

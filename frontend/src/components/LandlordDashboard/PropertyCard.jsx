@@ -8,7 +8,8 @@ const PropertyCard = ({
   title,
   location,
   bhk,
-  id
+  id,
+  available,
 }) => {
 
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const PropertyCard = ({
 
 
   return (
-    <div className={`property-card`}>
+    <div className={`property-card ${available ? "" : "delisted"}`}>
       {/* Image Section */}
       <div className="image-container">
         <img src={image} alt={title} />
@@ -37,7 +38,7 @@ const PropertyCard = ({
 
       {/* Buttons Section */}
       <div className="buttons">
-        <button className="view-button" onClick={handleView}>
+        <button className={`view-button ${available?"":"delisted"}`} onClick={handleView}>
           View
         </button>
       </div>

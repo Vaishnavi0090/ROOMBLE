@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "../../css/PropertyCard.css";
 import "../../css/PropertyCardTenant.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useDidMountEffect from "../../useDidMountEffect";
 
-const PropertyCardTenant = ({ image, price, title, location, bhk, onView, onBookMark, id }) => {
-  const [isPopping, setIsPopping] = useState(false);
+const PropertyCardTenant = ({ image, price, title, location, bhk, onView, onBookMark, id, available }) => {
   const [bookmarked, setBookmarked] = useState(false);
   const navigate = useNavigate();
 
-  const triggerPop = () => {
-    setIsPopping(true);
-    setTimeout(() => setIsPopping(false), 300); // Duration should match CSS animation
-  };
 
   const toggleBookmark = () => {
     setBookmarked(!bookmarked);
@@ -65,22 +60,22 @@ const PropertyCardTenant = ({ image, price, title, location, bhk, onView, onBook
   
 
   return (
-    <div className={`property-card ${isPopping ? "pop-animate" : ""}`}>
+    <div className={`property-card ${available?"":"delisted"}`}>
       {/* Image Section */}
       <div className="image-container">
-        <img src={image} alt={title} />
+        <img src={image} alt={title} className={`imagprop ${available?"":"delisted"}`}/>
       </div>
 
       {/* Details Section */}
       <div className="details">
         <p className="price">{price}</p>
-        <p className="description">{title}, {location}</p>
-        <p className="bhk">{bhk}</p>
+        <p className="description">{location}</p>
+        <p className="bhk">BHK: {bhk}</p>
       </div>
 
       {/* Buttons Section */}
       <div className="buttons">
-        <button className="bookmark-btn" onClick={toggleBookmark}>
+        <button className={`bookmark-btn`} onClick={toggleBookmark}>
           {bookmarked ? (
             <svg className="bookmark-svg" width="40" height="40" viewBox="0 0 30 30" fill="#8b1e2f">
               <path d="M6 3c-1.1 0-2 .9-2 2v16l8-5 8 5V5c0-1.1-.9-2-2-2H6z"></path>
@@ -91,7 +86,7 @@ const PropertyCardTenant = ({ image, price, title, location, bhk, onView, onBook
             </svg>
           )}
         </button>
-        <button className="view-button" onClick={handleView}>View</button>
+        <Link className={`view-button ${available?"":"delisted"}` } target="_blank" to={`/property/${id}`}>View</Link>
       </div>
     </div>
   );

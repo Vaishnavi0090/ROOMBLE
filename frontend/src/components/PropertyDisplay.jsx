@@ -1,7 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import "../css/PropertyDisplay.css";
 import { Basecontext } from '../context/base/Basecontext';
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { Bounce, ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import the CSS for styling
 
 const PropertyDisplay = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -21,13 +23,14 @@ const PropertyDisplay = () => {
     price: "Loading...",
     reviews: ["Loading..."],
   });
+  const navigate = useNavigate();
 
   const params = useParams();
   const id = params.id;
   useEffect(() => {
     fetuser();
   }, [user])
-  
+
   useEffect(() => {
     const fetchProperty = async () => {
       try {
@@ -62,9 +65,56 @@ const PropertyDisplay = () => {
     setCurrentIndex((prevIndex) => (prevIndex === property.Images.length - 1 ? 0 : prevIndex + 1));
   };
 
+  const redirectto = (type, id) => {
+    if (type == "landlord") {
+      return () => navigate(`/landlord/${id}`);
+    }
+    else {
+      return () => navigate(`/tenant/${id}`);
+    }
+  }
+
+  const handleDelist = async () => {
+    const res = await fetch("http://localhost:3000/api/Listing_Delisting/List_Delist_Prop", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "authtoken": localStorage.getItem("authtoken")
+      },
+      body: JSON.stringify({ property_id: id, action: property.available ? "delist" : "enlist" })
+    });
+    const data = await res.json();
+    if (data.success) {
+      setProperty({ ...property, available: !property.available });
+      // show toastify success
+      toast.success(data.message);
+    }
+    else {
+      // show toastify error
+      toast.error(data.message);
+    }
+  }
+
+  const handleEdit = () => {
+    navigate(`/edit-property/${id}`);
+  }
+
 
   return (
     <div className="property-display-container">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition={Bounce}
+      />
       {/* Left Section - Image Slider */}
       <div className="property-display-left">
         <div className="property-display-image-carousel">
@@ -74,6 +124,7 @@ const PropertyDisplay = () => {
         </div>
         <div className="property-display-price">₹{property.price}/Month</div>
         <div className="property-display-location">{property.address}</div>
+        {/* <div className="property-display-location"><Link to={`/landlord/${property.landlord}`}>Contact Landlord</Link></div> */}
       </div>
 
       {/* Right Section - Property Details */}
@@ -95,17 +146,24 @@ const PropertyDisplay = () => {
           <p>{property.bhk}</p>
         </div>
         <div className="property-display-section">
+          <h3>Availability</h3>
+          <p>{property.available ? "Available for renting" : "Already rented"}</p>
+        </div>
+        {/* <div className="property-display-section">
           <h3>Landlord</h3>
           <Link to={`/landlord/${property.landlord}`}>View Profile</Link>
-        </div>
+        </div> */}
 
 
         {user._id === property.landlord ? (
           <div className="property-display-buttons">
-            <Link to={`/edit-property/${property._id}`}>Edit</Link>
-            <Link to={`/delete-property/${property._id}`}>Delete</Link>
+            <button className="landlord-profile-edit-button" onClick={handleEdit}>Edit</button>
+            <button className="landlord-profile-edit-button" onClick={handleDelist}>{property.available ? "Delist" : "List"}</button>
           </div>
-        ) : null}
+        ) :
+          <div className="property-display-buttons">
+            <button className="landlord-profile-edit-button" onClick={redirectto("landlord", property.landlord)}>Contact Owner</button>
+          </div>}
       </div>
     </div>
   );

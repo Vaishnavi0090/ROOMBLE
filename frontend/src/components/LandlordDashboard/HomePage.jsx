@@ -52,6 +52,7 @@ const HomePage = () => {
     newth.bhk = item.bhk;
     newth.location = item.town;
     newth.id = item._id;
+    newth.available = item.available;
     properties.push(newth);
   }
   return (

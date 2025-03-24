@@ -1,0 +1,12 @@
+.property-card.delisted{
+    background-color: rgb(144, 144, 144);
+}
+.view-button.delisted{
+    background-color: rgb(73, 73, 73);
+}
+.imagprop.delisted{
+    filter: grayscale(100%);
+}
+.view-button{
+    text-decoration: none;
+}
