@@ -83,8 +83,6 @@ router.get("/SearchFlatmates", authMiddleware, async (req, res) => {
     try {
         const tenant_id = req.user.id;
 
-        let user = await Tenant.findById(tenant_id);
-
         if (!tenant_id) {
             return res.status(400).json({ success: false, message: "Tenant ID is required" });
         }
@@ -101,18 +99,31 @@ router.get("/SearchFlatmates", authMiddleware, async (req, res) => {
             return res.status(400).json({ success: false, message: "Invalid locality" });
         }
 
-        // **Filter for only tenants who are actually looking for a flatmate (flatmate: true)**
+        // Fetch the user's bookmarks
+        let user = await Tenant.findById(tenant_id);
+
+        // **Filter for only tenants who are looking for a flatmate**
         let potentialFlatmates = await Tenant.find({
             _id: { $ne: tenant_id },
             locality: { $exists: true },
-            flatmate: true // **Only consider those actually looking for a flatmate**
+            flatmate: true 
         }).select("-password");
 
         // Compute recommendation scores
         const alpha = 0.7; // Weight for locality importance
         let scoredResults = potentialFlatmates.map(flatmate => {
-            const distance = townData.distances[flatmate.locality] || 100; // Assume 100 if unknown
-            const localitySimilarity = 1 / (1 + distance);
+            // Fetch the correct distance value
+            let distance = townData.distances.get(flatmate.locality);
+
+            if (flatmate.locality === tenant.locality) {
+                distance = 0;
+            }
+            
+            if (distance === undefined) {
+                distance = 100; // Default distance
+            }
+
+            const localitySimilarity = 1 / (1 + Math.cbrt(distance));
 
             let booleanMatches = 0;
             if (flatmate.gender === tenant.gender) booleanMatches++;
@@ -120,18 +131,21 @@ router.get("/SearchFlatmates", authMiddleware, async (req, res) => {
             if (flatmate.veg === tenant.veg) booleanMatches++;
             if (flatmate.pets === tenant.pets) booleanMatches++;
 
-            const booleanSimilarity = booleanMatches / 4; // Normalize to [0,1]
+            const booleanSimilarity = booleanMatches / 4; // Normalized to [0,1]
 
-            const score = alpha * localitySimilarity + (1 - alpha) * booleanSimilarity;
+            let score = alpha * localitySimilarity + (1 - alpha) * booleanSimilarity;
 
-
-            return { ...flatmate.toObject(), recommendationScore: score , bookmarked : user.bookmarks_tenants.includes(flatmate._id)};
+            return { 
+                ...flatmate.toObject(), 
+                recommendationScore: score, 
+                bookmarked: user.bookmarks_tenants.includes(flatmate._id) 
+            };
         });
 
         // Sort by score in descending order
         scoredResults.sort((a, b) => b.recommendationScore - a.recommendationScore);
 
-        // **Extract filter parameters from the request body**
+        // **Extract filter parameters from the request query**
         const { locality, gender, smoke, veg, pets } = req.query;
 
         // Convert to Boolean only if defined
@@ -140,9 +154,8 @@ router.get("/SearchFlatmates", authMiddleware, async (req, res) => {
         const vegFilter = veg !== undefined ? veg === "true" : undefined;
         const petsFilter = pets !== undefined ? pets === "true" : undefined;
 
-
-        // **Filtering based on user-specified parameters (ONLY if present)**
-        if (Object.keys(req.query).length > 0) {  // Apply filters only if user specified anything
+        // **Apply filters based on user-specified parameters**
+        if (Object.keys(req.query).length > 0) {  
             scoredResults = scoredResults.filter(flatmate => {
                 if (locality !== undefined && flatmate.locality !== locality) return false;
                 if (genderFilter !== undefined && flatmate.gender !== genderFilter) return false;
@@ -160,12 +173,10 @@ router.get("/SearchFlatmates", authMiddleware, async (req, res) => {
         });
 
     } catch (err) {
-        // console.log(`Error in Searching Flatamates`);
         console.error(err);
         return res.status(500).json({ success: false, message: "Server error" });
     }
 });
-
 
 // Searching Properties
 

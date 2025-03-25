@@ -104,7 +104,7 @@ body{
 }
 
 .login-login-button {
-    background: linear-gradient(135deg, #a52a2a, #d53737);
+    background: linear-gradient(135deg,#7B1212, #a52a2a);
     color: white;
     border: none;
     padding: 12px;
@@ -221,8 +221,26 @@ body{
     transform: translateY(-15px);
     font-weight: normal;
     margin-left: auto;
-    margin-left: auto;
+    position: relative;
+    display: inline-block; /* Needed for ::after to align properly */
 }
+
+.login-forgot-password::after {
+    content: "";
+    position: absolute;
+    left: 50%; /* Start from the center */
+    bottom: -2px;
+    width: 0; /* Initially hidden */
+    height: 2px;
+    background-color: #a52a2a;
+    transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
+}
+
+.login-forgot-password:hover::after {
+    width: 100%; /* Expands fully */
+    left: 0; /* Moves outward from the center */
+}
+
 
 .login-register-text {
     color: black;
@@ -236,6 +254,31 @@ body{
     text-decoration: none;
     text-shadow: #d61515;
 }
+
+.login-register-text a {
+    color: #a52a2a;
+    font-weight: bold;
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+}
+
+.login-register-text a::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -2px;
+    width: 0;
+    height: 2px;
+    background-color: #a52a2a;
+    transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
+}
+
+.login-register-text a:hover::after {
+    width: 100%;
+    left: 0;
+}
+
 
 .login-footer-text {
     margin-top: 20px;
