@@ -92,14 +92,22 @@ const Login = () => {
             className={`login-user-btn ${userType === "tenant" ? "selected" : ""}`}
             onClick={() => handleUserTypeChange("tenant")}
           >
-            <img src="/key.png" style={{ width: "50px", height: "50px" }} />
+            <img 
+              src={userType === "landlord" ? "/key.png" : "/key_white.png"} 
+              style={{ width: "50px", height: "50px" }} 
+  
+            />
             Tenant
           </button>
           <button
             className={`login-user-btn ${userType === "landlord" ? "selected" : ""}`}
             onClick={() => handleUserTypeChange("landlord")}
           >
-            <img src="/house.jpg" style={{ width: "50px", height: "50px" }} />
+            <img 
+            src={userType === "landlord" ? "/white_house.png" : "/house.jpg"} 
+            style={{ width: "50px", height: "50px" }} 
+
+          />
             Landlord
           </button>
         </div>
