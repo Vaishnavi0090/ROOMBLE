@@ -1,5 +1,7 @@
 import React from "react";
 import { useState, useRef } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaw, faLeaf, faDrumstickBite, faWineGlassAlt, faBan, faMars, faVenus, faTimes, faCheck} from "@fortawesome/free-solid-svg-icons"; // Import icons
 import logo from "../../../public/sampleUser_img.png";
 import "../../css/TenantProfilePageStyles/TenantProfilePage.css"; // Import the CSS specific to this component
 import { useNavigate } from "react-router-dom";
@@ -57,11 +59,12 @@ export default function TenantProfilePage() {
         />
         <div className="tenant-bio-class">
           <p className="tenant-profile-bio">
-            {(state.user.description === "This user hasn't setup a description yet") || 
-              (state.user.description === "")
+            {state.user.description ===
+              "This user hasn't setup a description yet" ||
+            state.user.description === ""
               ? "You have not set up a description yet"
               : state.user.description}
-              </p>
+          </p>
         </div>
       </div>
 
@@ -94,41 +97,129 @@ export default function TenantProfilePage() {
             </p>
           </div>
           <div className="tenant-profile-gender">
-            <p>
+          <p>
               <span>Gender </span>
               <span>:</span>{" "}
-              <span>{state.user.gender ? "Male" : "Female"}</span>
+              <span>
+                {state.user.gender ? (
+                  <>
+                    Male{" "}
+                    <FontAwesomeIcon
+                      icon={faMars}
+                      style={{ color: "#7D141D", marginLeft: "5px" }}
+                    />
+                  </>
+                ) : (
+                  <>
+                    Female{" "}
+                    <FontAwesomeIcon
+                      icon={faVenus}
+                      style={{ color: "#7D141D", marginLeft: "5px" }}
+                    />
+                  </>
+                )}
+              </span>
             </p>
           </div>
           <div className="tenant-profile-flatmate">
-            <p>
+          <p>
               <span>Seeking Flatmate </span>
               <span>:</span>{" "}
               <span>
-                {state.user.flatmate
-                  ? "Yes"
-                  : "No"}
+                {state.user.flatmate ? (
+                  <>
+                    Yes{" "}
+                    <FontAwesomeIcon
+                      icon={faCheck}
+                      style={{ color: "#7D141D", marginLeft: "5px" }}
+                    />
+                  </>
+                ) : (
+                  <>
+                    No{" "}
+                    <FontAwesomeIcon
+                      icon={faTimes}
+                      style={{ color: "#7D141D", marginLeft: "5px" }}
+                    />
+                  </>
+                )}
               </span>
             </p>
           </div>
           <div className="tenant-profile-smoke">
-            <p>
-              <span>Alcohol/smoking </span> <span>:</span>{" "}
-              <span>{state.user.smoke ? "Smokes" : "Doesn't Smoke"}</span>
+          <p>
+              <span>Alcohol/Smoking </span>
+              <span>:</span>{" "}
+              <span>
+                {state.user.smoke ? (
+                  <>
+                    Smokes/Drinks{" "}
+                    <FontAwesomeIcon
+                      icon={faWineGlassAlt}
+                      style={{ color: "#7D141D", marginLeft: "5px" }}
+                    />
+                  </>
+                ) : (
+                  <>
+                    Doesn't Smoke/Drink{" "}
+                    <FontAwesomeIcon
+                      icon={faBan}
+                      style={{ color: "#7D141D", marginLeft: "5px" }}
+                    />
+                  </>
+                )}
+              </span>
             </p>
           </div>
           <div className="tenant-profile-veg">
-            <p>
+          <p>
               <span>Veg/Non Veg </span>
-              <span>:</span> <span>{state.user.veg ? "Veg" : "Non-Veg"}</span>
+              <span>:</span>{" "}
+              <span>
+                {state.user.veg ? (
+                  <>
+                    Veg{" "}
+                    <FontAwesomeIcon
+                      icon={faLeaf}
+                      style={{ color: "#7D141D", marginLeft: "5px" }}
+                    />
+                  </>
+                ) : (
+                  <>
+                    Non-Veg{" "}
+                    <FontAwesomeIcon
+                      icon={faDrumstickBite}
+                      style={{ color: "#7D141D", marginLeft: "5px" }}
+                    />
+                  </>
+                )}
+              </span>
             </p>
           </div>
           <div className="tenant-profile-pets">
-            <p>
-              <span>Domesticated animals </span>
-              <span>:</span>{" "}
-              <span>{state.user.pets ? "Has Pets" : "No Pets"}</span>
-            </p>
+          <p>
+    <span>Has Pets </span>
+    <span>:</span>{" "}
+    <span>
+      {state.user.pets ? (
+        <>
+          Yes{" "}
+          <FontAwesomeIcon
+            icon={faPaw}
+            style={{ color: "#7D141D", marginLeft: "5px" }}
+          />
+        </>
+      ) : (
+        <>
+          No{" "}
+          <FontAwesomeIcon
+            icon={faBan}
+            style={{ color: "#7D141D", marginLeft: "5px" }}
+          />
+        </>
+      )}
+    </span>
+  </p>
           </div>
         </div>
 
