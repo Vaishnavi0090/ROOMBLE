@@ -287,7 +287,7 @@ function SignUpForm({ setID }) {
             </label>
 
             <label>
-              Do you eat Non-veg?
+              Are you a Vegetarian?
               <label htmlFor="veg-yes">
                 <input
                   type="radio"
