@@ -12,7 +12,7 @@ function OwnMessage(props) {
     return (
         <div className="message own">
                 <div className="msgBox">
-                    <p className="msgText" style={{fontWeight: 100, fontFamily: 'Roboto'}}>{props.message}</p>
+                    <p className="msgText" style={{fontWeight: 300} }>{props.message}</p>
 
                     <span className="sentTime">{Date_to_time(props.timestamp)}</span>
         

@@ -73,6 +73,7 @@
         .msgText{
             display: flex;
             align-items: flex-end;
+            font-family: "Inter", sans-serif;
             background-color:white;
             color: #7D141D;
             padding: 10px;
