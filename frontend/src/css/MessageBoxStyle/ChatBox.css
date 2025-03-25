@@ -79,6 +79,7 @@
             border-radius: 10px;
         }
         &.own{
+            
             align-self: flex-end;
             img{
                 width: 100%;
