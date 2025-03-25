@@ -7,11 +7,31 @@ function MessageCard({conversation}) {
 
     const navigate = useNavigate();
 
-    const Date_to_time = (date) => {
-        // Convert date to time
-        const time = new Date(date);
-        return time.getHours() + ":" + time.getMinutes();
-    }
+    const Date_to_time = (timestamp) => {
+        const time = new Date(timestamp);
+        const now = new Date();
+        
+        const hours = time.getHours();
+        const minutes = String(time.getMinutes()).padStart(2, '0'); // Ensures 2-digit minutes
+        
+        // Get today's and yesterday's dates (without time)
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const yesterday = new Date(today);
+        yesterday.setDate(today.getDate() - 1);
+        
+        // Get message date (without time)
+        const msgDate = new Date(time.getFullYear(), time.getMonth(), time.getDate());
+    
+        if (msgDate.getTime() === today.getTime()) {
+            return `${hours}:${minutes}`;  // Show time if it's today
+        } else if (msgDate.getTime() === yesterday.getTime()) {
+            return `Yesterday`;  // Show "Yesterday" if it's yesterday
+        } else {
+            return time.toLocaleDateString();  // Show date for older messages
+        }
+    };
+    
+    
 
     const redirectto = (id) => {
         navigate("/chat/"+id);
