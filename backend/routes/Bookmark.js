@@ -162,7 +162,7 @@ router.post(`/edit_bookmarks`, authMiddleware, async (req, res) => {
 
         return res.status(200).json({
           success: true,
-          message: "Successfule unmarked",
+          message: "Successfully unmarked",
         });
       } else {
         return res.status(404).json({
