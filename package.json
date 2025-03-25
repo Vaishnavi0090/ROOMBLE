@@ -3,6 +3,7 @@
     "axios": "^1.8.4",
     "express-fileupload": "^1.5.1",
     "jwt-decode": "^4.0.0",
+    "lucide-react": "^0.483.0",
     "react-toastify": "^11.0.5"
   }
 }
