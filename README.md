@@ -1,30 +1,36 @@
 #  Roomble
 
-**Roomble** is a full-stack web application designed to help users find rental accommodations and connect with compatible flatmates based on their location and preferences.
+**Roomble** is a full-stack rental discovery and flatmate-matching web application built using the **MERN stack** (MongoDB, Express.js, React.js, Node.js) and powered by **Vite.js** for fast development and performance.
 
->  Developed as a course project with real-world features like recommendation systems, real-time communication, and secure user authentication.
+> 🛠️ Developed as a CS253 course project at IIT Kanpur by Group 7 - "Marauders"
 
 ---
 
 ##  Features
 
--  **Smart Room Search**: Browse property listings by location and preferences.
--  **Flatmate Matching**: Get recommendations for compatible roommates.
--  **Real-Time Chat**: Communicate instantly with potential flatmates using Socket.io.
--  **Secure Authentication**: User login/signup with JWT token-based authentication.
--  **Personalized Feed**: Custom recommendations based on your profile and past preferences.
+-  **Secure Authentication**: Dual-role login for tenants and landlords using JWT + bcrypt + OTP (via nodemailer)
+-  **Property Listings**: Add, update, and manage rental properties with images and features
+-  **Flatmate Recommendation**: AI-powered scoring algorithm based on proximity and preferences
+-  **Real-Time Chat**: Chat with matches instantly via Socket.io
+-  **Bookmark System**: Save your favorite properties and flatmates
+-  **Reviews & Ratings**: Rate and review users and properties
+-  **Email Verification**: Secure registration and password recovery via OTP
+-  **Responsive Web UI**: Built with React and Material UI for a sleek experience
 
 ---
 
 ##  Tech Stack
 
-| Component   | Tech Used                         |
-|-------------|----------------------------------|
-| Frontend    | React                             |
-| Backend     | Node.js, Express.js               |
-| Database    | MongoDB                           |
-| Real-time   | Socket.io                         |
-| Auth        | JSON Web Tokens (JWT), Bcrypt     |
+| Layer       | Tools / Frameworks                      |
+|-------------|------------------------------------------|
+| Frontend    | React.js, Vite.js, HTML, CSS, Material UI |
+| Backend     | Node.js, Express.js                      |
+| Database    | MongoDB                                  |
+| Real-time   | Socket.io                                 |
+| Auth        | JWT, bcrypt, nodemailer                  |
+| Dev Tools   | Git, Postman, ESLint, dotenv             |
+
+---
 
 
 
